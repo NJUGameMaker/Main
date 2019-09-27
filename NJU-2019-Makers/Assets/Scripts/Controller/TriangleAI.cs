@@ -21,6 +21,12 @@ public class TriangleAI : MonoBehaviour
 
 	}
 
+	//血量低于0后行为
+	private void AfterDie()
+	{
+
+	}
+
     void Update()
     {
 		//暂停
@@ -34,5 +40,9 @@ public class TriangleAI : MonoBehaviour
 			return;
 		}
 		myAI();
+		if (enemy.health < 0)
+		{
+			AfterDie();
+		}
 	}
 }

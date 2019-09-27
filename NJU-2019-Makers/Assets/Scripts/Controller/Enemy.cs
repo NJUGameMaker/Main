@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
 
 	//血量
 	private float maxHealth;
-	private float health;
+	public float health { get; private set; }
 	//移动类型
 	public Move move { get; private set; }
 
