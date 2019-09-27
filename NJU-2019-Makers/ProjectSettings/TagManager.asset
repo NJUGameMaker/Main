@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - PlayerEdge
+  - PlayerHeart
+  - Enemy
+  - EnemyBullet
+  - PlayerBullet
+  - EnemyCut
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -13,8 +20,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Player
+  - PlayerWall
   - 
   - 
   - 
@@ -41,8 +48,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
+  - name: Player Heart
     uniqueID: 3635575921
+    locked: 0
+  - name: Player Edge
+    uniqueID: 2973847287
     locked: 0
   - name: Player Bullet
     uniqueID: 3103091431

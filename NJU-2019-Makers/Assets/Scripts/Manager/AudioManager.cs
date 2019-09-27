@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
 		return tmp;
 	}
 
-	//播放音效
+	//播放音效 第二个参数是音效播放完后的回调函数
 	public void PlaySound(string name,Statics.vFunv fun = null)
 	{
 		if (AudioDic.ContainsKey(name))
@@ -56,7 +56,7 @@ public class AudioManager : MonoBehaviour
 		}
 	}
 
-	//持续播放
+	//持续播放 第二个参数是持续播放的条件 同一个持续播放不要重复调用
 	public void PlayUntil(string name, Statics.bFunv fun)
 	{
 		if (AudioDic.ContainsKey(name))

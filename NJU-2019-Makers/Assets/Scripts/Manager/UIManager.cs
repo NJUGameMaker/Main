@@ -21,6 +21,43 @@ public class UIManager : MonoBehaviour
 
 		//Main 物体 跨场景
 		DontDestroyOnLoad(gameObject);
+	}
 
+	//开始播放剧情 UI TODO
+	public void StartPlayVideo()
+	{
+
+	}
+
+	//显示对话框 TODO
+	public void ShowDialog()
+	{
+
+	}
+
+	//显示文字 TODO 
+	public void ShowText(string text)
+	{
+
+	}
+
+	//隐藏文字和对话框 TODO
+	public void HideDialogAndText()
+	{
+
+	}
+
+	//更新UI条 TODO
+	public void updateUI()
+	{
+
+	}
+
+	//设置临时UI条
+	//..........
+
+	private void Update()
+	{
+		updateUI();
 	}
 }
