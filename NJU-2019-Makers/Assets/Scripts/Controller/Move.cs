@@ -26,7 +26,7 @@ public class Move : MonoBehaviour
     private float roundTime = 3;//一圈的时间
     private float currentTime = 0;
     //方向
-    private Vector2 direction;
+    private Vector2 direction = new Vector2(1, 0);
     //开始点
     private Vector2 startPoint;
     private Vector2 endPoint;
@@ -41,11 +41,13 @@ public class Move : MonoBehaviour
     //设置为静止的状态，参数为静止点
     public void SetStopType(Vector2 position)
     {
+        moveType = MoveType.Stop;
         heart = position;
     }
     //直线移动，设定开始点和移动方向
     public void SetLineType(Vector2 position, Vector2 dt, float sp)
     {
+        moveType = MoveType.Line;
         heart = position;
         direction = dt;
         speed = sp;
@@ -53,12 +55,14 @@ public class Move : MonoBehaviour
     //曲线移动，传入曲线开始和结束的点
     public void SetCurveType(Vector2 start_point, Vector2 end_point)
     {
+        moveType = MoveType.Cruve;
         startPoint = start_point;
         endPoint = end_point;
     }
     //圆形移动
     public void SetRoundType(Vector2 position, float r, float roundt)
     {
+        moveType = MoveType.Round;
         heart = position;
         radius = r;
         roundTime = roundt;
@@ -69,6 +73,7 @@ public class Move : MonoBehaviour
     //跟踪主角视角,参数为主角
     public void SetAIFollowType(GameObject player)
     {
+        moveType = MoveType.AIFollow;
         follow = player;
     }
     //设置各种类型移动的参数并且设置各种初始化函数 TODO
