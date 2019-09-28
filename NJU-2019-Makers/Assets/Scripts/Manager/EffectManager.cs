@@ -40,28 +40,74 @@ public class EffectManager : MonoBehaviour
 	{
 		for (float deltime = 0; deltime<time; deltime += Time.deltaTime)
 		{
-			Debug.Log(deltime);
+			//TODO 设置type
 			Camera.main.orthographicSize = Statics.FixFun(Statics.FunType.X2, st, ed, deltime / time);
 			yield return new WaitForEndOfFrame();
 		}
 	}
 
-	//镜头放大 TODO
+	//协程：镜头跟踪
+	private IEnumerator IECameraFocus(Vector2 st, Vector2 ed, float time)
+	{
+		for (float deltime = 0; deltime < time; deltime += Time.deltaTime)
+		{
+			//TODO 设置type
+			Camera.main.transform.position = new Vector3(Statics.FixFun(Statics.FunType.X2, st.x, ed.x, deltime / time), Statics.FixFun(Statics.FunType.X2, st.x, ed.x, deltime / time), 0);
+			yield return new WaitForEndOfFrame();
+		}
+	}
+
+	//镜头放大 TODO csk
 	public void CameraZoom(float time, float size)
 	{
 		StartCoroutine(IECameraZoom(Camera.main.orthographicSize, size, time));
 	}
 
-	//镜头跟踪 TODO
+	//镜头跟踪 TODO csk
 	public void CameraFocus(float time, Vector2 focus)
 	{
-
+		StartCoroutine(IECameraFocus(Camera.main.transform.position, focus, time));
 	}
+
+	//是否持续跟踪
+	private bool keepFocus;
+	//持续跟踪的位置
+	private Statics.V2Funv funFocus;
+	//设置镜头是否持续跟踪 TODO csk
+	public void SetCameraContinueFocus(Statics.V2Funv fun,bool f)
+	{
+		funFocus = fun;
+		keepFocus = f;
+	}
+	//设置镜头持续跟踪 TODO csk
+	public void CameraContinueFocus()
+	{
+		if (keepFocus)
+		{
+			const float con = 2;
+			//调参数 TODO
+			Camera.main.transform.position = Statics.V3toV2(Camera.main.transform.position) + (funFocus() - Statics.V3toV2(Camera.main.transform.position)) * Time.deltaTime * con;
+		}
+	}
+
 
 	private void Update()
 	{
+		//暂停
+		if (GameManager.Instance.pause)
+		{
+			return;
+		}
+		//播放剧情
+		if (GameManager.Instance.playVideo)
+		{
+			return;
+		}
+		//镜头持续跟踪
+		CameraContinueFocus();
 		//test
 		if (Input.GetKeyDown(KeyCode.Z))
-			CameraZoom(1, Camera.main.orthographicSize + 1);
+			SetCameraContinueFocus(() => Input.mousePosition, true);
+		gameObject.AddComponent<PlayerBullet>();
 	}
 }
