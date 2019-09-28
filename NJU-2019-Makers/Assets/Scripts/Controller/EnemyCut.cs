@@ -13,24 +13,24 @@ public class EnemyCut : MonoBehaviour
 
 
 
-	//初始化 TODO
+	//初始化 应该写完了 TODO
 	public void Init(bool s,Move m) { isStatic = s; move = m; }
 
-	//攻击到玩家 TODO
+	//攻击到玩家 应该写完了 还有特效 音效 TODO
 	public void Attack()
 	{
 		PlayerManager.Instance.BeingCut(gameObject);
 		Destroy(gameObject);
 	}
 
-	//攻击到玩家核心 TODO
+	//攻击到玩家核心 应该写完了 还有特效 音效 TODO
 	public void AttackHeart()
 	{
 		PlayerManager.Instance.AttackHeart(gameObject);
 		Destroy(gameObject);
 	}
 
-	//碰到墙 TODO
+	//碰到墙 应该写完了 还有特效 音效 TODO
 	public void Wall()
 	{
 		Destroy(gameObject);
