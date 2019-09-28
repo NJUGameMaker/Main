@@ -14,6 +14,11 @@ public class Statics : MonoBehaviour
 		X2,
 	}
 
+	public static float FixFun(FunType type,float mn,float mx,float step)
+	{
+		return 0;
+	}
+
 	//x限制在[mn,mx]
 	public static float InRange(float x,float mn,float mx)
 	{
