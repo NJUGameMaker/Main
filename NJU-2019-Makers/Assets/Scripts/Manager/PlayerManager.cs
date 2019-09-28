@@ -77,7 +77,7 @@ public class PlayerManager : MonoBehaviour
 	private bool SMALL => Input.GetMouseButton(1);
 	private bool BOMB => Input.GetMouseButtonUp(1);
 	//鼠标位置
-	private Vector2 MOUSE => Input.mousePosition;
+	private Vector2 MOUSE => Camera.main.ScreenToWorldPoint(Input.mousePosition);
 	//获取子物体
 	private GameObject GOHeart => HeartCollider.gameObject;
 	private GameObject GOEdge => EdgeCollider.gameObject;
@@ -109,7 +109,8 @@ public class PlayerManager : MonoBehaviour
 		PlayerBullet playerBullet = bullet.AddComponent<PlayerBullet>();
 		playerBullet.Init(bulletType, NoneDamage, false, bullet.AddComponent<Move>());
 		float angle = Mathf.Atan((MOUSE - pos).y / (MOUSE - pos).x)*Mathf.Rad2Deg + deviation*(1-energy/maxEnergy);
-		Vector2 direct = new Vector2 (Mathf.Cos(angle*Mathf.Deg2Rad),Mathf.Sin(angle*Mathf.Deg2Rad)); 
+		Vector2 direct = new Vector2 (Mathf.Cos(angle*Mathf.Deg2Rad),Mathf.Sin(angle*Mathf.Deg2Rad));
+		Debug.Log(direct);
 		playerBullet.move.SetLineType(pos,direct,10);
 	}
 
