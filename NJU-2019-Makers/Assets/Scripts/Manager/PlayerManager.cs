@@ -103,10 +103,19 @@ public class PlayerManager : MonoBehaviour
 
 	}
 
-	//移动 TODO
-	public void Move()
+    //表示移动的速度
+    public float speed = 50;
+    //移动 TODO
+    public void Move()
 	{
-		if (LEFT)
+        
+        float inputX = Input.GetAxis("Horizontal");//横向上的移动
+        float inputY = Input.GetAxis("Vertical");//竖直线上的移动
+        Vector3 v = new Vector3(inputX, inputY, 0); //新建移动向量
+        v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
+        v = v * speed * Time.deltaTime;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
+        transform.Translate(v);                       //移动
+        if (LEFT)
 		{
 
 		}
@@ -195,5 +204,7 @@ public class PlayerManager : MonoBehaviour
 		{
 			Bomb();
 		}
+        
+        Move();
 	}
 }
