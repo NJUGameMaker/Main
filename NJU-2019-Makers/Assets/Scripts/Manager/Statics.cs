@@ -9,13 +9,28 @@ public class Statics : MonoBehaviour
 	public delegate void vFunv();
 	public delegate bool bFunv();
 
-	public enum FunType
+    public enum FunType
 	{
 		X2,
+        X
 	}
-
-	public static float FixFun(FunType type,float mn,float mx,float step)
+    //将size从startsize到endsize的平滑移动
+	public static float FixFun(FunType type,float startsize, float endsize,float step)
 	{
+        if(startsize > endsize)//若是下降形式，那么将其反向处理，转成上升
+        {
+            float tmp = startsize;
+            startsize = endsize;
+            endsize = tmp;
+            step = 1 - step;
+        }
+        //保证startsize < endsize且step在（0，1）
+        switch (type)
+        {
+            case FunType.X: { return startsize + (endsize - startsize) * step; };break;
+            case FunType.X2: { return startsize + (endsize - startsize) * step * step; } break;
+            default: Debug.LogAssertion("Wrong FunType!");break;
+        }
 		return 0;
 	}
 
