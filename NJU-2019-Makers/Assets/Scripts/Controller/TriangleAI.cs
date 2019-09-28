@@ -7,24 +7,42 @@ public class TriangleAI : MonoBehaviour
 	//自身Enemy引用
 	private Enemy enemy;
 
+    //子弹的Preb By BJY
+    public GameObject bulletPrefab;
+
     // 初始化自身属性 TODO
     void Start()
     {
-		enemy = gameObject.AddComponent<Enemy>();
+		enemy = gameObject.AddComponent<Enemy>();    
 		enemy.Init(100, gameObject.AddComponent<Move>());
 		enemy.move.Init();
     }
-
-	//自身AI行为 攻击 等 TODO
-	private void myAI()
+    //发射帧间隔(s)：
+    public const float interval = 0.2f;
+    //能够发射子弹
+    private bool canFire = true;
+    //自身AI行为 攻击 等 TODO:BJY
+    private void myAI()
 	{
-
-	}
+        if (canFire)
+        {
+            float damage = 0;
+            
+            canFire = false;
+            StartCoroutine(Statics.WorkAfterSeconds(() => canFire = true, interval));
+            var pos = Statics.V3toV2(transform.position);
+            GameObject bullet = GameObject.Instantiate(bulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
+            EnemyBullet enemyBullet = bullet.AddComponent<EnemyBullet>();
+            enemyBullet.Init(damage, false, bullet.AddComponent<Move>());
+            enemyBullet.move.SetAIFollowType(PlayerManager.Instance.transform.gameObject);
+        }
+        
+    }
 
 	//血量低于0后行为
 	private void AfterDie()
 	{
-
+        Object.Destroy(gameObject);
 	}
 
     void Update()
