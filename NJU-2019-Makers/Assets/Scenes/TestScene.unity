@@ -858,6 +858,7 @@ MonoBehaviour:
   EdgeSprite: {fileID: 1419060796}
   HeartSprite: {fileID: 844408019}
   Points: []
+  BulletPrefab: {fileID: 442074829}
   speed: 50
 --- !u!4 &1757080600
 Transform:

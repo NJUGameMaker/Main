@@ -109,8 +109,8 @@ public class PlayerManager : MonoBehaviour
 		PlayerBullet playerBullet = bullet.AddComponent<PlayerBullet>();
 		playerBullet.Init(bulletType, NoneDamage, false, bullet.AddComponent<Move>());
 		float angle = Mathf.Atan((MOUSE - pos).y / (MOUSE - pos).x)*Mathf.Rad2Deg + deviation*(1-energy/maxEnergy);
-		Vector2 direct = (Mathf.Cos(angle*Mathf.Deg2Rad),Mathf.Sin(angle*Mathf.Deg2Rad)); 
-		playerBullet.move.setLineType(pos,direct);
+		Vector2 direct = new Vector2 (Mathf.Cos(angle*Mathf.Deg2Rad),Mathf.Sin(angle*Mathf.Deg2Rad)); 
+		playerBullet.move.SetLineType(pos,direct,10);
 	}
 
 	//当缩小键按下 改变外壳大小 改变内核大小 改变enegy数值 音效 特效 TODO
