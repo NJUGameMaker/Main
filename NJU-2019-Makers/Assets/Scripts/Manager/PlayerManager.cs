@@ -92,26 +92,41 @@ public class PlayerManager : MonoBehaviour
 
 
 	//子弹误差默认值（角度值）：
-	public const float deviation = 5;
-
+	public const float deviation = 25;
 	//发射帧间隔(s)：
-	public const float interval = 0.5f;
-	//发射计时器：
-	private float remainTime = interval;
+	public const float interval = 0.2f;
+	//能够发射子弹
+	private bool canFire = true;
 
 
 	//当攻击键按下 TODO
 	public void Fire()
 	{
-		//玩家当前位置
-		var pos = Statics.V3toV2(transform.position);
-		GameObject bullet = GameObject.Instantiate(BulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
-		PlayerBullet playerBullet = bullet.AddComponent<PlayerBullet>();
-		playerBullet.Init(bulletType, NoneDamage, false, bullet.AddComponent<Move>());
-		float angle = Mathf.Atan((MOUSE - pos).y / (MOUSE - pos).x)*Mathf.Rad2Deg + deviation*(1-energy/maxEnergy);
-		Vector2 direct = new Vector2 (Mathf.Cos(angle*Mathf.Deg2Rad),Mathf.Sin(angle*Mathf.Deg2Rad));
-		Debug.Log(direct);
-		playerBullet.move.SetLineType(pos,direct,10);
+		if (canFire)
+		{
+			float damage = 0;
+			switch (bulletType)
+			{
+				case BulletType.None:
+					damage = NoneDamage;
+					break;
+				case BulletType.Strong:
+					damage = StrongDamage;
+					break;
+				case BulletType.Bounce:
+					damage = BounceDamage;
+					break;
+			}
+			canFire = false;
+			StartCoroutine(Statics.WorkAfterSeconds(() => canFire = true, interval));
+			var pos = Statics.V3toV2(transform.position);
+			GameObject bullet = GameObject.Instantiate(BulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
+			PlayerBullet playerBullet = bullet.AddComponent<PlayerBullet>();
+			playerBullet.Init(bulletType, damage, false, bullet.AddComponent<Move>());
+			float angle = Mathf.Atan2((MOUSE - pos).y, (MOUSE - pos).x) * Mathf.Rad2Deg + Random.Range(-deviation, deviation) * (1 - energy / maxEnergy);
+			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+			playerBullet.move.SetLineType(pos, direct, 10);
+		}
 	}
 
 	//当缩小键按下 改变外壳大小 改变内核大小 改变enegy数值 音效 特效 TODO

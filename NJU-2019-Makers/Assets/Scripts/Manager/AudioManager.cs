@@ -131,7 +131,7 @@ public class AudioManager : MonoBehaviour
 
 
 		//test
-		Debug.Log(SoundPlayerUntil.Keys.Count);
+		//Debug.Log(SoundPlayerUntil.Keys.Count);
 		if (Input.GetKeyDown(KeyCode.A))
 			PlaySound("test",()=>Debug.Log("Over"));
 		if (Input.GetKeyDown(KeyCode.S))
