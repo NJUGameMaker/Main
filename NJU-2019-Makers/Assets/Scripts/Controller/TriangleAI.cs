@@ -16,6 +16,7 @@ public class TriangleAI : MonoBehaviour
 		enemy = gameObject.AddComponent<Enemy>();    
 		enemy.Init(100, gameObject.AddComponent<Move>());
 		enemy.move.Init();
+        enemy.move.SetStopType(Statics.V3toV2(transform.position));
     }
     //发射帧间隔(s)：
     public const float interval = 0.2f;
