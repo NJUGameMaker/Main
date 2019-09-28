@@ -86,16 +86,18 @@ public class PlayerManager : MonoBehaviour
 	public GameObject BulletPrefab;
 
 	//子弹类型伤害
+	public const float NoneDamage = 10;
 	public const float StrongDamage = 10;
 	public const float BounceDamage = 5;
+
 
 	//子弹误差默认值（角度值）：
 	public const float deviation = 5;
 
 	//发射帧间隔(s)：
-	public const float interval = 0.5;
+	public const float interval = 0.5f;
 	//发射计时器：
-	private int remainTime = interval;
+	private float remainTime = interval;
 
 
 	//当攻击键按下 TODO
@@ -104,8 +106,8 @@ public class PlayerManager : MonoBehaviour
 		//玩家当前位置
 		var pos = Statics.V3toV2(transform.position);
 		GameObject bullet = GameObject.Instantiate(BulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
-		GameObject playerBullet = bullet.AddComponent<PlayerBullet>();
-		playerBullet.Init(bulletType, damage, false, bullet.AddComponent<Move>());
+		PlayerBullet playerBullet = bullet.AddComponent<PlayerBullet>();
+		playerBullet.Init(bulletType, NoneDamage, false, bullet.AddComponent<Move>());
 		float angle = Mathf.Atan((MOUSE - pos).y / (MOUSE - pos).x)*Mathf.Rad2Deg + deviation*(1-energy/maxEnergy);
 		Vector2 direct = (Mathf.Cos(angle*Mathf.Deg2Rad),Mathf.Sin(angle*Mathf.Deg2Rad)); 
 		playerBullet.move.setLineType(pos,direct);
