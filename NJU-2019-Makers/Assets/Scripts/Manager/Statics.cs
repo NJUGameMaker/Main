@@ -9,7 +9,7 @@ public class Statics : MonoBehaviour
 	public delegate void vFunv();
 	public delegate bool bFunv();
 
-	enum FunType
+	public enum FunType
 	{
 		X2,
 	}
