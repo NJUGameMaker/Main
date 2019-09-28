@@ -9,6 +9,11 @@ public class Statics : MonoBehaviour
 	public delegate void vFunv();
 	public delegate bool bFunv();
 
+	enum FunType
+	{
+		X2,
+	}
+
 	//x限制在[mn,mx]
 	public static float InRange(float x,float mn,float mx)
 	{
