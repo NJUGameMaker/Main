@@ -17,14 +17,14 @@ public class Move : MonoBehaviour
 		//TODO ...BJY
 	};
     //移动的类型
-    MoveType moveType = MoveType.Stop;
+    public MoveType moveType = MoveType.Stop;
     //移动的速度
     public float speed = 50; 
     //中心和半径
-    private Vector2 heart;
-    private float radius;
-    private float roundTime;//一圈的时间
-    private float currentTime;
+    private Vector2 heart = new Vector2(2, 0);
+    private float radius = 3f;
+    private float roundTime = 3;//一圈的时间
+    private float currentTime = 0;
     //方向
     private Vector2 direction;
     //开始点
@@ -63,6 +63,8 @@ public class Move : MonoBehaviour
         radius = r;
         roundTime = roundt;
         currentTime = 0;
+        transform.position = new Vector3(heart.x + r, heart.y, transform.position.z);
+        
     }
     //跟踪主角视角,参数为主角
     public void SetAIFollowType(GameObject player)
@@ -91,10 +93,18 @@ public class Move : MonoBehaviour
                 transform.Translate(v);                       //移动
                 };break;
             case MoveType.Round: {
-                    currentTime += 2 * Mathf.PI / roundTime * Time.deltaTime;
+                    float oldTime = currentTime;
+                    currentTime += 2 * Mathf.PI / roundTime * Time.deltaTime;//更新角度
                     float nextX = radius * Mathf.Cos(currentTime);
                     float nextY = radius * Mathf.Sin(currentTime);
-
+                    if (currentTime >= 2 * Mathf.PI)
+                        currentTime = 0;
+                    //Vector3 v = new Vector3(nextX - radius * Mathf.Cos(currentTime), heart.y + nextY - transform.position.y, 0);
+                    Vector3 v = new Vector3(nextX - radius * Mathf.Cos(oldTime), nextY - radius * Mathf.Sin(oldTime), 0);
+                    //v = v.normalized ;
+                    //v = v * Time.deltaTime;
+                    transform.Translate(v);
+                    
                 };break;
             case MoveType.Cruve: { };break;
             case MoveType.AIFollow: { };break;
@@ -106,7 +116,7 @@ public class Move : MonoBehaviour
     void Update()
     {
 		//暂停
-		if (GameManager.Instance.pause)
+		/*if (GameManager.Instance.pause)
 		{
 			return;
 		}
@@ -114,7 +124,7 @@ public class Move : MonoBehaviour
 		if (GameManager.Instance.playVideo)
 		{
 			return;
-		}
+		}*/
 		work();
 	}
 }
