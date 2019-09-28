@@ -15,20 +15,20 @@ public class Enemy : MonoBehaviour
 	public Move move { get; private set; }
 
 
-	//初始化 TODO
+	//初始化 应该写完了 TODO
 	public void Init(float h, Move m) { maxHealth = health = h; move = m; }
 
-	//攻击到玩家 需要考虑 玩家是否无敌  TODO
+	//敌人本体撞到玩家 需要考虑 玩家是否无敌 （玩家在无敌状态需要被弹开 或者 对玩家造成伤害自己死亡） TODO
 	public void Attack()
 	{
 	}
 
-	//攻击到玩家核心 TODO
+	//攻击到玩家核心 判断游戏结束或者读取存档等 TODO
 	public void AttackHeart()
 	{
 	}
 
-	//被玩家子弹攻击 TODO
+	//被玩家子弹攻击 受到伤害血量计算 特效 音效等 TODO
 	public void BeingAttack(GameObject bullet)
 	{
 	}

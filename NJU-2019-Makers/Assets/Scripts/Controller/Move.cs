@@ -14,14 +14,17 @@ public class Move : MonoBehaviour
 		Cruve,
 		Round,
 		AIFollow
-		//TODO ...
+		//TODO ...BJY
 	};
     //移动的类型
-    MoveType moveType = MoveType.Stop;
+    public MoveType moveType = MoveType.Stop;
     //移动的速度
     public float speed = 50; 
-    //中心
-    private Vector2 heart;
+    //中心和半径
+    private Vector2 heart = new Vector2(2, 0);
+    private float radius = 3f;
+    private float roundTime = 3;//一圈的时间
+    private float currentTime = 0;
     //方向
     private Vector2 direction;
     //开始点
@@ -41,10 +44,11 @@ public class Move : MonoBehaviour
         heart = position;
     }
     //直线移动，设定开始点和移动方向
-    public void SetLineType(Vector2 position, Vector2 dt)
+    public void SetLineType(Vector2 position, Vector2 dt, float sp)
     {
         heart = position;
         direction = dt;
+        speed = sp;
     }
     //曲线移动，传入曲线开始和结束的点
     public void SetCurveType(Vector2 start_point, Vector2 end_point)
@@ -53,9 +57,14 @@ public class Move : MonoBehaviour
         endPoint = end_point;
     }
     //圆形移动
-    public void SetRoundType(Vector2 position)
+    public void SetRoundType(Vector2 position, float r, float roundt)
     {
         heart = position;
+        radius = r;
+        roundTime = roundt;
+        currentTime = 0;
+        transform.position = new Vector3(heart.x + r, heart.y, transform.position.z);
+        
     }
     //跟踪主角视角,参数为主角
     public void SetAIFollowType(GameObject player)
@@ -74,9 +83,29 @@ public class Move : MonoBehaviour
         //分开判断处理
         switch (moveType)
         {
-            case MoveType.Stop: { };break;
-            case MoveType.Line: { };break;
-            case MoveType.Round: { };break;
+            case MoveType.Stop: {
+                    transform.position = new Vector3(heart.x, heart.y, transform.position.z);
+                };break;
+            case MoveType.Line: {
+                Vector3 v = new Vector3(direction.x, direction.y, 0); //新建移动向量
+                v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
+                v = v * speed * Time.deltaTime;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
+                transform.Translate(v);                       //移动
+                };break;
+            case MoveType.Round: {
+                    float oldTime = currentTime;
+                    currentTime += 2 * Mathf.PI / roundTime * Time.deltaTime;//更新角度
+                    float nextX = radius * Mathf.Cos(currentTime);
+                    float nextY = radius * Mathf.Sin(currentTime);
+                    if (currentTime >= 2 * Mathf.PI)
+                        currentTime = 0;
+                    //Vector3 v = new Vector3(nextX - radius * Mathf.Cos(currentTime), heart.y + nextY - transform.position.y, 0);
+                    Vector3 v = new Vector3(nextX - radius * Mathf.Cos(oldTime), nextY - radius * Mathf.Sin(oldTime), 0);
+                    //v = v.normalized ;
+                    //v = v * Time.deltaTime;
+                    transform.Translate(v);
+                    
+                };break;
             case MoveType.Cruve: { };break;
             case MoveType.AIFollow: { };break;
             default: Debug.LogAssertion("Wrong move type");break;
@@ -87,7 +116,7 @@ public class Move : MonoBehaviour
     void Update()
     {
 		//暂停
-		if (GameManager.Instance.pause)
+		/*if (GameManager.Instance.pause)
 		{
 			return;
 		}
@@ -95,7 +124,7 @@ public class Move : MonoBehaviour
 		if (GameManager.Instance.playVideo)
 		{
 			return;
-		}
+		}*/
 		work();
 	}
 }

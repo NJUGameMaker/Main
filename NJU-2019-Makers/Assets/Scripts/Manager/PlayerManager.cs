@@ -111,13 +111,14 @@ public class PlayerManager : MonoBehaviour
 		playerBullet.move.setLineType(pos,direct);
 	}
 
-	//当缩小键按下 TODO
+	//当缩小键按下 改变外壳大小 改变内核大小 改变enegy数值 音效 特效 TODO
 	public void BeingSmall()
 	{
 
 	}
 
-	//当放开缩小键 TODO
+	//当放开缩小键 恢复外壳大小 恢复内核大小 设置短时间无敌 改变enegy数值（可能要设置缩放CD） 音效 特效
+	//考虑技能释放 考虑角的攻击 TODO
 	public void Bomb()
 	{
 
@@ -156,19 +157,19 @@ public class PlayerManager : MonoBehaviour
 		}
 	}
 
-	//内核被攻击 TODO
+	//内核被攻击 死亡 或者 读取存档点等 TODO
 	public void AttackHeart(GameObject other)
 	{
 
 	}
 
-	//受到攻击 TODO
+	//受到攻击 减少生命 减少外壳大小 音效 特效 TODO
 	public void BeingAttack(GameObject other)
 	{
 
 	}
 
-	//受到切削 （需要判断是否切到核心） TODO
+	//受到切削 改变外壳形状 新增角的攻击点 维护Mask （需要判断是否切到核心） 音效 特效 TODO
 	public void BeingCut(GameObject other)
 	{
 

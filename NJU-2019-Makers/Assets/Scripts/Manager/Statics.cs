@@ -8,6 +8,7 @@ public class Statics : MonoBehaviour
 	//委托（函数指针类型）
 	public delegate void vFunv();
 	public delegate bool bFunv();
+	public delegate Vector2 V2Funv();
 
     public enum FunType
 	{
@@ -46,6 +47,10 @@ public class Statics : MonoBehaviour
 		return new Vector2(v.x, v.y);
 	}
 
+	public static Vector3 V2toV3(Vector2 v)
+	{
+		return new Vector3(v.x, v.y, 0);
+	}
 
 	public static IEnumerator WorkAfterSeconds(vFunv fun, float time)
 	{

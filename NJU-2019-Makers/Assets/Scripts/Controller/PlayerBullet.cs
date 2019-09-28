@@ -16,19 +16,23 @@ public class PlayerBullet : MonoBehaviour
 	//移动类型
 	public Move move { get; private set; }
 
-	//初始化 TODO
+	//初始化 应该写完了 TODO
 	public void Init(PlayerManager.BulletType type, float d, bool s,Move m) { bulletType = type; damage = d; isStatic = s; move = m;}
 
-	//攻击到敌人 TODO
+	//攻击到敌人 根据子弹类型判断 弹开（修改自己的move）穿透还是删除自身 
+	//敌人扣血和特效写在enemy 不用考虑 TODO
 	public void Attack(GameObject enemy)
 	{
 
 	}
 
-	//碰到墙 TODO
+	//碰到墙 应该写完了 TODO
 	public void Wall()
 	{
-
+		if (!isStatic)
+		{
+			Destroy(gameObject);
+		}
 	}
 
 	private void OnCollisionEnter2D(Collision2D collision)
