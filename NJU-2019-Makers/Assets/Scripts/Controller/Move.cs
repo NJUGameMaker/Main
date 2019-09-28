@@ -129,7 +129,44 @@ public class Move : MonoBehaviour
             default: Debug.LogAssertion("Wrong move type");break;
         }
 	}
+    public Vector2 GetSpeedDirection()
+    {
+        switch (moveType)
+        {
+            case MoveType.Stop:
+                {
+                    return new Vector2(0, 0);
+                }; break;
+            case MoveType.Line:
+                {
+                    return direction;
+                }; break;
+            case MoveType.Round:
+                {
+                    float oldTime = currentTime;
+                    float newTime = oldTime + 2 * Mathf.PI / roundTime * Time.deltaTime;//更新角度
+                    float nextX = radius * Mathf.Cos(newTime);
+                    float nextY = radius * Mathf.Sin(newTime);
+                    if (currentTime >= 2 * Mathf.PI)
+                        currentTime = 0;
+                    //Vector3 v = new Vector3(nextX - radius * Mathf.Cos(currentTime), heart.y + nextY - transform.position.y, 0);
+                    Vector2 v = new Vector2(nextX - radius * Mathf.Cos(oldTime), nextY - radius * Mathf.Sin(oldTime));
+                    return v;
 
+                }; break;
+            case MoveType.Cruve: { }; break;
+            case MoveType.AIFollow:
+                {
+                    Vector3 target = new Vector3(0, 0, 0);
+                    target = follow.transform.position;
+                    Vector2 v = new Vector2(target.x - transform.position.x, target.y - transform.position.y); 
+                    return v;
+
+                }; break;
+            default: Debug.LogAssertion("Wrong move type"); break;
+        }
+        return new Vector2(0, 0);
+    }
     // Update is called once per frame
     void Update()
     {
