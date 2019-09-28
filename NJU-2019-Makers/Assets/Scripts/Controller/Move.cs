@@ -107,7 +107,20 @@ public class Move : MonoBehaviour
                     
                 };break;
             case MoveType.Cruve: { };break;
-            case MoveType.AIFollow: { };break;
+            case MoveType.AIFollow: {
+                    Vector3 target = new Vector3(0, 0, 0);
+                    //Vector3 target = follow.transform.position;
+                    //Vector2 mousePosition = Input.mousePosition; //获取屏幕坐标
+                    //Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePosition); //屏幕坐标转世界坐标
+                    //target.x = mouseWorldPos.x;
+                    //target.y = mouseWorldPos.y;
+                    target = follow.transform.position;
+                    Vector3 v = new Vector3(target.x - transform.position.x, target.y - transform.position.y, 0); //新建移动向量
+                    v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
+                    v = v * speed * Time.deltaTime;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
+                    transform.Translate(v);                       //移动
+                
+            };break;
             default: Debug.LogAssertion("Wrong move type");break;
         }
 	}
@@ -116,7 +129,7 @@ public class Move : MonoBehaviour
     void Update()
     {
 		//暂停
-		/*if (GameManager.Instance.pause)
+		if (GameManager.Instance.pause)
 		{
 			return;
 		}
@@ -124,7 +137,7 @@ public class Move : MonoBehaviour
 		if (GameManager.Instance.playVideo)
 		{
 			return;
-		}*/
+		}
 		work();
 	}
 }
