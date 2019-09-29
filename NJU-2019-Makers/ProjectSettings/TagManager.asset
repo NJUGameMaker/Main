@@ -57,11 +57,11 @@ TagManager:
   - name: Player Bullet
     uniqueID: 3103091431
     locked: 0
-  - name: Enemy
-    uniqueID: 1634022759
-    locked: 0
   - name: Enemy Bullet
     uniqueID: 1071695099
+    locked: 0
+  - name: Enemy
+    uniqueID: 1634022759
     locked: 0
   - name: Map
     uniqueID: 4034569349

@@ -34,7 +34,7 @@ public class Statics : MonoBehaviour
         {
             case FunType.X: { return startsize + (endsize - startsize) * step; };break;
             case FunType.X2: { return startsize + (endsize - startsize) * step * step; } break;
-            case FunType.LogX: { return startsize + (endsize - startsize) * Math.Log(step); };break;
+            case FunType.LogX: { return startsize + (endsize - startsize) * Mathf.Log(step); };break;
             default: Debug.LogAssertion("Wrong FunType!");break;
         }
 		return 0;
