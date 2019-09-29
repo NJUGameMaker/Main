@@ -10,12 +10,16 @@ public class Statics : MonoBehaviour
 	public delegate bool bFunv();
 	public delegate Vector2 V2Funv();
 
+    //表示的是类型：X2表示X^2速度增长，表示先慢后快递增，先快后慢递减
+    //X表示匀速递增或递减
+    //LogX表示LogX速度，表示先快后慢递增，先慢后快递减。
     public enum FunType
 	{
 		X2,
-        X
+        X,
+        LogX
 	}
-    //将size从startsize到endsize的平滑移动
+    //将size从startsize到endsize的平滑移动，这里的step是百分比
 	public static float FixFun(FunType type,float startsize, float endsize,float step)
 	{
         if(startsize > endsize)//若是下降形式，那么将其反向处理，转成上升
@@ -30,6 +34,7 @@ public class Statics : MonoBehaviour
         {
             case FunType.X: { return startsize + (endsize - startsize) * step; };break;
             case FunType.X2: { return startsize + (endsize - startsize) * step * step; } break;
+            case FunType.LogX: { return startsize + (endsize - startsize) * Math.Log(step); };break;
             default: Debug.LogAssertion("Wrong FunType!");break;
         }
 		return 0;
