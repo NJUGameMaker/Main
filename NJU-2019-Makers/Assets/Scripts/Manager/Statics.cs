@@ -13,11 +13,13 @@ public class Statics : MonoBehaviour
     //表示的是类型：X2表示X^2速度增长，表示先慢后快递增，先快后慢递减
     //X表示匀速递增或递减
     //LogX表示LogX速度，表示先快后慢递增，先慢后快递减。
+    //SqrtX表示SqrtX速度，表示先快后慢递增，先慢后快递减。
     public enum FunType
 	{
 		X2,
         X,
-        LogX
+        LogX,
+		SqrtX
 	}
     //将size从startsize到endsize的平滑移动，这里的step是百分比
 	public static float FixFun(FunType type,float startsize, float endsize,float step)
@@ -35,6 +37,7 @@ public class Statics : MonoBehaviour
             case FunType.X: { return startsize + (endsize - startsize) * step; };break;
             case FunType.X2: { return startsize + (endsize - startsize) * step * step; } break;
             case FunType.LogX: { return startsize + (endsize - startsize) * Mathf.Log(step); };break;
+            case FunType.SqrtX: { return startsize + (endsize - startsize) * Mathf.Sqrt(step); }break;
             default: Debug.LogAssertion("Wrong FunType!");break;
         }
 		return 0;
