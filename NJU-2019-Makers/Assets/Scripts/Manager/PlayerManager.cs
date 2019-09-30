@@ -54,7 +54,7 @@ public class PlayerManager : MonoBehaviour
 	private float health;
 
 	//能量（缩放），0->初始不放缩情况
-	private float maxEnergy = 100;
+	private float maxEnergy;
 	private float energy;
 
 	//子弹条
@@ -218,13 +218,17 @@ public class PlayerManager : MonoBehaviour
 	//内核被攻击 死亡 或者 读取存档点等 TODO 先只考虑死亡
 	public void AttackHeart(GameObject other)
 	{
-		
+		health = 0;
+		Destroy(gameObject);
 	}
 
 	//受到攻击 减少生命 减少外壳大小 音效 特效 TODO
-	public void BeingAttack(GameObject other)
+	public void BeingAttack(float damage)
 	{
-
+        health -= damage;
+		maxEnergy = health;
+		float scale = health/maxHealth;
+		GOEdge.transform.localScale = new Vector3(scale,scale,1);
 	}
 
 	//受到切削 改变外壳形状 新增角的攻击点 维护Mask （需要判断是否切到核心） 音效 特效 TODO
@@ -238,8 +242,13 @@ public class PlayerManager : MonoBehaviour
 	{
 		if((health + x) > maxHealth){
 			health = maxHealth;
+			maxEnergy = health;
+			GOEdge.transform.localScale = new Vector3(1,1,1);
 		}else{
 			health += x;
+			maxEnergy = health;
+			float scale = health/maxHealth;
+			GOEdge.transform.localScale = new Vector3(scale,scale,1);
 		}
 	}
 
@@ -256,9 +265,9 @@ public class PlayerManager : MonoBehaviour
 	// 初始化 TODO
 	void Start()
     {
-		health = 100;
+		health = maxHealth;
 		energy = 0;
-		bullet = 100;
+		bullet = maxBullet;
 		protect = false;
 		bulletType = BulletType.None;
 		skillType = SkillType.None;
@@ -268,6 +277,7 @@ public class PlayerManager : MonoBehaviour
 		step_percent = 0;
 		canBomb = false;
 		canSmall = true;
+		maxEnergy = health;
     }
 
     // Update is called once per frame

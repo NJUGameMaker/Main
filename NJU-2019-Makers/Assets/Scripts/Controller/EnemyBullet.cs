@@ -20,7 +20,7 @@ public class EnemyBullet : MonoBehaviour
 	//攻击到玩家 应该写完了 还有特效 音效 TODO
 	public void Attack()
 	{
-		PlayerManager.Instance.BeingAttack(gameObject);
+		PlayerManager.Instance.BeingAttack(damage);
 		Destroy(gameObject);
 	}
 
