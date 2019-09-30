@@ -51,19 +51,20 @@ public class PlayerManager : MonoBehaviour
 
 	//血量
 	private float maxHealth = 100;
-	private float health = 100;
+	private float health;
 
 	//能量（缩放），0->初始不放缩情况
 	private float maxEnergy = 100;
-	private float energy = 0;
+	private float energy;
 
 	//子弹条
 	private float maxBullet = 100;
-	private float bullet = 100;
+	private float bullet;
 
 
 	//弹开之后的保护状态
 	private bool protect;
+	public const float protect_time = 0.1f;
 
 	private BulletType bulletType;
 	private SkillType skillType;
@@ -94,12 +95,26 @@ public class PlayerManager : MonoBehaviour
 	//子弹误差默认值（角度值）：
 	public const float deviation = 25;
 	//发射帧间隔(s)：
-	public const float interval = 0.2f;
+	public const float shoot_interval = 0.2f;
 	//能够发射子弹
-	private bool canFire = true;
+	private bool canFire;
+
+	// 放缩所需参数：
+	public const float small_interval = 0.2f;
+	public const float bounce_thresold = 0.6f;
+	private float step_percent;
+	public const float step_interval = 0.1f;
+	public const float bounce_cd = 2;
+	public const float invincible_time = 0.5f;
+	private bool canBomb;
+	private bool canSmall;
+
+	// 缓慢自愈单次血量：
+	public const float reBlood = 1;
 
 
-	//当攻击键按下 TODO
+
+	//当攻击键按下 TODO 不对啊还有子弹条没考虑进去
 	public void Fire()
 	{
 		if (canFire)
@@ -118,7 +133,7 @@ public class PlayerManager : MonoBehaviour
 					break;
 			}
 			canFire = false;
-			StartCoroutine(Statics.WorkAfterSeconds(() => canFire = true, interval));
+			StartCoroutine(Statics.WorkAfterSeconds(() => canFire = true, shoot_interval));
 			var pos = Statics.V3toV2(transform.position);
 			GameObject bullet = GameObject.Instantiate(BulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
 			PlayerBullet playerBullet = bullet.AddComponent<PlayerBullet>();
@@ -132,14 +147,39 @@ public class PlayerManager : MonoBehaviour
 	//当缩小键按下 改变外壳大小 改变内核大小 改变enegy数值 音效 特效 TODO
 	public void BeingSmall()
 	{
-
+		if(canSmall && step_percent <= 1){
+			canSmall = false;
+			StartCoroutine(Statics.WorkAfterSeconds(() => {canSmall = true;energy = Statics.FixFun(Statics.FunType.X,0,maxEnergy,step_percent);},small_interval));
+			step_percent += step_interval;
+			float scale = energy / maxEnergy;
+			GOEdge.transform.localScale = new Vector3(1-scale,1-scale,1);
+			if(scale >= bounce_thresold){
+				canBomb = true;
+				float heartScale = (scale-bounce_thresold)/(1-bounce_thresold);
+				GOHeart.transform.localScale = new Vector3(1+heartScale,1+heartScale,1);
+			}
+		}
 	}
 
 	//当放开缩小键 恢复外壳大小 恢复内核大小 设置短时间无敌 改变enegy数值（可能要设置缩放CD） 音效 特效
 	//考虑技能释放 考虑角的攻击 TODO
 	public void Bomb()
 	{
-
+		if(canBomb){
+			energy = 0;
+			step_percent = 0;
+			GOHeart.transform.localScale = new Vector3(1,1,1);
+			GOEdge.transform.localScale = new Vector3(1,1,1);
+			canBomb = false;
+			canSmall = false;
+			StartCoroutine(Statics.WorkAfterSeconds(() => canSmall = true,bounce_cd));
+			protect = true;
+			StartCoroutine(Statics.WorkAfterSeconds(() => protect = false,protect_time));
+		}else{
+			energy = 0;
+			step_percent = 0;
+			GOEdge.transform.localScale = new Vector3(1,1,1);
+		}
 	}
 
     //表示移动的速度
@@ -175,10 +215,10 @@ public class PlayerManager : MonoBehaviour
 		}
 	}
 
-	//内核被攻击 死亡 或者 读取存档点等 TODO
+	//内核被攻击 死亡 或者 读取存档点等 TODO 先只考虑死亡
 	public void AttackHeart(GameObject other)
 	{
-
+		
 	}
 
 	//受到攻击 减少生命 减少外壳大小 音效 特效 TODO
@@ -193,10 +233,14 @@ public class PlayerManager : MonoBehaviour
 
 	}
 
-	//回血 TODO
+	//回血 TODO: done
 	public void ReHealth(float x)
 	{
-
+		if((health + x) > maxHealth){
+			health = maxHealth;
+		}else{
+			health += x;
+		}
 	}
 
 	public void SetBullet(BulletType bullet)
@@ -212,10 +256,22 @@ public class PlayerManager : MonoBehaviour
 	// 初始化 TODO
 	void Start()
     {
-        
+		health = 100;
+		energy = 0;
+		bullet = 100;
+		protect = false;
+		bulletType = BulletType.None;
+		skillType = SkillType.None;
+        GOEdge.transform.localScale = new Vector3(1, 1, 1);
+        GOHeart.transform.localScale = new Vector3(1, 1, 1);
+		canFire = true;
+		step_percent = 0;
+		canBomb = false;
+		canSmall = true;
     }
 
     // Update is called once per frame
+	// 添加了随每帧缓慢恢复血量
     void Update()
     {
 		//暂停
@@ -245,5 +301,6 @@ public class PlayerManager : MonoBehaviour
 		}
         
         Move();
+		ReHealth(reBlood);
 	}
 }
