@@ -101,7 +101,7 @@ public class PlayerManager : MonoBehaviour
 
 	// 放缩所需参数：
 	public const float small_interval = 0.2f;
-	public const float bounce_thresold = 0.6f;
+	public const float bounce_thresold = 0.8f;
 	private float step_percent;
 	public const float step_interval = 0.1f;
 	public const float bounce_cd = 2;
@@ -149,14 +149,11 @@ public class PlayerManager : MonoBehaviour
 	{
 		if(canSmall && step_percent <= 1){
 			canSmall = false;
-			StartCoroutine(Statics.WorkAfterSeconds(() => {canSmall = true;energy = Statics.FixFun(Statics.FunType.X,0,maxEnergy,step_percent);},small_interval));
+			StartCoroutine(Statics.WorkAfterSeconds(() => {canSmall = true;energy = Statics.FixFun(Statics.FunType.SqrtX,0,maxEnergy,step_percent);},small_interval));
 			step_percent += step_interval;
 			float scale = energy / maxEnergy;
-			GOEdge.transform.localScale = new Vector3(1-scale,1-scale,1);
 			if(scale >= bounce_thresold){
 				canBomb = true;
-				float heartScale = (scale-bounce_thresold)/(1-bounce_thresold);
-				GOHeart.transform.localScale = new Vector3(1+heartScale,1+heartScale,1);
 			}
 		}
 	}
@@ -168,8 +165,6 @@ public class PlayerManager : MonoBehaviour
 		if(canBomb){
 			energy = 0;
 			step_percent = 0;
-			GOHeart.transform.localScale = new Vector3(1,1,1);
-			GOEdge.transform.localScale = new Vector3(1,1,1);
 			canBomb = false;
 			canSmall = false;
 			StartCoroutine(Statics.WorkAfterSeconds(() => canSmall = true,bounce_cd));
@@ -178,7 +173,6 @@ public class PlayerManager : MonoBehaviour
 		}else{
 			energy = 0;
 			step_percent = 0;
-			GOEdge.transform.localScale = new Vector3(1,1,1);
 		}
 	}
 
@@ -218,17 +212,15 @@ public class PlayerManager : MonoBehaviour
 	//内核被攻击 死亡 或者 读取存档点等 TODO 先只考虑死亡
 	public void AttackHeart(GameObject other)
 	{
-		health = 0;
-		Destroy(gameObject);
+		//health = 0;
+		//Destroy(gameObject);
 	}
 
 	//受到攻击 减少生命 减少外壳大小 音效 特效 TODO
 	public void BeingAttack(float damage)
 	{
-        health -= damage;
-		maxEnergy = health;
-		float scale = health/maxHealth;
-		GOEdge.transform.localScale = new Vector3(scale,scale,1);
+        /*health -= damage;
+		maxEnergy = health;*/
 	}
 
 	//受到切削 改变外壳形状 新增角的攻击点 维护Mask （需要判断是否切到核心） 音效 特效 TODO
@@ -237,20 +229,39 @@ public class PlayerManager : MonoBehaviour
 
 	}
 
-	//回血 TODO: done
+	//回血 TODO: done.
 	public void ReHealth(float x)
 	{
 		if((health + x) > maxHealth){
 			health = maxHealth;
 			maxEnergy = health;
-			GOEdge.transform.localScale = new Vector3(1,1,1);
 		}else{
 			health += x;
 			maxEnergy = health;
 			float scale = health/maxHealth;
-			GOEdge.transform.localScale = new Vector3(scale,scale,1);
 		}
 	}
+
+    //随帧检测参数设置圆形大小
+    public void ReShape()
+    {
+        if(energy == 0)
+        {
+            float scale = health / maxHealth;
+            GOEdge.transform.localScale = new Vector3(scale, scale, 1);
+            GOHeart.transform.localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            float scale = energy / maxEnergy;
+            GOEdge.transform.localScale = new Vector3(1 - scale, 1 - scale, 1);
+            if(canBomb)
+            {
+                float heartScale = (scale - bounce_thresold) / (1 - bounce_thresold);
+                GOHeart.transform.localScale = new Vector3(1 + heartScale, 1 + heartScale, 1);
+            }
+        }
+    }
 
 	public void SetBullet(BulletType bullet)
 	{
@@ -281,7 +292,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     // Update is called once per frame
-	// 添加了随每帧缓慢恢复血量
+	// 添加了随每帧缓慢恢复血量、改变大小
     void Update()
     {
 		//暂停
@@ -312,5 +323,6 @@ public class PlayerManager : MonoBehaviour
         
         Move();
 		ReHealth(reBlood);
+        ReShape();
 	}
 }
