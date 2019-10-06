@@ -32,35 +32,43 @@ public class Move : MonoBehaviour
     private Vector2 endPoint;
     //跟踪的主角
     GameObject follow;
+
+	//控制的物体的刚体(test)
+	private Rigidbody2D rb2;
+
     //设置移动的类型
-    public void SetMoveType(MoveType mt, Vector2 position)
+    public void SetMoveType(MoveType mt, Vector2 position,Rigidbody2D rb = null)
     {
         moveType = mt;
         heart = position;
+		rb2 = rb;
     }
     //设置为静止的状态，参数为静止点
-    public void SetStopType(Vector2 position)
+    public void SetStopType(Vector2 position, Rigidbody2D rb = null)
     {
         moveType = MoveType.Stop;
         heart = position;
-    }
-    //直线移动，设定开始点和移动方向
-    public void SetLineType(Vector2 position, Vector2 dt, float sp)
+		rb2 = rb;
+	}
+	//直线移动，设定开始点和移动方向
+	public void SetLineType(Vector2 position, Vector2 dt, float sp, Rigidbody2D rb = null)
     {
         moveType = MoveType.Line;
         heart = position;
         direction = dt;
         speed = sp;
-    }
-    //曲线移动，传入曲线开始和结束的点
-    public void SetCurveType(Vector2 start_point, Vector2 end_point)
+		rb2 = rb;
+	}
+	//曲线移动，传入曲线开始和结束的点
+	public void SetCurveType(Vector2 start_point, Vector2 end_point, Rigidbody2D rb = null)
     {
         moveType = MoveType.Cruve;
         startPoint = start_point;
         endPoint = end_point;
+		rb2 = rb;
     }
     //圆形移动
-    public void SetRoundType(Vector2 position, float r, float roundt)
+    public void SetRoundType(Vector2 position, float r, float roundt, Rigidbody2D rb = null)
     {
         moveType = MoveType.Round;
         heart = position;
@@ -68,23 +76,27 @@ public class Move : MonoBehaviour
         roundTime = roundt;
         currentTime = 0;
         transform.position = new Vector3(heart.x + r, heart.y, transform.position.z);
-        
-    }
-    //跟踪主角视角,参数为主角
-    public void SetAIFollowType(GameObject player)
+		rb2 = rb;
+	}
+	//跟踪主角视角,参数为主角
+	public void SetAIFollowType(GameObject player, Rigidbody2D rb = null)
     {
         moveType = MoveType.AIFollow;
         follow = player;
-    }
-    //设置各种类型移动的参数并且设置各种初始化函数 TODO
-    public void Init()
+		rb2 = rb;
+	}
+	//设置各种类型移动的参数并且设置各种初始化函数 TODO
+	public void Init()
 	{
 
 	}
 
 	//根据类型和参数进行移动 TODO
+	//update test 测试刚体运动
 	private void work()
 	{
+		//速度参数
+		Vector3 v = new Vector3(0,0,0);
         //分开判断处理
         switch (moveType)
         {
@@ -92,10 +104,10 @@ public class Move : MonoBehaviour
                     transform.position = new Vector3(heart.x, heart.y, transform.position.z);
                 };break;
             case MoveType.Line: {
-                Vector3 v = new Vector3(direction.x, direction.y, 0); //新建移动向量
+                v = new Vector3(direction.x, direction.y, 0); //新建移动向量
                 v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
                 v = v * speed * Time.deltaTime;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
-                transform.Translate(v);                       //移动
+                //transform.Translate(v);                       //移动
                 };break;
             case MoveType.Round: {
                     float oldTime = currentTime;
@@ -105,10 +117,10 @@ public class Move : MonoBehaviour
                     if (currentTime >= 2 * Mathf.PI)
                         currentTime = 0;
                     //Vector3 v = new Vector3(nextX - radius * Mathf.Cos(currentTime), heart.y + nextY - transform.position.y, 0);
-                    Vector3 v = new Vector3(nextX - radius * Mathf.Cos(oldTime), nextY - radius * Mathf.Sin(oldTime), 0);
+                    v = new Vector3(nextX - radius * Mathf.Cos(oldTime), nextY - radius * Mathf.Sin(oldTime), 0);
                     //v = v.normalized ;
                     //v = v * Time.deltaTime;
-                    transform.Translate(v);
+                    //transform.Translate(v);
                     
                 };break;
             case MoveType.Cruve: { };break;
@@ -120,16 +132,26 @@ public class Move : MonoBehaviour
                     //target.x = mouseWorldPos.x;
                     //target.y = mouseWorldPos.y;
                     target = follow.transform.position;
-                    Vector3 v = new Vector3(target.x - transform.position.x, target.y - transform.position.y, 0); //新建移动向量
+                    v = new Vector3(target.x - transform.position.x, target.y - transform.position.y, 0); //新建移动向量
                     v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
                     v = v * speed * Time.deltaTime;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
-                    transform.Translate(v);                       //移动
+                    //transform.Translate(v);                       //移动
                 
             };break;
             default: Debug.LogAssertion("Wrong move type");break;
         }
+		//移动
+		if (rb2)
+		{
+			rb2.velocity = v;
+		}
+		else
+		{
+			transform.Translate(v);                       
+		}
+
 	}
-    public Vector2 GetSpeedDirection()
+	public Vector2 GetSpeedDirection()
     {
         switch (moveType)
         {

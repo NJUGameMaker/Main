@@ -27,7 +27,7 @@ public class EnemyBullet : MonoBehaviour
 	//攻击到玩家核心 应该写完了 还有特效 音效 TODO
 	public void AttackHeart()
 	{
-		Debug.Log("attack");
+		//Debug.Log("attack");
 
 		PlayerManager.Instance.AttackHeart(gameObject);
 		Destroy(gameObject);
@@ -41,7 +41,7 @@ public class EnemyBullet : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		Debug.Log(collision.gameObject.tag);
+		//Debug.Log(collision.gameObject.tag);
 		if (collision.gameObject.tag == "PlayerHeart")
 		{
 			AttackHeart();

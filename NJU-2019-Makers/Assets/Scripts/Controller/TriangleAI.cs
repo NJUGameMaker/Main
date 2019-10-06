@@ -35,7 +35,7 @@ public class TriangleAI : MonoBehaviour
             GameObject bullet = GameObject.Instantiate(bulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
             EnemyBullet enemyBullet = bullet.AddComponent<EnemyBullet>();
             enemyBullet.Init(damage, false, bullet.AddComponent<Move>());
-            enemyBullet.move.SetAIFollowType(PlayerManager.Instance.transform.gameObject);
+            enemyBullet.move.SetAIFollowType(PlayerManager.Instance.transform.gameObject, bullet.GetComponent<Rigidbody2D>());
         }
         
     }

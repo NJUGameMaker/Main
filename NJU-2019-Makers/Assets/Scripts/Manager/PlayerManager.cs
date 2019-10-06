@@ -82,6 +82,8 @@ public class PlayerManager : MonoBehaviour
 	//获取子物体
 	private GameObject GOHeart => HeartCollider.gameObject;
 	private GameObject GOEdge => EdgeCollider.gameObject;
+	//自身刚体
+	private Rigidbody2D m_rb;
 
 	//图形界面加预设物体 TODO
 	public GameObject BulletPrefab;
@@ -114,7 +116,8 @@ public class PlayerManager : MonoBehaviour
 
 
 
-	//当攻击键按下 TODO 不对啊还有子弹条没考虑进去
+	//当攻击键按下 TODO 不对啊还有子弹条没考虑进去-->有道理哦
+	//那还要留一个UI的接口
 	public void Fire()
 	{
 		if (canFire)
@@ -140,7 +143,7 @@ public class PlayerManager : MonoBehaviour
 			playerBullet.Init(bulletType, damage, false, bullet.AddComponent<Move>());
 			float angle = Mathf.Atan2((MOUSE - pos).y, (MOUSE - pos).x) * Mathf.Rad2Deg + Random.Range(-deviation, deviation) * (1 - energy / maxEnergy);
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-			playerBullet.move.SetLineType(pos, direct, 10);
+			playerBullet.move.SetLineType(pos, direct, 10,bullet.GetComponent<Rigidbody2D>());
 		}
 	}
 
@@ -261,6 +264,7 @@ public class PlayerManager : MonoBehaviour
                 GOHeart.transform.localScale = new Vector3(1 + heartScale, 1 + heartScale, 1);
             }
         }
+		//Debug.Log(GOEdge.transform.localScale.ToString() +" " +energy + " "+health);
     }
 
 	public void SetBullet(BulletType bullet)
@@ -289,6 +293,7 @@ public class PlayerManager : MonoBehaviour
 		canBomb = false;
 		canSmall = true;
 		maxEnergy = health;
+		m_rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
