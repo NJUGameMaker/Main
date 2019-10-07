@@ -23,10 +23,10 @@ TagManager:
   - Player
   - Heart
   - CanGoWall
-  - 
-  - 
-  - 
-  - 
+  - Wall
+  - Enemy
+  - PlayerBullet
+  - EnemyBullet
   - 
   - 
   - 

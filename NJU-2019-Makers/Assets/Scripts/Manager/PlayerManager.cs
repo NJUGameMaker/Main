@@ -240,6 +240,11 @@ public class PlayerManager : MonoBehaviour
 
 	}
 
+	public void BeingCut(Vector2 point, Vector2 dir)
+	{
+
+	}
+
 	//回血 TODO: done.
 	public void ReHealth(float x)
 	{

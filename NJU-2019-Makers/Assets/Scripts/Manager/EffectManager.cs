@@ -108,6 +108,6 @@ public class EffectManager : MonoBehaviour
 		//test
 		if (Input.GetKeyDown(KeyCode.Z))
 			SetCameraContinueFocus(() => Input.mousePosition, true);
-		gameObject.AddComponent<PlayerBullet>();
+		//gameObject.AddComponent<PlayerBullet>();
 	}
 }

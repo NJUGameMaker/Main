@@ -252,7 +252,7 @@ GameObject:
   - component: {fileID: 261866037}
   - component: {fileID: 261866039}
   - component: {fileID: 261866040}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Bullet-Enemy
   m_TagString: EnemyBullet
   m_Icon: {fileID: 0}
@@ -370,7 +370,7 @@ GameObject:
   - component: {fileID: 442074830}
   - component: {fileID: 442074833}
   - component: {fileID: 442074834}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Bullet-Player
   m_TagString: PlayerBullet
   m_Icon: {fileID: 0}
@@ -545,7 +545,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -659391375
   m_SortingLayer: 2
-  m_SortingOrder: -299
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f272776e82882d941a4947d18ff46511, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.627451}
   m_FlipX: 0
@@ -605,7 +605,7 @@ GameObject:
   - component: {fileID: 848902886}
   - component: {fileID: 848902885}
   - component: {fileID: 848902887}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Enemy-Triangle
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -953,7 +953,7 @@ GameObject:
   - component: {fileID: 1672377607}
   - component: {fileID: 1672377606}
   - component: {fileID: 1672377605}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Wall
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1081,7 +1081,7 @@ GameObject:
   - component: {fileID: 1693956724}
   - component: {fileID: 1693956726}
   - component: {fileID: 1693956727}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: BulletCut-Enemy
   m_TagString: EnemyCut
   m_Icon: {fileID: 0}

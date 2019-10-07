@@ -11,6 +11,10 @@ GameObject:
   - component: {fileID: 9073080590865555129}
   - component: {fileID: 9073080590865555130}
   - component: {fileID: 9073080590865555128}
+  - component: {fileID: 9073080591100737981}
+  - component: {fileID: 9073080591100737982}
+  - component: {fileID: 9073080591100737983}
+  - component: {fileID: 9073080591100737984}
   m_Layer: 0
   m_Name: Main
   m_TagString: Untagged
@@ -92,3 +96,52 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 943d9916321395a43933667f9a121706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9073080591100737981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9073080590865555131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e11653ee7125b34c9372c0006b3e1bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9073080591100737982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9073080590865555131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14905beb85bf97a4bb4805c1d85e9300, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9073080591100737983
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9073080590865555131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab1112da4e8d14b4a9013907e3d3c6b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &9073080591100737984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9073080590865555131}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f34d830d08832f4f8735a8bfe44a177, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Laser: {fileID: 0}
