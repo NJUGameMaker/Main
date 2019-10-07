@@ -143,7 +143,7 @@ public class PlayerManager : MonoBehaviour
 			playerBullet.Init(bulletType, damage, false, bullet.AddComponent<Move>());
 			float angle = Mathf.Atan2((MOUSE - pos).y, (MOUSE - pos).x) * Mathf.Rad2Deg + Random.Range(-deviation, deviation) * (1 - energy / maxEnergy);
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-			playerBullet.move.SetLineType(pos, direct, 10,bullet.GetComponent<Rigidbody2D>());
+			playerBullet.move.SetLineType(pos, direct, 100,bullet.GetComponent<Rigidbody2D>());
 		}
 	}
 
@@ -158,6 +158,12 @@ public class PlayerManager : MonoBehaviour
 			if(scale >= bounce_thresold){
 				canBomb = true;
 			}
+			//当形状足够小的时候把外壳设置为false 能够穿进敌人
+			if (energy > 80)
+			{
+				GOEdge.SetActive(false);
+			}
+
 		}
 	}
 
@@ -165,7 +171,8 @@ public class PlayerManager : MonoBehaviour
 	//考虑技能释放 考虑角的攻击 TODO
 	public void Bomb()
 	{
-		if(canBomb){
+		GOEdge.SetActive(true);
+		if (canBomb){
 			energy = 0;
 			step_percent = 0;
 			canBomb = false;
@@ -190,7 +197,8 @@ public class PlayerManager : MonoBehaviour
         Vector3 v = new Vector3(inputX, inputY, 0); //新建移动向量
         v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
         v = v * speed * Time.deltaTime;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
-        transform.Translate(v);                       //移动
+		//transform.Translate(v);                       //移动
+		m_rb.velocity = v * 10;
         if (LEFT)
 		{
 

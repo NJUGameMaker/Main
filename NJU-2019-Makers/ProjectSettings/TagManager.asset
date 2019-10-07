@@ -21,8 +21,8 @@ TagManager:
   - 
   - 
   - Player
-  - PlayerWall
-  - 
+  - Heart
+  - CanGoWall
   - 
   - 
   - 

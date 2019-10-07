@@ -19,7 +19,7 @@ public class Move : MonoBehaviour
     //移动的类型
     public MoveType moveType = MoveType.Stop;
     //移动的速度
-    public float speed = 10; 
+    public float speed = 100; 
     //中心和半径
     private Vector2 heart = new Vector2(2, 0);
     private float radius = 3f;
