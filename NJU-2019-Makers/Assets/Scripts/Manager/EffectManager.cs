@@ -32,7 +32,14 @@ public class EffectManager : MonoBehaviour
 	//镜头震动 TODO
 	public void CameraShake(float time, float force)
 	{
-
+        //注意：使用前提是将ShakeEffect脚本挂载到Camera上面
+        if (Camera.main.GetComponent<ShakeEffect>() != null)
+        {
+            Camera.main.GetComponent<ShakeEffect>().SetShakePower(force);
+            Camera.main.GetComponent<ShakeEffect>().BeginShake(time);
+        }
+        else
+            Debug.LogWarning("Camera can't shake: may dont't have shakeEffect.cs ");
 	}
 
 	//协程：镜头放大
