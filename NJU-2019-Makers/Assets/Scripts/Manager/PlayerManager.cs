@@ -34,14 +34,16 @@ public class PlayerManager : MonoBehaviour
 		Laser
 	};
 
-    //外层碰撞器
-    public PolygonCollider2D EdgeCollider;
+	//外层碰撞器
+	public PolygonCollider2D EdgeCollider;
 	//内层碰撞器
 	public Collider2D HeartCollider;
 	//外层贴图
 	public SpriteRenderer EdgeSprite;
 	//内层贴图
 	public SpriteRenderer HeartSprite;
+	//切削遮罩
+	public GameObject CutMask;
 	//切削产生的角
 	public HashSet<GameObject> Angles = new HashSet<GameObject>();
 	//边界点
@@ -114,7 +116,14 @@ public class PlayerManager : MonoBehaviour
 	// 缓慢自愈单次血量：
 	public const float reBlood = 0.03f;
 
-
+	//增加切削遮罩
+	private void addCutMask(Vector2 vec)
+	{
+		var tmp = Instantiate(CutMask,GOEdge.transform);
+		tmp.transform.localPosition = vec;
+		tmp.transform.localRotation = Quaternion.Euler(0, 0, -90+(Mathf.Atan2(vec.y, vec.x) / Mathf.PI * 180));// (0, 0,Mathf.Atan2(vec.y,vec.x), 1);
+		tmp.SetActive(true);
+	}
 
 	//当攻击键按下 TODO 不对啊还有子弹条没考虑进去-->有道理哦
 	//那还要留一个UI的接口
@@ -313,6 +322,8 @@ public class PlayerManager : MonoBehaviour
 		canSmall = true;
 		maxEnergy = health;
 		m_rb = GetComponent<Rigidbody2D>();
+		//test
+		addCutMask(new Vector2(0, -0.5f));
     }
 
     // Update is called once per frame
