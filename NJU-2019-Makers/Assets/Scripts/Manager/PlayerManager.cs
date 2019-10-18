@@ -32,10 +32,10 @@ public class PlayerManager : MonoBehaviour
 		None,
 		Satellite,
 		Laser
-	}
+	};
 
-	//外层碰撞器
-	public EdgeCollider2D EdgeCollider;
+    //外层碰撞器
+    public PolygonCollider2D EdgeCollider;
 	//内层碰撞器
 	public Collider2D HeartCollider;
 	//外层贴图
@@ -102,17 +102,17 @@ public class PlayerManager : MonoBehaviour
 	private bool canFire;
 
 	// 放缩所需参数：
-	public const float small_interval = 0.2f;
-	public const float bounce_thresold = 0.8f;
+	public const float small_interval = 0.01f;
+	public const float bounce_thresold = 0.4f;
 	private float step_percent;
-	public const float step_interval = 0.1f;
-	public const float bounce_cd = 2;
+	public const float step_interval = 0.002f;
+	public const float bounce_cd = 3;
 	public const float invincible_time = 0.5f;
 	private bool canBomb;
 	private bool canSmall;
 
 	// 缓慢自愈单次血量：
-	public const float reBlood = 1;
+	public const float reBlood = 0.03f;
 
 
 
@@ -176,7 +176,7 @@ public class PlayerManager : MonoBehaviour
 			energy = 0;
 			step_percent = 0;
 			canBomb = false;
-			canSmall = false;
+			StartCoroutine(Statics.WorkAfterSeconds(() => canSmall = false,small_interval));	//以免被BeingSmall的协程函数更改canSmall的值
 			StartCoroutine(Statics.WorkAfterSeconds(() => canSmall = true,bounce_cd));
 			protect = true;
 			StartCoroutine(Statics.WorkAfterSeconds(() => protect = false,protect_time));
@@ -223,15 +223,15 @@ public class PlayerManager : MonoBehaviour
 	//内核被攻击 死亡 或者 读取存档点等 TODO 先只考虑死亡
 	public void AttackHeart(GameObject other)
 	{
-		//health = 0;
-		//Destroy(gameObject);
+		health = 0;
+		Destroy(gameObject);
 	}
 
 	//受到攻击 减少生命 减少外壳大小 音效 特效 TODO
 	public void BeingAttack(float damage)
 	{
-        /*health -= damage;
-		maxEnergy = health;*/
+        health -= damage;
+		maxEnergy = health;
 	}
 
 	//受到切削 改变外壳形状 新增角的攻击点 维护Mask （需要判断是否切到核心） 音效 特效 TODO
@@ -244,17 +244,23 @@ public class PlayerManager : MonoBehaviour
 	{
 
 	}
+    /*
+	private void OnCollisionEnter2D(Collision2D other) {
+		int ContactNum = EdgeCollider.GetContacts(other.contacts);
+		for(int i = 0; i < ContactNum; i++){
+			Debug.Log(other.contacts[i].point);
+		}
+	}*/
 
 	//回血 TODO: done.
 	public void ReHealth(float x)
 	{
-		if((health + x) > maxHealth){
+		if((health + x) >= maxHealth){
 			health = maxHealth;
 			maxEnergy = health;
 		}else{
 			health += x;
 			maxEnergy = health;
-			float scale = health/maxHealth;
 		}
 	}
 
@@ -342,5 +348,6 @@ public class PlayerManager : MonoBehaviour
         Move();
 		ReHealth(reBlood);
         ReShape();
+		Debug.Log(EdgeCollider.points[0]);
 	}
 }
