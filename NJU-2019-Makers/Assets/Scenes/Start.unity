@@ -192,7 +192,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1269834155}
-        m_MethodName: ChangeScene
+        m_MethodName: StartGame
         m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -721,11 +721,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9073080591100737984, guid: c844d2e0f62d580418e172db33690806,
-        type: 3}
-      propertyPath: Laser
-      value: 
-      objectReference: {fileID: 8947829810577445845, guid: c58521c8148346a4c9bf5a3d2d608336,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c844d2e0f62d580418e172db33690806, type: 3}

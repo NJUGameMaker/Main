@@ -348,6 +348,6 @@ public class PlayerManager : MonoBehaviour
         Move();
 		ReHealth(reBlood);
         ReShape();
-		Debug.Log(EdgeCollider.points[0]);
+		//Debug.Log(EdgeCollider.points[0]);
 	}
 }

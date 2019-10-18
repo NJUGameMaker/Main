@@ -59,7 +59,7 @@ public class EffectManager : MonoBehaviour
 		for (float deltime = 0; deltime < time; deltime += Time.deltaTime)
 		{
 			//TODO 设置type
-			Camera.main.transform.position = new Vector3(Statics.FixFun(Statics.FunType.X2, st.x, ed.x, deltime / time), Statics.FixFun(Statics.FunType.X2, st.x, ed.x, deltime / time), 0);
+			Camera.main.transform.position = new Vector3(Statics.FixFun(Statics.FunType.X2, st.x, ed.x, deltime / time), Statics.FixFun(Statics.FunType.X2, st.x, ed.x, deltime / time), -10);
 			yield return new WaitForEndOfFrame();
 		}
 	}
@@ -93,7 +93,10 @@ public class EffectManager : MonoBehaviour
 		{
 			const float con = 2;
 			//调参数 TODO
-			Camera.main.transform.position = Statics.V3toV2(Camera.main.transform.position) + (funFocus() - Statics.V3toV2(Camera.main.transform.position)) * Time.deltaTime * con;
+			Debug.Log((Vector3)funFocus());
+			Vector3 tmp = Camera.main.transform.position + ((Vector3)funFocus() - Camera.main.transform.position) * Time.deltaTime * con;
+			tmp.z = -10;
+			Camera.main.transform.position = tmp;
 		}
 	}
 

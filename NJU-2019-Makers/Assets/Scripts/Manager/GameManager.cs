@@ -46,6 +46,16 @@ public class GameManager : MonoBehaviour
 	//开始播放剧情
 	public void GameRestart() => pause = playVideo = false;
 
+	public void StartGame(string name)
+	{
+		ChangeScene(name);
+	}
+
+	private void Start()
+	{
+		//StartGame("TestScene");
+	}
+
 	private void Update()
 	{
 		//暂停
@@ -59,7 +69,8 @@ public class GameManager : MonoBehaviour
 			return;
 		}
 		//镜头跟随主角
-		EffectManager.Instance.CameraFocus(0, PlayerManager.Instance.transform.position);
+		//Debug.Log(PlayerManager.Instance.transform.position);
+		//EffectManager.Instance.CameraFocus(0, PlayerManager.Instance.transform.position);
 	}
 
 }
