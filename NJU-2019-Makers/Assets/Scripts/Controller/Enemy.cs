@@ -10,6 +10,11 @@ public class Enemy : MonoBehaviour
 	//动画组件
 	public Animator animator;
 
+	//被攻击闪烁时间
+	const float atktime = 1f;
+	//死亡动画时间
+	const float dietime = 2f;
+
 	//血量
 	private float maxHealth;
 	public float health { get; private set; }
@@ -33,17 +38,21 @@ public class Enemy : MonoBehaviour
 	//被玩家子弹攻击 受到伤害血量计算 特效 音效等 TODO
 	public void BeingAttack(GameObject bullet)
 	{
+		//if (health < 0) return;
         health -= bullet.GetComponent<PlayerBullet>().damage;
         if(health < 0)
         {
-            Debug.Log("Print Enemy Dead!");
-        }
-        else
+			animator.SetInteger("State", 2);
+			Destroy(gameObject, dietime);
+		}
+		else
         {
-            Debug.Log("Print Enemy Being attack!");
             Vector3 shootin = bullet.GetComponent<Rigidbody2D>().velocity;
             shootin.z = 0;
             GetComponent<Move>().AddForceSpeed(shootin * 0.5f);
+			if (animator.GetInteger("State") == 0)
+				StartCoroutine(Statics.WorkAfterSeconds(() => { if (animator.GetInteger("State") == 1) animator.SetInteger("State", 0); }, atktime));
+			animator.SetInteger("State", 1);
         }
 	}
 
@@ -67,17 +76,11 @@ public class Enemy : MonoBehaviour
 	private void Start()
 	{
 		animator = GetComponent<Animator>();
+		animator.SetInteger("State", 0);
 	}
 
 	private void Update()
 	{
-		//test
-		if (Input.GetKey(KeyCode.P))
-			animator.SetInteger("State", 0);
-		if (Input.GetKey(KeyCode.O))
-			animator.SetInteger("State", 1);
-		if (Input.GetKey(KeyCode.I))
-			animator.SetInteger("State", 2);
 
 	}
 

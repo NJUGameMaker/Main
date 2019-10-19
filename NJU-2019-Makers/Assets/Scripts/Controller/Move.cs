@@ -40,7 +40,6 @@ public class Move : MonoBehaviour
     public void AddForceSpeed(Vector3 vect)
     {
         addSpeed = vect;
-        Debug.Log("here is :" + addSpeed);
     }
 
     //控制的物体的刚体(test)

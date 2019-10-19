@@ -1469,6 +1469,7 @@ GameObject:
   - component: {fileID: 1419060796}
   - component: {fileID: 1419060799}
   - component: {fileID: 1419060797}
+  - component: {fileID: 1419060798}
   m_Layer: 8
   m_Name: Edge
   m_TagString: PlayerEdge
@@ -1583,6 +1584,22 @@ PolygonCollider2D:
       - {x: 0.25, y: -0.55}
       - {x: 0.35, y: -0.48999998}
       - {x: 0.51, y: -0.32}
+--- !u!58 &1419060798
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1419060794}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 1
 --- !u!95 &1419060799
 Animator:
   serializedVersion: 3
@@ -1952,7 +1969,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bfdcba559668f244923b4008daf8fec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EdgeCollider: {fileID: 0}
+  EdgeCollider: {fileID: 1419060797}
   HeartCollider: {fileID: 844408020}
   EdgeSprite: {fileID: 1419060796}
   HeartSprite: {fileID: 844408019}

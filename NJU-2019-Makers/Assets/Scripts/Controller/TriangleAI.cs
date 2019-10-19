@@ -43,7 +43,7 @@ public class TriangleAI : MonoBehaviour
 	//血量低于0后行为
 	private void AfterDie()
 	{
-        Object.Destroy(gameObject);
+        Destroy(this);
 	}
 
     void Update()
