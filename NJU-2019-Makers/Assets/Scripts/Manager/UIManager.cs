@@ -40,6 +40,7 @@ public class UIManager : MonoBehaviour
 	//初始化
 	public void Init()
 	{
+		Debug.Log("init");
 		canvas.gameObject.SetActive(true);
 
 		var rect = canvas.GetComponent<RectTransform>();

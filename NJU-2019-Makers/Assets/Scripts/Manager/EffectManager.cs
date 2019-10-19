@@ -93,7 +93,7 @@ public class EffectManager : MonoBehaviour
 		{
 			const float con = 2;
 			//调参数 TODO
-			Debug.Log((Vector3)funFocus());
+			//Debug.Log((Vector3)funFocus());
 			Vector3 tmp = Camera.main.transform.position + ((Vector3)funFocus() - Camera.main.transform.position) * Time.deltaTime * con;
 			tmp.z = -10;
 			Camera.main.transform.position = tmp;
