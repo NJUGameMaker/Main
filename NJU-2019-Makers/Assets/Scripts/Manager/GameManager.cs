@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
 	//分数统计
 	private int score;
 	public int Score { get => score; set => score = value; }
-
 	//初始化单例
 	private void Awake()
 	{

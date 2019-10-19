@@ -57,7 +57,7 @@ public class PlayerManager : MonoBehaviour
 
 	//能量（缩放），0->初始不放缩情况
 	private float maxEnergy;
-	private float energy;
+	private float energy { get => energy; set => energy = value; }
 
 	//子弹条
 	private float maxBullet = 100;
