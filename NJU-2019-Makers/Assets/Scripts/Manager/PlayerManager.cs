@@ -125,6 +125,13 @@ public class PlayerManager : MonoBehaviour
 		tmp.SetActive(true);
 	}
 
+	private void FaceToMouse()
+	{
+		var tmp = -(Vector2)transform.position + MOUSE;
+		Debug.Log(tmp);
+		transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(tmp.y, tmp.x) / Mathf.PI * 180f);
+	}
+
 	//当攻击键按下 TODO 不对啊还有子弹条没考虑进去-->有道理哦
 	//那还要留一个UI的接口
 	public void Fire()
@@ -359,6 +366,7 @@ public class PlayerManager : MonoBehaviour
         Move();
 		ReHealth(reBlood);
         ReShape();
+		FaceToMouse();
 		//Debug.Log(EdgeCollider.points[0]);
 	}
 }
