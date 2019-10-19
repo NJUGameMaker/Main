@@ -33,7 +33,17 @@ public class Move : MonoBehaviour
     //跟踪的主角
     GameObject follow;
 
-	//控制的物体的刚体(test)
+    //附加的速度，用于被撞击后后退
+    private Vector3 addSpeed = new Vector3(0, 0, 0);
+    private const float declineSpeed = 0.9f;//衰减常量
+	
+    public void AddForceSpeed(Vector3 vect)
+    {
+        addSpeed = vect;
+        Debug.Log("here is :" + addSpeed);
+    }
+
+    //控制的物体的刚体(test)
 	private Rigidbody2D rb2;
 
     //设置移动的类型
@@ -140,6 +150,7 @@ public class Move : MonoBehaviour
             };break;
             default: Debug.LogAssertion("Wrong move type");break;
         }
+        v += addSpeed;
 		//移动
 		if (rb2)
 		{
@@ -202,6 +213,8 @@ public class Move : MonoBehaviour
 		{
 			return;
 		}
-		work();
+        addSpeed = addSpeed * declineSpeed;
+
+        work();
 	}
 }

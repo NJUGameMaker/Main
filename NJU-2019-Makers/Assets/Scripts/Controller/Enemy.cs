@@ -33,6 +33,18 @@ public class Enemy : MonoBehaviour
 	//被玩家子弹攻击 受到伤害血量计算 特效 音效等 TODO
 	public void BeingAttack(GameObject bullet)
 	{
+        health -= bullet.GetComponent<PlayerBullet>().damage;
+        if(health < 0)
+        {
+            Debug.Log("Print Enemy Dead!");
+        }
+        else
+        {
+            Debug.Log("Print Enemy Being attack!");
+            Vector3 shootin = bullet.GetComponent<Rigidbody2D>().velocity;
+            shootin.z = 0;
+            GetComponent<Move>().AddForceSpeed(shootin * 0.5f);
+        }
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
