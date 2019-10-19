@@ -10,7 +10,7 @@ public class PlayerBullet : MonoBehaviour
 	//子弹类型
 	private PlayerManager.BulletType bulletType;
 	//伤害
-	private float damage;
+	public float damage;
 	//是否始终跟随
 	private bool isStatic;
 	//移动类型
