@@ -114,9 +114,10 @@ public class UIManager : MonoBehaviour
 	const float bloodtime = 0.2f;
 	public void BloodFlash()
 	{
-		var red = new Color(1, 0, 0, 0.3f);
-		StartCoroutine(Statics.Flash(BloodMask, Color.clear,red, bloodtime));
-		StartCoroutine(Statics.WorkAfterSeconds(() => { Debug.Log("12313"); StartCoroutine(Statics.Flash(BloodMask, red, Color.clear, bloodtime)); }, bloodtime));
+		var st = new Color(1, 0, 0, 0f);
+		var ed = new Color(1, 0, 0, 0.5f);
+		StartCoroutine(Statics.Flash(BloodMask, st,ed, bloodtime));
+		StartCoroutine(Statics.WorkAfterSeconds(() => { Debug.Log("12313"); StartCoroutine(Statics.Flash(BloodMask, ed, st, bloodtime)); }, bloodtime));
 	}
 
 	//设置临时UI条
