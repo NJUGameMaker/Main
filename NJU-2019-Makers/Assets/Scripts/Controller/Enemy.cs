@@ -7,6 +7,8 @@ using UnityEngine;
 //不具有移动功能 移动功能另加Move组件
 public class Enemy : MonoBehaviour
 {
+	//动画组件
+	public Animator animator;
 
 	//血量
 	private float maxHealth;
@@ -47,6 +49,23 @@ public class Enemy : MonoBehaviour
 		{
 			BeingAttack(collision.gameObject);
 		}
+
+	}
+
+	private void Start()
+	{
+		animator = GetComponent<Animator>();
+	}
+
+	private void Update()
+	{
+		//test
+		if (Input.GetKey(KeyCode.P))
+			animator.SetInteger("State", 0);
+		if (Input.GetKey(KeyCode.O))
+			animator.SetInteger("State", 1);
+		if (Input.GetKey(KeyCode.I))
+			animator.SetInteger("State", 2);
 
 	}
 
