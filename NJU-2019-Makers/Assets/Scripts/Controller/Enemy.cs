@@ -11,7 +11,7 @@ public class Enemy : MonoBehaviour
 	public Animator animator;
 
 	//被攻击闪烁时间
-	const float atktime = 1f;
+	const float atktime = 0.5f;
 	//死亡动画时间
 	const float dietime = 2f;
 
@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
 	//被玩家子弹攻击 受到伤害血量计算 特效 音效等 TODO
 	public void BeingAttack(GameObject bullet)
 	{
+		EffectManager.Instance.CameraShake(0.1f, 0.1f);
 		//if (health < 0) return;
         health -= bullet.GetComponent<PlayerBullet>().damage;
         if(health < 0)

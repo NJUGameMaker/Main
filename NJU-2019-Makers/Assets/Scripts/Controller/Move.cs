@@ -149,7 +149,7 @@ public class Move : MonoBehaviour
             };break;
             default: Debug.LogAssertion("Wrong move type");break;
         }
-        v += addSpeed;
+        if (moveType != MoveType.Stop) v += addSpeed;
 		//移动
 		if (rb2)
 		{
