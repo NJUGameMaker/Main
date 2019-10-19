@@ -1109,6 +1109,7 @@ GameObject:
   - component: {fileID: 1078705441}
   - component: {fileID: 1078705444}
   - component: {fileID: 1078705445}
+  - component: {fileID: 1078705446}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1213,6 +1214,22 @@ MonoBehaviour:
   BottomBlack: {fileID: 1059983594}
   BloodMask: {fileID: 1560411950}
   Dialog: {fileID: 2138554014}
+--- !u!114 &1078705446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1078705440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc787f9203fa5944b836f296204e56f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camTransform: {fileID: 0}
+  shakeTime: 0.7
+  shakeEffect: 0
+  shakePower: 1
 --- !u!1 &1082530342
 GameObject:
   m_ObjectHideFlags: 0

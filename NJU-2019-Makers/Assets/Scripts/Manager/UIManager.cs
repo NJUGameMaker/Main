@@ -132,8 +132,11 @@ public class UIManager : MonoBehaviour
 			HideDialogAndText();
 		if (Input.GetKey(KeyCode.D))
 			ShowText("dddddddddddd");
-		if (Input.GetKey(KeyCode.F))
-			BloodFlash();
+        if (Input.GetKey(KeyCode.F))
+        {
+            BloodFlash();
+            EffectManager.Instance.CameraShake(0.2f, 0.5f);
+        }
 
 	}
 }
