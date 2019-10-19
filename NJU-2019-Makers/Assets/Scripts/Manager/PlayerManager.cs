@@ -128,7 +128,6 @@ public class PlayerManager : MonoBehaviour
 	private void FaceToMouse()
 	{
 		var tmp = -(Vector2)transform.position + MOUSE;
-		Debug.Log(tmp);
 		transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(tmp.y, tmp.x) / Mathf.PI * 180f);
 	}
 

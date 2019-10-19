@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
 	public Image Mask;
 	public Image TopBlack;
 	public Image BottomBlack;
+	public Image BloodMask;
 	public Text Dialog;
 
 	//上下对话信息
@@ -46,6 +47,7 @@ public class UIManager : MonoBehaviour
 		Mask.rectTransform.sizeDelta = rect.sizeDelta;
 		TopBlack.rectTransform.sizeDelta = rect.sizeDelta;
 		BottomBlack.rectTransform.sizeDelta = rect.sizeDelta;
+		BloodMask.rectTransform.sizeDelta = rect.sizeDelta;
 		Dialog.rectTransform.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y * BlackProportion) * 0.8f;
 
 		Mask.rectTransform.localPosition = Vector3.zero;
@@ -58,6 +60,7 @@ public class UIManager : MonoBehaviour
 		Dialog.fontSize = (int)rect.sizeDelta.x / 24;
 		Dialog.enabled = false;
 		Mask.color = Color.clear;
+		BloodMask.color = Color.clear;
 	}
 
 	private void Start()
@@ -108,6 +111,14 @@ public class UIManager : MonoBehaviour
 		StartCoroutine(Statics.Flash(Mask, st, ed, time, t));
 	}
 
+	const float bloodtime = 0.2f;
+	public void BloodFlash()
+	{
+		var red = new Color(1, 0, 0, 0.3f);
+		StartCoroutine(Statics.Flash(BloodMask, Color.clear,red, bloodtime));
+		StartCoroutine(Statics.WorkAfterSeconds(() => { Debug.Log("12313"); StartCoroutine(Statics.Flash(BloodMask, red, Color.clear, bloodtime)); }, bloodtime));
+	}
+
 	//设置临时UI条
 	//..........
 
@@ -122,7 +133,7 @@ public class UIManager : MonoBehaviour
 		if (Input.GetKey(KeyCode.D))
 			ShowText("dddddddddddd");
 		if (Input.GetKey(KeyCode.F))
-			Flash(Color.black,Color.clear,0.6f);
+			BloodFlash();
 
 	}
 }
