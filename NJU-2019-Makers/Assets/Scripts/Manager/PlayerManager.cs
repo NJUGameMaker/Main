@@ -57,7 +57,7 @@ public class PlayerManager : MonoBehaviour
 
 	//能量（缩放），0->初始不放缩情况
 	private float maxEnergy;
-	private float energy { get => energy; set => energy = value; }
+	public float energy;
 
 	//子弹条
 	private float maxBullet = 100;
@@ -90,10 +90,13 @@ public class PlayerManager : MonoBehaviour
 	//图形界面加预设物体 TODO
 	public GameObject BulletPrefab;
 
-	//子弹类型伤害
+	//子弹类型伤害 和 速度
 	public const float NoneDamage = 10;
 	public const float StrongDamage = 10;
 	public const float BounceDamage = 5;
+	public const float NoneSpeed = 10;
+	public const float StrongSpeed = 10;
+	public const float BounceSpeed = 15;
 
 
 	//子弹误差默认值（角度值）：
@@ -138,16 +141,20 @@ public class PlayerManager : MonoBehaviour
 		if (canFire)
 		{
 			float damage = 0;
+			float speed = 0;
 			switch (bulletType)
 			{
 				case BulletType.None:
 					damage = NoneDamage;
+					speed = NoneSpeed;
 					break;
 				case BulletType.Strong:
 					damage = StrongDamage;
+					speed = StrongSpeed;
 					break;
 				case BulletType.Bounce:
 					damage = BounceDamage;
+					speed = BounceSpeed;
 					break;
 			}
 			canFire = false;
@@ -157,8 +164,9 @@ public class PlayerManager : MonoBehaviour
 			PlayerBullet playerBullet = bullet.AddComponent<PlayerBullet>();
 			playerBullet.Init(bulletType, damage, false, bullet.AddComponent<Move>());
 			float angle = Mathf.Atan2((MOUSE - pos).y, (MOUSE - pos).x) * Mathf.Rad2Deg + Random.Range(-deviation, deviation) * (1 - energy / maxEnergy);
+			bullet.transform.rotation = Quaternion.Euler(0, 0, angle-90);
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-			playerBullet.move.SetLineType(pos, direct, 100,bullet.GetComponent<Rigidbody2D>());
+			playerBullet.move.SetLineType(pos, direct, speed,bullet.GetComponent<Rigidbody2D>());
 		}
 	}
 
@@ -202,7 +210,7 @@ public class PlayerManager : MonoBehaviour
 	}
 
     //表示移动的速度
-    public float speed = 50;
+    const float speed = 10;
     //移动 TODO
     public void Move()
 	{
@@ -210,10 +218,10 @@ public class PlayerManager : MonoBehaviour
         float inputX = Input.GetAxis("Horizontal");//横向上的移动
         float inputY = Input.GetAxis("Vertical");//竖直线上的移动
         Vector3 v = new Vector3(inputX, inputY, 0); //新建移动向量
-        v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
-        v = v * speed * Time.deltaTime;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
+		v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
+		v = v * speed;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
 		//transform.Translate(v);                       //移动
-		m_rb.velocity = v * 10;
+		m_rb.velocity = v;
         if (LEFT)
 		{
 

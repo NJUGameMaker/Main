@@ -53,6 +53,7 @@ public class CameraManager : MonoBehaviour
 				m_backGrounds[i + 1, j + 1].SetActive(true);
 			}
 		}
+		PBackGround.SetActive(false);
 		EffectManager.Instance.SetCameraContinueFocus(() => { return PlayerManager.Instance.transform.position; }, true);
 	}
 

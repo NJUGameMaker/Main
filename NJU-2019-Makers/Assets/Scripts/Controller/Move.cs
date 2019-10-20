@@ -19,7 +19,7 @@ public class Move : MonoBehaviour
     //移动的类型
     public MoveType moveType = MoveType.Stop;
     //移动的速度
-    public float speed = 100; 
+    public float speed = 1; 
     //中心和半径
     private Vector2 heart = new Vector2(2, 0);
     private float radius = 3f;
@@ -115,12 +115,12 @@ public class Move : MonoBehaviour
             case MoveType.Line: {
                 v = new Vector3(direction.x, direction.y, 0); //新建移动向量
                 v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
-                v = v * speed * Time.deltaTime;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
+                v = v * speed;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
                 //transform.Translate(v);                       //移动
                 };break;
             case MoveType.Round: {
                     float oldTime = currentTime;
-                    currentTime += 2 * Mathf.PI / roundTime * Time.deltaTime;//更新角度
+                    currentTime += 2 * Mathf.PI / roundTime;//更新角度
                     float nextX = radius * Mathf.Cos(currentTime);
                     float nextY = radius * Mathf.Sin(currentTime);
                     if (currentTime >= 2 * Mathf.PI)
@@ -143,7 +143,7 @@ public class Move : MonoBehaviour
                     target = follow.transform.position;
                     v = new Vector3(target.x - transform.position.x, target.y - transform.position.y, 0); //新建移动向量
                     v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
-                    v = v * speed * Time.deltaTime;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
+                    v = v * speed;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
                     //transform.Translate(v);                       //移动
                 
             };break;
@@ -176,7 +176,7 @@ public class Move : MonoBehaviour
             case MoveType.Round:
                 {
                     float oldTime = currentTime;
-                    float newTime = oldTime + 2 * Mathf.PI / roundTime * Time.deltaTime;//更新角度
+                    float newTime = oldTime + 2 * Mathf.PI / roundTime;//更新角度
                     float nextX = radius * Mathf.Cos(newTime);
                     float nextY = radius * Mathf.Sin(newTime);
                     if (currentTime >= 2 * Mathf.PI)

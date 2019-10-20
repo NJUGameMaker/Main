@@ -132,19 +132,19 @@ public class AudioManager : MonoBehaviour
 
 		//test
 		//Debug.Log(SoundPlayerUntil.Keys.Count);
-		if (Input.GetKeyDown(KeyCode.A))
-			PlaySound("test",()=>Debug.Log("Over"));
-		if (Input.GetKeyDown(KeyCode.S))
-			PlayUntil("test2",()=>Input.GetKey(KeyCode.S));
-		if (Input.GetKeyDown(KeyCode.S))
-			PlayUntil("test2", () => Input.GetKey(KeyCode.S));
-		if (Input.GetKeyDown(KeyCode.D))
-			PlayBGM("test");
-		if (Input.GetKeyDown(KeyCode.F))
-			PlayBGM("test2");
-		if (Input.GetKeyDown(KeyCode.Q))
-			SoundVolume += 0.1f;
-		if (Input.GetKeyDown(KeyCode.W))
-			SoundVolume -= 0.1f;
+		//if (Input.GetKeyDown(KeyCode.A))
+		//	PlaySound("test",()=>Debug.Log("Over"));
+		//if (Input.GetKeyDown(KeyCode.S))
+		//	PlayUntil("test2",()=>Input.GetKey(KeyCode.S));
+		//if (Input.GetKeyDown(KeyCode.S))
+		//	PlayUntil("test2", () => Input.GetKey(KeyCode.S));
+		//if (Input.GetKeyDown(KeyCode.D))
+		//	PlayBGM("test");
+		//if (Input.GetKeyDown(KeyCode.F))
+		//	PlayBGM("test2");
+		//if (Input.GetKeyDown(KeyCode.Q))
+		//	SoundVolume += 0.1f;
+		//if (Input.GetKeyDown(KeyCode.W))
+		//	SoundVolume -= 0.1f;
 	}
 }

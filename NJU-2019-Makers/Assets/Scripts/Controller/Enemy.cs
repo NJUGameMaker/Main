@@ -15,6 +15,9 @@ public class Enemy : MonoBehaviour
 	//死亡动画时间
 	const float dietime = 2f;
 
+	//自身刚体
+	private Rigidbody2D m_rb;
+
 	//血量
 	private float maxHealth;
 	public float health { get; private set; }
@@ -78,11 +81,11 @@ public class Enemy : MonoBehaviour
 	{
 		animator = GetComponent<Animator>();
 		animator.SetInteger("State", 0);
+		m_rb = GetComponent<Rigidbody2D>();
 	}
 
 	private void Update()
 	{
-
 	}
 
 }
