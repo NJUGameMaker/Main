@@ -86,6 +86,9 @@ public class PlayerManager : MonoBehaviour
 	private GameObject GOEdge => EdgeCollider.gameObject;
 	//自身刚体
 	private Rigidbody2D m_rb;
+	//
+	private Animator EdgeAnimator;
+	private Animator HeartAnimator;
 
 	//图形界面加预设物体 TODO
 	public GameObject BulletPrefab;
@@ -164,7 +167,7 @@ public class PlayerManager : MonoBehaviour
 			PlayerBullet playerBullet = bullet.AddComponent<PlayerBullet>();
 			playerBullet.Init(bulletType, damage, false, bullet.AddComponent<Move>());
 			float angle = Mathf.Atan2((MOUSE - pos).y, (MOUSE - pos).x) * Mathf.Rad2Deg + Random.Range(-deviation, deviation) * (1 - energy / maxEnergy);
-			bullet.transform.rotation = Quaternion.Euler(0, 0, angle-90);
+			bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
 			playerBullet.move.SetLineType(pos, direct, speed,bullet.GetComponent<Rigidbody2D>());
 		}
@@ -255,6 +258,10 @@ public class PlayerManager : MonoBehaviour
 	{
         health -= damage;
 		maxEnergy = health;
+		Statics.AnimatorPlay(this, EdgeAnimator, Statics.AnimatorType.Attack);
+		Statics.AnimatorPlay(this, HeartAnimator, Statics.AnimatorType.Attack);
+		EffectManager.Instance.CameraShake(0.5f, 0.5f);
+		UIManager.Instance.BloodFlash();
 	}
 
 	//受到切削 改变外壳形状 新增角的攻击点 维护Mask （需要判断是否切到核心） 音效 特效 TODO
@@ -336,6 +343,8 @@ public class PlayerManager : MonoBehaviour
 		canSmall = true;
 		maxEnergy = health;
 		m_rb = GetComponent<Rigidbody2D>();
+		EdgeAnimator = GOEdge.GetComponent<Animator>();
+		HeartAnimator = GOHeart.GetComponent<Animator>();
 		//test
 		addCutMask(new Vector2(0, -0.5f));
     }

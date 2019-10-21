@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
         health -= bullet.GetComponent<PlayerBullet>().damage;
         if(health < 0)
         {
-			animator.SetInteger("State", 2);
+			Statics.AnimatorPlay(this,animator, Statics.AnimatorType.Die);
 			Destroy(gameObject, dietime);
 		}
 		else
@@ -54,10 +54,9 @@ public class Enemy : MonoBehaviour
             Vector3 shootin = bullet.GetComponent<Rigidbody2D>().velocity;
             shootin.z = 0;
             GetComponent<Move>().AddForceSpeed(shootin * 0.5f);
-			if (animator.GetInteger("State") == 0)
-				StartCoroutine(Statics.WorkAfterSeconds(() => { if (animator.GetInteger("State") == 1) animator.SetInteger("State", 0); }, atktime));
-			animator.SetInteger("State", 1);
-        }
+			Statics.AnimatorPlay(this,animator, Statics.AnimatorType.Attack);
+
+		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)

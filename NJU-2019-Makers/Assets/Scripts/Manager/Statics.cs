@@ -76,6 +76,13 @@ public class Statics : MonoBehaviour
 		fun();
 	}
 
+	public static IEnumerator WorkAfterFrame(vFunv fun, int frame)
+	{
+		while (frame-- != 0)
+			yield return new WaitForEndOfFrame();
+		fun();
+	}
+
 	public static IEnumerator DestroyAfterSeconds(GameObject go, float time)
 	{
 		yield return new WaitForSeconds(time);
@@ -102,6 +109,33 @@ public class Statics : MonoBehaviour
 			p += delta;
 			transform.localPosition = new Vector3(FixFun(t, st.x, ed.x, p), FixFun(t, st.y, ed.y, p), FixFun(t, st.z, ed.z, p));
 			yield return new WaitForFixedUpdate();
+		}
+	}
+
+	public enum AnimatorType
+	{
+		Attack,
+		Die,
+		Null
+	}
+
+	public static void AnimatorPlay(MonoBehaviour mono,Animator animator,AnimatorType type)
+	{
+		switch (type)
+		{
+			case AnimatorType.Attack:
+				if (animator.GetInteger("State") == 0)
+					mono.StartCoroutine(WorkAfterFrame(() => { if (animator.GetInteger("State") == 1) animator.SetInteger("State", 0); }, 2));
+				animator.SetInteger("State", 1);
+				break;
+			case AnimatorType.Die:
+				animator.SetInteger("State", 2);
+				break;
+			case AnimatorType.Null:
+				animator.SetInteger("State", 0);
+				break;
+			default:
+				break;
 		}
 	}
 
