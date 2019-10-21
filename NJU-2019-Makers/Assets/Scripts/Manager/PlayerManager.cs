@@ -86,9 +86,12 @@ public class PlayerManager : MonoBehaviour
 	private GameObject GOEdge => EdgeCollider.gameObject;
 	//自身刚体
 	private Rigidbody2D m_rb;
-	//
+	//动画
 	private Animator EdgeAnimator;
 	private Animator HeartAnimator;
+
+	//子弹发射位置
+	public Transform FirePos;
 
 	//图形界面加预设物体 TODO
 	public GameObject BulletPrefab;
@@ -170,6 +173,7 @@ public class PlayerManager : MonoBehaviour
 			bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
 			playerBullet.move.SetLineType(pos, direct, speed,bullet.GetComponent<Rigidbody2D>());
+			EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOut0, FirePos.position, transform.rotation, 1f);
 		}
 	}
 

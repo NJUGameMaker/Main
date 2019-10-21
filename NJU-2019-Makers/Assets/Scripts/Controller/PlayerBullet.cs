@@ -43,7 +43,7 @@ public class PlayerBullet : MonoBehaviour
 	//敌人扣血和特效写在enemy 不用考虑 TODO
 	public void Attack(GameObject enemy)
 	{
-
+		EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOn, transform.position, transform.rotation, 1f);
 	}
 
 	//碰到墙 应该写完了 TODO
@@ -51,6 +51,7 @@ public class PlayerBullet : MonoBehaviour
 	{
 		if (!isStatic)
 		{
+			EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOn, transform.position, transform.rotation, 1f);
 			Destroy(gameObject);
 		}
 	}

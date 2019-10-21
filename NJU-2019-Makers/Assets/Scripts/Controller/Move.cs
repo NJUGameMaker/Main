@@ -88,11 +88,12 @@ public class Move : MonoBehaviour
 		rb2 = rb;
 	}
 	//跟踪主角视角,参数为主角
-	public void SetAIFollowType(GameObject player, Rigidbody2D rb = null)
+	public void SetAIFollowType(GameObject player,float sp = 1 ,Rigidbody2D rb = null)
     {
         moveType = MoveType.AIFollow;
         follow = player;
 		rb2 = rb;
+		speed = sp;
 	}
 	//设置各种类型移动的参数并且设置各种初始化函数 TODO
 	public void Init()
@@ -144,8 +145,8 @@ public class Move : MonoBehaviour
                     v = new Vector3(target.x - transform.position.x, target.y - transform.position.y, 0); //新建移动向量
                     v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
                     v = v * speed;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
-                    //transform.Translate(v);                       //移动
-                
+												  //transform.Translate(v);                       //移动
+					transform.rotation = Quaternion.Euler(0,0,Mathf.Atan2(v.y, v.x)*180f/Mathf.PI);
             };break;
             default: Debug.LogAssertion("Wrong move type");break;
         }
@@ -213,7 +214,6 @@ public class Move : MonoBehaviour
 			return;
 		}
         addSpeed = addSpeed * declineSpeed;
-
         work();
 	}
 }

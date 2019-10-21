@@ -23,6 +23,22 @@ public class EffectManager : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 	}
 
+	//设置预设特效路径
+	private const string path = "Prefabs/";
+	//设置特效名
+	public enum EffectType
+	{
+		PlayerNormalOn,
+		PlayerNormalOut0,
+		PlayerNormalOut1,
+		TriNormalOn,
+		TriNormalOut,
+		End
+	}
+	//特效哈希表
+	private Dictionary<EffectType,GameObject> Effects = new Dictionary<EffectType, GameObject>();
+
+
 	//屏幕特效 TODO
 	public void ScreenEffect()
 	{
@@ -100,6 +116,18 @@ public class EffectManager : MonoBehaviour
 		}
 	}
 
+	public void PlayEffect(EffectType type,Vector3 pos,Quaternion qua,float time)
+	{
+		Destroy(Instantiate(Effects[type],pos,qua),time);
+	}
+
+	private void Start()
+	{
+		for (int i = 0; i < (int)EffectType.End; i++) {
+			var type = (EffectType)i;
+			Effects.Add(type,Resources.Load(path+type.ToString()) as GameObject);
+		}
+	}
 
 	private void Update()
 	{

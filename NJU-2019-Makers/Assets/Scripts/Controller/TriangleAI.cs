@@ -10,6 +10,9 @@ public class TriangleAI : MonoBehaviour
     //子弹的Preb By BJY
     public GameObject bulletPrefab;
 
+	//速度
+	const float speed = 4f;
+
     // 初始化自身属性 TODO
     void Start()
     {
@@ -19,7 +22,7 @@ public class TriangleAI : MonoBehaviour
         enemy.move.SetStopType(transform.position);
     }
     //发射帧间隔(s)：
-    public const float interval = 0.2f;
+    public const float interval = 1f;
     //能够发射子弹
     private bool canFire = true;
     //自身AI行为 攻击 等 TODO:BJY
@@ -35,7 +38,7 @@ public class TriangleAI : MonoBehaviour
             GameObject bullet = GameObject.Instantiate(bulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
             EnemyBullet enemyBullet = bullet.AddComponent<EnemyBullet>();
             enemyBullet.Init(damage, false, bullet.AddComponent<Move>());
-            enemyBullet.move.SetAIFollowType(PlayerManager.Instance.transform.gameObject, bullet.GetComponent<Rigidbody2D>());
+            enemyBullet.move.SetAIFollowType(PlayerManager.Instance.transform.gameObject,speed,bullet.GetComponent<Rigidbody2D>());
         }
         
     }
