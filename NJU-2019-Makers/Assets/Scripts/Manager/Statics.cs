@@ -139,4 +139,16 @@ public class Statics : MonoBehaviour
 		}
 	}
 
+	public static bool IsPointCut(Vector2 point, Vector2 point1, Vector2 point2){
+		float x1 = (point1.x < point2.x)?(point1.x):(point2.x);
+		float x2 = (point1.x >= point2.x)?(point1.x):(point2.x);
+		float y1 = (point1.y < point2.y)?(point1.y):(point2.y);
+		float y2 = (point1.y >= point2.y)?(point1.y):(point2.y);
+		float x = point.x;
+		float y = point.y;
+		if((x1 <= x)&(x <= x2)&(y1 <= y)&(y <= y2)){
+			return true;
+		}
+		return false;
+	}
 }

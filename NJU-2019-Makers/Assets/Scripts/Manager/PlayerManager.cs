@@ -34,7 +34,7 @@ public class PlayerManager : MonoBehaviour
 		Laser
 	};
 
-	//外层碰撞器
+	//外层碰撞器(改了类型)
 	public PolygonCollider2D EdgeCollider;
 	//内层碰撞器
 	public Collider2D HeartCollider;
@@ -46,10 +46,10 @@ public class PlayerManager : MonoBehaviour
 	public GameObject CutMask;
 	//切削产生的角
 	public HashSet<GameObject> Angles = new HashSet<GameObject>();
-	//边界点
-	public List<Vector2> Points = new List<Vector2>();
-	//切削产生的点的编号
-	public HashSet<int> KeyPoints = new HashSet<int>();
+	//边界点 (改成了动态数组和类型)
+	public Vector2[] Points = null;
+	//切削产生的点的编号(改成了记录点的vector)
+	public HashSet<Vector2> KeyPoints = new HashSet<Vector2>();
 
 	//血量
 	private float maxHealth = 100;
@@ -281,7 +281,52 @@ public class PlayerManager : MonoBehaviour
         Vector2 point1;
         point1.x = (2*Mathf.Pow(dir.x,2)*center.x + (Mathf.Pow(dir.y,2)-Mathf.Pow(dir.x,2))*point.x + 2*dir.x*dir.y*(center.y-point.y)) / (Mathf.Pow(dir.x,2) + Mathf.Pow(dir.y,2));
         point1.y = 2 * (dir.y / dir.x) * ((Mathf.Pow(dir.x,2)*(center.x-point.x) + dir.x*dir.y*(center.y-point.y)) / (Mathf.Pow(dir.x,2) + Mathf.Pow(dir.y,2))) + point.y;
-
+		//找插入位置
+		int x1 = -1,x2 = -1;
+		point = point - center;	//相对距离
+		point1 = point1 - center;
+		for(int i = 0; i < Points.Length; i++){
+			if(Statics.IsPointCut(point,Points[i],Points[(i+1)%Points.Length])){
+				x1 = i;
+			}
+			if(Statics.IsPointCut(point1,Points[i],Points[(i+1)%Points.Length])){
+				x2 = i;
+			}
+		}
+		//插入与删除，维护边界点集
+		if(x1 > x2){
+			int temp = x1;
+			x1 = x2;
+			x2 = temp;
+			Vector2 temp_v = point;
+			point = point1;
+			point1 = temp_v;
+		}
+		if(x2 - x1 < Points.Length/2){
+			Vector2[] temp_array = new Vector2[Points.Length-(x2-x1)+2];
+			for(int i = 0; i <= x1; i++){
+				temp_array[i] = Points[i];
+			}
+			temp_array[x1+1] = point;
+			temp_array[x1+2] = point1;
+			for(int i = 0; i < Points.Length-x2-1; i++){
+				temp_array[x1+3+i] = Points[x2+1+i];
+			}
+			Points = temp_array;
+		}else{
+			Vector2[] temp_array = new Vector2[x2-x1+2];
+			temp_array[0] = point;
+			for(int i = 0; i < x2-x1; i++){
+				temp_array[1+i] = Points[x1+1+i];
+			}
+			temp_array[x2-x1+1] = point1;
+			Points = temp_array;
+		}
+		//添加切削点，维护切削点集
+		KeyPoints.Add(point);
+		KeyPoints.Add(point1);
+		//判断是否切到核心
+		//HeartCollider.radius;
 	}
 
 	//回血 TODO: done.
@@ -347,6 +392,7 @@ public class PlayerManager : MonoBehaviour
 		m_rb = GetComponent<Rigidbody2D>();
 		EdgeAnimator = GOEdge.GetComponent<Animator>();
 		HeartAnimator = GOHeart.GetComponent<Animator>();
+		Points = EdgeCollider.points;
 		//test
 		addCutMask(new Vector2(0, -0.5f));
     }
