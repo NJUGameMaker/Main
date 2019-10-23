@@ -10,20 +10,40 @@ public class PlayerBullet : MonoBehaviour
 	//子弹类型
 	private PlayerManager.BulletType bulletType;
 	//伤害
-	private float damage;
+	public float damage;
 	//是否始终跟随
 	private bool isStatic;
 	//移动类型
 	public Move move { get; private set; }
+	//动画
+	private Animator animator;
 
 	//初始化 应该写完了 TODO
-	public void Init(PlayerManager.BulletType type, float d, bool s,Move m) { bulletType = type; damage = d; isStatic = s; move = m;}
+	public void Init(PlayerManager.BulletType type, float d, bool s, Move m)
+	{
+		bulletType = type; damage = d; isStatic = s; move = m;
+		animator = GetComponent<Animator>();
+		switch (type)
+		{
+			case PlayerManager.BulletType.None:
+				animator.SetInteger("Type", 0);
+				break;
+			case PlayerManager.BulletType.Strong:
+				animator.SetInteger("Type", 1);
+				break;
+			case PlayerManager.BulletType.Bounce:
+				animator.SetInteger("Type", 2);
+				break;
+			default:
+				break;
+		}
+	}
 
 	//攻击到敌人 根据子弹类型判断 弹开（修改自己的move）穿透还是删除自身 
 	//敌人扣血和特效写在enemy 不用考虑 TODO
 	public void Attack(GameObject enemy)
 	{
-
+		EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOn, transform.position, transform.rotation, 1f);
 	}
 
 	//碰到墙 应该写完了 TODO
@@ -31,6 +51,7 @@ public class PlayerBullet : MonoBehaviour
 	{
 		if (!isStatic)
 		{
+			EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOn, transform.position, transform.rotation, 1f);
 			Destroy(gameObject);
 		}
 	}

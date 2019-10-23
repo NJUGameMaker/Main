@@ -34,14 +34,16 @@ public class PlayerManager : MonoBehaviour
 		Laser
 	};
 
-    //外层碰撞器
-    public PolygonCollider2D EdgeCollider;
+	//外层碰撞器
+	public PolygonCollider2D EdgeCollider;
 	//内层碰撞器
 	public Collider2D HeartCollider;
 	//外层贴图
 	public SpriteRenderer EdgeSprite;
 	//内层贴图
 	public SpriteRenderer HeartSprite;
+	//切削遮罩
+	public GameObject CutMask;
 	//切削产生的角
 	public HashSet<GameObject> Angles = new HashSet<GameObject>();
 	//边界点
@@ -55,7 +57,7 @@ public class PlayerManager : MonoBehaviour
 
 	//能量（缩放），0->初始不放缩情况
 	private float maxEnergy;
-	private float energy;
+	public float energy;
 
 	//子弹条
 	private float maxBullet = 100;
@@ -84,14 +86,23 @@ public class PlayerManager : MonoBehaviour
 	private GameObject GOEdge => EdgeCollider.gameObject;
 	//自身刚体
 	private Rigidbody2D m_rb;
+	//动画
+	private Animator EdgeAnimator;
+	private Animator HeartAnimator;
+
+	//子弹发射位置
+	public Transform FirePos;
 
 	//图形界面加预设物体 TODO
 	public GameObject BulletPrefab;
 
-	//子弹类型伤害
+	//子弹类型伤害 和 速度
 	public const float NoneDamage = 10;
 	public const float StrongDamage = 10;
 	public const float BounceDamage = 5;
+	public const float NoneSpeed = 10;
+	public const float StrongSpeed = 10;
+	public const float BounceSpeed = 15;
 
 
 	//子弹误差默认值（角度值）：
@@ -114,7 +125,20 @@ public class PlayerManager : MonoBehaviour
 	// 缓慢自愈单次血量：
 	public const float reBlood = 0.03f;
 
+	//增加切削遮罩
+	private void addCutMask(Vector2 vec)
+	{
+		var tmp = Instantiate(CutMask,GOEdge.transform);
+		tmp.transform.localPosition = vec;
+		tmp.transform.localRotation = Quaternion.Euler(0, 0, -90+(Mathf.Atan2(vec.y, vec.x) / Mathf.PI * 180));// (0, 0,Mathf.Atan2(vec.y,vec.x), 1);
+		tmp.SetActive(true);
+	}
 
+	private void FaceToMouse()
+	{
+		var tmp = -(Vector2)transform.position + MOUSE;
+		transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(tmp.y, tmp.x) / Mathf.PI * 180f);
+	}
 
 	//当攻击键按下 TODO 不对啊还有子弹条没考虑进去-->有道理哦
 	//那还要留一个UI的接口
@@ -123,16 +147,20 @@ public class PlayerManager : MonoBehaviour
 		if (canFire)
 		{
 			float damage = 0;
+			float speed = 0;
 			switch (bulletType)
 			{
 				case BulletType.None:
 					damage = NoneDamage;
+					speed = NoneSpeed;
 					break;
 				case BulletType.Strong:
 					damage = StrongDamage;
+					speed = StrongSpeed;
 					break;
 				case BulletType.Bounce:
 					damage = BounceDamage;
+					speed = BounceSpeed;
 					break;
 			}
 			canFire = false;
@@ -142,8 +170,10 @@ public class PlayerManager : MonoBehaviour
 			PlayerBullet playerBullet = bullet.AddComponent<PlayerBullet>();
 			playerBullet.Init(bulletType, damage, false, bullet.AddComponent<Move>());
 			float angle = Mathf.Atan2((MOUSE - pos).y, (MOUSE - pos).x) * Mathf.Rad2Deg + Random.Range(-deviation, deviation) * (1 - energy / maxEnergy);
+			bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-			playerBullet.move.SetLineType(pos, direct, 100,bullet.GetComponent<Rigidbody2D>());
+			playerBullet.move.SetLineType(pos, direct, speed,bullet.GetComponent<Rigidbody2D>());
+			EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOut0, FirePos.position, transform.rotation, 1f);
 		}
 	}
 
@@ -187,7 +217,7 @@ public class PlayerManager : MonoBehaviour
 	}
 
     //表示移动的速度
-    public float speed = 50;
+    const float speed = 10;
     //移动 TODO
     public void Move()
 	{
@@ -195,10 +225,10 @@ public class PlayerManager : MonoBehaviour
         float inputX = Input.GetAxis("Horizontal");//横向上的移动
         float inputY = Input.GetAxis("Vertical");//竖直线上的移动
         Vector3 v = new Vector3(inputX, inputY, 0); //新建移动向量
-        v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
-        v = v * speed * Time.deltaTime;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
+		v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
+		v = v * speed;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
 		//transform.Translate(v);                       //移动
-		m_rb.velocity = v * 10;
+		m_rb.velocity = v;
         if (LEFT)
 		{
 
@@ -232,6 +262,10 @@ public class PlayerManager : MonoBehaviour
 	{
         health -= damage;
 		maxEnergy = health;
+		Statics.AnimatorPlay(this, EdgeAnimator, Statics.AnimatorType.Attack);
+		Statics.AnimatorPlay(this, HeartAnimator, Statics.AnimatorType.Attack);
+		EffectManager.Instance.CameraShake(0.5f, 0.5f);
+		UIManager.Instance.BloodFlash();
 	}
 
 	//受到切削 改变外壳形状 新增角的攻击点 维护Mask （需要判断是否切到核心） 音效 特效 TODO
@@ -311,6 +345,10 @@ public class PlayerManager : MonoBehaviour
 		canSmall = true;
 		maxEnergy = health;
 		m_rb = GetComponent<Rigidbody2D>();
+		EdgeAnimator = GOEdge.GetComponent<Animator>();
+		HeartAnimator = GOHeart.GetComponent<Animator>();
+		//test
+		addCutMask(new Vector2(0, -0.5f));
     }
 
     // Update is called once per frame
@@ -346,5 +384,7 @@ public class PlayerManager : MonoBehaviour
         Move();
 		ReHealth(reBlood);
         ReShape();
+		FaceToMouse();
+		//Debug.Log(EdgeCollider.points[0]);
 	}
 }

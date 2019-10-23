@@ -19,7 +19,7 @@ public class Move : MonoBehaviour
     //移动的类型
     public MoveType moveType = MoveType.Stop;
     //移动的速度
-    public float speed = 100; 
+    public float speed = 1; 
     //中心和半径
     private Vector2 heart = new Vector2(2, 0);
     private float radius = 3f;
@@ -33,7 +33,16 @@ public class Move : MonoBehaviour
     //跟踪的主角
     GameObject follow;
 
-	//控制的物体的刚体(test)
+    //附加的速度，用于被撞击后后退
+    private Vector3 addSpeed = new Vector3(0, 0, 0);
+    private const float declineSpeed = 0.9f;//衰减常量
+	
+    public void AddForceSpeed(Vector3 vect)
+    {
+        addSpeed = vect;
+    }
+
+    //控制的物体的刚体(test)
 	private Rigidbody2D rb2;
 
     //设置移动的类型
@@ -79,11 +88,12 @@ public class Move : MonoBehaviour
 		rb2 = rb;
 	}
 	//跟踪主角视角,参数为主角
-	public void SetAIFollowType(GameObject player, Rigidbody2D rb = null)
+	public void SetAIFollowType(GameObject player,float sp = 1 ,Rigidbody2D rb = null)
     {
         moveType = MoveType.AIFollow;
         follow = player;
 		rb2 = rb;
+		speed = sp;
 	}
 	//设置各种类型移动的参数并且设置各种初始化函数 TODO
 	public void Init()
@@ -106,12 +116,12 @@ public class Move : MonoBehaviour
             case MoveType.Line: {
                 v = new Vector3(direction.x, direction.y, 0); //新建移动向量
                 v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
-                v = v * speed * Time.deltaTime;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
+                v = v * speed;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
                 //transform.Translate(v);                       //移动
                 };break;
             case MoveType.Round: {
                     float oldTime = currentTime;
-                    currentTime += 2 * Mathf.PI / roundTime * Time.deltaTime;//更新角度
+                    currentTime += 2 * Mathf.PI / roundTime;//更新角度
                     float nextX = radius * Mathf.Cos(currentTime);
                     float nextY = radius * Mathf.Sin(currentTime);
                     if (currentTime >= 2 * Mathf.PI)
@@ -134,12 +144,13 @@ public class Move : MonoBehaviour
                     target = follow.transform.position;
                     v = new Vector3(target.x - transform.position.x, target.y - transform.position.y, 0); //新建移动向量
                     v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
-                    v = v * speed * Time.deltaTime;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
-                    //transform.Translate(v);                       //移动
-                
+                    v = v * speed;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
+												  //transform.Translate(v);                       //移动
+					transform.rotation = Quaternion.Euler(0,0,Mathf.Atan2(v.y, v.x)*180f/Mathf.PI);
             };break;
             default: Debug.LogAssertion("Wrong move type");break;
         }
+        if (moveType != MoveType.Stop) v += addSpeed;
 		//移动
 		if (rb2)
 		{
@@ -166,7 +177,7 @@ public class Move : MonoBehaviour
             case MoveType.Round:
                 {
                     float oldTime = currentTime;
-                    float newTime = oldTime + 2 * Mathf.PI / roundTime * Time.deltaTime;//更新角度
+                    float newTime = oldTime + 2 * Mathf.PI / roundTime;//更新角度
                     float nextX = radius * Mathf.Cos(newTime);
                     float nextY = radius * Mathf.Sin(newTime);
                     if (currentTime >= 2 * Mathf.PI)
@@ -202,6 +213,7 @@ public class Move : MonoBehaviour
 		{
 			return;
 		}
-		work();
+        addSpeed = addSpeed * declineSpeed;
+        work();
 	}
 }

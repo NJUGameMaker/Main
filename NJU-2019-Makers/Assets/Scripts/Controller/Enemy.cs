@@ -7,6 +7,16 @@ using UnityEngine;
 //不具有移动功能 移动功能另加Move组件
 public class Enemy : MonoBehaviour
 {
+	//动画组件
+	public Animator animator;
+
+	//被攻击闪烁时间
+	const float atktime = 0.5f;
+	//死亡动画时间
+	const float dietime = 2f;
+
+	//自身刚体
+	private Rigidbody2D m_rb;
 
 	//血量
 	private float maxHealth;
@@ -31,6 +41,22 @@ public class Enemy : MonoBehaviour
 	//被玩家子弹攻击 受到伤害血量计算 特效 音效等 TODO
 	public void BeingAttack(GameObject bullet)
 	{
+		EffectManager.Instance.CameraShake(0.1f, 0.1f);
+		//if (health < 0) return;
+        health -= bullet.GetComponent<PlayerBullet>().damage;
+        if(health < 0)
+        {
+			Statics.AnimatorPlay(this,animator, Statics.AnimatorType.Die);
+			Destroy(gameObject, dietime);
+		}
+		else
+        {
+            Vector3 shootin = bullet.GetComponent<Rigidbody2D>().velocity;
+            shootin.z = 0;
+            GetComponent<Move>().AddForceSpeed(shootin * 0.5f);
+			Statics.AnimatorPlay(this,animator, Statics.AnimatorType.Attack);
+
+		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
@@ -48,6 +74,17 @@ public class Enemy : MonoBehaviour
 			BeingAttack(collision.gameObject);
 		}
 
+	}
+
+	private void Start()
+	{
+		animator = GetComponent<Animator>();
+		animator.SetInteger("State", 0);
+		m_rb = GetComponent<Rigidbody2D>();
+	}
+
+	private void Update()
+	{
 	}
 
 }
