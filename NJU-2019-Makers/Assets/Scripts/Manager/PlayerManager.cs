@@ -37,7 +37,7 @@ public class PlayerManager : MonoBehaviour
 	//外层碰撞器(改了类型)
 	public PolygonCollider2D EdgeCollider;
 	//内层碰撞器
-	public Collider2D HeartCollider;
+	public CircleCollider2D HeartCollider;
 	//外层贴图
 	public SpriteRenderer EdgeSprite;
 	//内层贴图
@@ -274,7 +274,7 @@ public class PlayerManager : MonoBehaviour
 
 	}
 
-	public void BeingCut(Vector2 point, Vector2 dir)
+	public void BeingCut(GameObject other, Vector2 point, Vector2 dir)
 	{
         //求交点
         Vector2 center = Statics.V3toV2(EdgeCollider.bounds.center);
@@ -300,7 +300,10 @@ public class PlayerManager : MonoBehaviour
 		addCutMask(vec);
 		//判断是否切到核心
 		float distance = Mathf.Abs((dir.y*center.x - dir.x*center.y + dir.x*point.y-dir.y*point.x) / (Mathf.Pow(dir.y*dir.y+dir.x*dir.x,0.5f)));
-		//HeartCollider.radius;
+		if(distance <= HeartCollider.radius)
+		{
+			AttackHeart(other);
+		}
 		//找插入位置
 		int x1 = -1,x2 = -1;
 		point = point - center;	//相对距离
