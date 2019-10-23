@@ -242,15 +242,13 @@ public class PlayerManager : MonoBehaviour
 
 	public void BeingCut(Vector2 point, Vector2 dir)
 	{
+        //求交点
+        Vector2 center = Statics.V3toV2(EdgeCollider.bounds.center);
+        Vector2 point1;
+        point1.x = (2*Mathf.Pow(dir.x,2)*center.x + (Mathf.Pow(dir.y,2)-Mathf.Pow(dir.x,2))*point.x + 2*dir.x*dir.y*(center.y-point.y)) / (Mathf.Pow(dir.x,2) + Mathf.Pow(dir.y,2));
+        point1.y = 2 * (dir.y / dir.x) * ((Mathf.Pow(dir.x,2)*(center.x-point.x) + dir.x*dir.y*(center.y-point.y)) / (Mathf.Pow(dir.x,2) + Mathf.Pow(dir.y,2))) + point.y;
 
 	}
-    /*
-	private void OnCollisionEnter2D(Collision2D other) {
-		int ContactNum = EdgeCollider.GetContacts(other.contacts);
-		for(int i = 0; i < ContactNum; i++){
-			Debug.Log(other.contacts[i].point);
-		}
-	}*/
 
 	//回血 TODO: done.
 	public void ReHealth(float x)
@@ -348,6 +346,5 @@ public class PlayerManager : MonoBehaviour
         Move();
 		ReHealth(reBlood);
         ReShape();
-		Debug.Log(EdgeCollider.points[0]);
 	}
 }
