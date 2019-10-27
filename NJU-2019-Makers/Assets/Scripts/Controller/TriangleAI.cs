@@ -11,7 +11,7 @@ public class TriangleAI : MonoBehaviour
     public GameObject bulletPrefab;
 
 	//速度
-	const float speed = 4f;
+	const float speed = 1f;
 
     // 初始化自身属性 TODO
     void Start()
@@ -22,7 +22,7 @@ public class TriangleAI : MonoBehaviour
         enemy.move.SetStopType(transform.position);
     }
     //发射帧间隔(s)：
-    public const float interval = 1f;
+    public const float interval = 3f;
     //能够发射子弹
     private bool canFire = true;
     //自身AI行为 攻击 等 TODO:BJY
@@ -36,12 +36,24 @@ public class TriangleAI : MonoBehaviour
             StartCoroutine(Statics.WorkAfterSeconds(() => canFire = true, interval));
             var pos = Statics.V3toV2(transform.position);
             GameObject bullet = GameObject.Instantiate(bulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
-            EnemyBullet enemyBullet = bullet.AddComponent<EnemyBullet>();
-            enemyBullet.Init(damage, false, bullet.AddComponent<Move>());
-            enemyBullet.move.SetAIFollowType(PlayerManager.Instance.transform.gameObject,speed,bullet.GetComponent<Rigidbody2D>());
-        }
-        
-    }
+			bullet.SetActive(true);
+			//子弹
+			//EnemyBullet enemyBullet = bullet.AddComponent<EnemyBullet>();
+			//bullet.tag = "EnemyBullet";
+			//enemyBullet.Init(damage, false, bullet.AddComponent<Move>());
+			//enemyBullet.move.SetAIFollowType(PlayerManager.Instance.transform.gameObject, speed, bullet.GetComponent<Rigidbody2D>());
+
+			//切削子弹
+			var cut = bullet.AddComponent<EnemyCut>();
+			bullet.tag = "EnemyCut";
+			cut.Init(false, bullet.AddComponent<Move>());
+			cut.move.SetLineType(transform.position, PlayerManager.Instance.transform.position - transform.position, speed, bullet.GetComponent<Rigidbody2D>());
+			//enemyBullet.tag = "EnemyCut";
+			//enemyBullet.move.SetAIFollowType(PlayerManager.Instance.transform.gameObject,speed,bullet.GetComponent<Rigidbody2D>());
+
+		}
+
+	}
 
 	//血量低于0后行为
 	private void AfterDie()

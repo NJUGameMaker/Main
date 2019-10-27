@@ -24,15 +24,20 @@ public class EffectManager : MonoBehaviour
 	}
 
 	//设置预设特效路径
-	private const string path = "Prefabs/";
+	private const string path = "Prefabs/Effect/";
 	//设置特效名
 	public enum EffectType
 	{
 		PlayerNormalOn,
 		PlayerNormalOut0,
 		PlayerNormalOut1,
-		TriNormalOn,
-		TriNormalOut,
+		PlayerTanOn,
+		PlayerTanOut,
+		PlayerStrongOn,
+		PlayerStrongOut,
+		EnemyNormalOn,
+		EnemyNormalOut,
+
 		End
 	}
 	//特效哈希表
@@ -121,8 +126,14 @@ public class EffectManager : MonoBehaviour
 		Destroy(Instantiate(Effects[type],pos,qua),time);
 	}
 
+	public void PlayEffect(EffectType type, Vector3 pos, Quaternion qua)
+	{
+		Instantiate(Effects[type], pos, qua);
+	}
+
 	private void Start()
 	{
+		//初始化特效列表
 		for (int i = 0; i < (int)EffectType.End; i++) {
 			var type = (EffectType)i;
 			Effects.Add(type,Resources.Load(path+type.ToString()) as GameObject);

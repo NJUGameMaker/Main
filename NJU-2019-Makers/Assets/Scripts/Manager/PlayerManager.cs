@@ -89,6 +89,11 @@ public class PlayerManager : MonoBehaviour
 	//动画
 	private Animator EdgeAnimator;
 	private Animator HeartAnimator;
+	//子弹图片
+	public Sprite BulletNormal;
+	public Sprite BulletStrong;
+	public Sprite BulletTan;
+
 
 	//子弹发射位置
 	public Transform FirePos;
@@ -129,9 +134,9 @@ public class PlayerManager : MonoBehaviour
 	private void addCutMask(Vector2 vec)
 	{
 		var tmp = Instantiate(CutMask,GOEdge.transform);
+		tmp.SetActive(true);
 		tmp.transform.localPosition = vec;
 		tmp.transform.localRotation = Quaternion.Euler(0, 0, -90+(Mathf.Atan2(vec.y, vec.x) / Mathf.PI * 180));// (0, 0,Mathf.Atan2(vec.y,vec.x), 1);
-		tmp.SetActive(true);
 	}
 
 	private void FaceToMouse()
@@ -148,32 +153,44 @@ public class PlayerManager : MonoBehaviour
 		{
 			float damage = 0;
 			float speed = 0;
+			EffectManager.EffectType effectType = EffectManager.EffectType.End;
+			Sprite sprite = BulletNormal;
 			switch (bulletType)
 			{
 				case BulletType.None:
 					damage = NoneDamage;
 					speed = NoneSpeed;
+					effectType = EffectManager.EffectType.EnemyNormalOut;
+					sprite = BulletNormal;
 					break;
 				case BulletType.Strong:
 					damage = StrongDamage;
 					speed = StrongSpeed;
+					effectType = EffectManager.EffectType.PlayerStrongOut;
+					sprite = BulletStrong;
 					break;
 				case BulletType.Bounce:
 					damage = BounceDamage;
 					speed = BounceSpeed;
+					effectType = EffectManager.EffectType.PlayerTanOut;
+					sprite = BulletTan;
+					break;
+				default:
 					break;
 			}
 			canFire = false;
 			StartCoroutine(Statics.WorkAfterSeconds(() => canFire = true, shoot_interval));
 			var pos = Statics.V3toV2(transform.position);
 			GameObject bullet = GameObject.Instantiate(BulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
+			bullet.SetActive(true);
+			bullet.GetComponent<SpriteRenderer>().sprite = sprite;
 			PlayerBullet playerBullet = bullet.AddComponent<PlayerBullet>();
 			playerBullet.Init(bulletType, damage, false, bullet.AddComponent<Move>());
 			float angle = Mathf.Atan2((MOUSE - pos).y, (MOUSE - pos).x) * Mathf.Rad2Deg + Random.Range(-deviation, deviation) * (1 - energy / maxEnergy);
 			bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
 			playerBullet.move.SetLineType(pos, direct, speed,bullet.GetComponent<Rigidbody2D>());
-			EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOut0, FirePos.position, transform.rotation, 1f);
+			EffectManager.Instance.PlayEffect(effectType, FirePos.position, transform.rotation, 1f);
 		}
 	}
 
@@ -254,7 +271,9 @@ public class PlayerManager : MonoBehaviour
 	public void AttackHeart(GameObject other)
 	{
 		health = 0;
-		Destroy(gameObject);
+		Statics.AnimatorPlay(this, EdgeAnimator, Statics.AnimatorType.Die);
+		Statics.AnimatorPlay(this, HeartAnimator, Statics.AnimatorType.Die);
+		Destroy(gameObject,5f);
 	}
 
 	//受到攻击 减少生命 减少外壳大小 音效 特效 TODO
@@ -276,6 +295,10 @@ public class PlayerManager : MonoBehaviour
 
 	public void BeingCut(GameObject other, Vector2 point, Vector2 dir)
 	{
+		Debug.Log("cut");
+		Debug.DrawRay(point, dir,Color.red,100,false);
+		//Debug.DrawLine(Vector3.zero, new Vector3(1, 1),Color.red,100);
+
         //求交点
         Vector2 center = Statics.V3toV2(EdgeCollider.bounds.center);
         Vector2 point1;
@@ -297,6 +320,7 @@ public class PlayerManager : MonoBehaviour
 				vec.x = -vec.x;
 			}
 		}
+		Debug.DrawLine(transform.position,(Vector2)transform.position+vec,Color.blue,100);
 		addCutMask(vec);
 		//判断是否切到核心
 		float distance = Mathf.Abs((dir.y*center.x - dir.x*center.y + dir.x*point.y-dir.y*point.x) / (Mathf.Pow(dir.y*dir.y+dir.x*dir.x,0.5f)));
@@ -401,7 +425,7 @@ public class PlayerManager : MonoBehaviour
 		energy = 0;
 		bullet = maxBullet;
 		protect = false;
-		bulletType = BulletType.None;
+		bulletType = BulletType.Bounce;
 		skillType = SkillType.None;
         GOEdge.transform.localScale = new Vector3(1, 1, 1);
         GOHeart.transform.localScale = new Vector3(1, 1, 1);
@@ -414,8 +438,11 @@ public class PlayerManager : MonoBehaviour
 		EdgeAnimator = GOEdge.GetComponent<Animator>();
 		HeartAnimator = GOHeart.GetComponent<Animator>();
 		Points = EdgeCollider.points;
-		//test
-		addCutMask(new Vector2(0, -0.5f));
+		//BulletNormal = Resources.Load("Sprites/normal.png") as Sprite;
+		//BulletStrong = Resources.Load("Sprites/strong.png") as Sprite;
+		//BulletTan = Resources.Load("Sprites/tantan.png") as Sprite;
+		//Debug.Log(BulletNormal);
+
     }
 
     // Update is called once per frame

@@ -10,7 +10,8 @@ public class EnemyCut : MonoBehaviour
 	private bool isStatic;
 	//移动类型
 	public Move move { get; private set; }
-
+	//刚体
+	private Rigidbody2D rigidbody2;
 
 
 	//初始化 应该写完了 TODO
@@ -19,7 +20,7 @@ public class EnemyCut : MonoBehaviour
 	//攻击到玩家 应该写完了 还有特效 音效 TODO
 	public void Attack()
 	{
-		PlayerManager.Instance.BeingCut(gameObject);
+		PlayerManager.Instance.BeingCut(gameObject,transform.position,rigidbody2.velocity);
 		Destroy(gameObject);
 	}
 
@@ -54,6 +55,7 @@ public class EnemyCut : MonoBehaviour
 
 	private void Start()
 	{
+		rigidbody2 = GetComponent<Rigidbody2D>();
 	}
 
 	void Update()

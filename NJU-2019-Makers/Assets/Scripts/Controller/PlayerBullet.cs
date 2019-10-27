@@ -22,36 +22,52 @@ public class PlayerBullet : MonoBehaviour
 	public void Init(PlayerManager.BulletType type, float d, bool s, Move m)
 	{
 		bulletType = type; damage = d; isStatic = s; move = m;
-		animator = GetComponent<Animator>();
-		switch (type)
+	}
+
+
+	//攻击到敌人 根据子弹类型判断 弹开（修改自己的move）穿透还是删除自身 
+	//敌人扣血和特效写在enemy 不用考虑 TODO
+	public void Attack(GameObject enemy)
+	{
+		switch (bulletType)
 		{
 			case PlayerManager.BulletType.None:
-				animator.SetInteger("Type", 0);
+				EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOn, transform.position, transform.rotation, 1f);
+				Destroy(gameObject);
 				break;
 			case PlayerManager.BulletType.Strong:
-				animator.SetInteger("Type", 1);
+				EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerStrongOn, transform.position, transform.rotation, 1f);
+				
 				break;
 			case PlayerManager.BulletType.Bounce:
-				animator.SetInteger("Type", 2);
+				EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerTanOn, transform.position, transform.rotation, 1f);
+				//TODO 反弹
 				break;
 			default:
 				break;
 		}
 	}
 
-	//攻击到敌人 根据子弹类型判断 弹开（修改自己的move）穿透还是删除自身 
-	//敌人扣血和特效写在enemy 不用考虑 TODO
-	public void Attack(GameObject enemy)
-	{
-		EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOn, transform.position, transform.rotation, 1f);
-	}
-
 	//碰到墙 应该写完了 TODO
 	public void Wall()
 	{
+		Debug.Log(isStatic);
 		if (!isStatic)
 		{
-			EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOn, transform.position, transform.rotation, 1f);
+			switch (bulletType)
+			{
+				case PlayerManager.BulletType.None:
+					EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOn, transform.position, transform.rotation, 1f);
+					break;
+				case PlayerManager.BulletType.Strong:
+					EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerStrongOn, transform.position, transform.rotation, 1f);
+					break;
+				case PlayerManager.BulletType.Bounce:
+					EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerTanOn, transform.position, transform.rotation, 1f);
+					break;
+				default:
+					break;
+			}
 			Destroy(gameObject);
 		}
 	}

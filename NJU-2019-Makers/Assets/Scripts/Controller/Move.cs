@@ -67,6 +67,8 @@ public class Move : MonoBehaviour
         direction = dt;
         speed = sp;
 		rb2 = rb;
+		transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dt.y, dt.x) * 180f / Mathf.PI);
+
 	}
 	//曲线移动，传入曲线开始和结束的点
 	public void SetCurveType(Vector2 start_point, Vector2 end_point, Rigidbody2D rb = null)
