@@ -48,16 +48,17 @@ public class UIManager : MonoBehaviour
 		TopBlack.rectTransform.sizeDelta = rect.sizeDelta;
 		BottomBlack.rectTransform.sizeDelta = rect.sizeDelta;
 		BloodMask.rectTransform.sizeDelta = rect.sizeDelta;
-		Dialog.rectTransform.sizeDelta = new Vector2(rect.sizeDelta.x, rect.sizeDelta.y * BlackProportion) * 0.8f;
+		Dialog.rectTransform.sizeDelta = new Vector2(rect.sizeDelta.x * 1.1f, rect.sizeDelta.y * BlackProportion * 0.9f) ;
 
 		Mask.rectTransform.localPosition = Vector3.zero;
 		BlackHide = new Vector2(0, rect.sizeDelta.y);
 		BlackShow = BlackHide - BlackProportion * BlackHide;
 		TopBlack.rectTransform.localPosition = BlackHide;
 		BottomBlack.rectTransform.localPosition = -BlackHide;
+		BloodMask.rectTransform.localPosition = Vector3.zero;
 		Dialog.rectTransform.localPosition = new Vector2(0, rect.sizeDelta.y * (-1 + BlackProportion) / 2);
 
-		Dialog.fontSize = (int)rect.sizeDelta.x / 24;
+		Dialog.fontSize = (int)rect.sizeDelta.x / 30;
 		Dialog.enabled = false;
 		Mask.color = Color.clear;
 		BloodMask.color = Color.clear;
@@ -86,9 +87,10 @@ public class UIManager : MonoBehaviour
 	}
 
 	//显示文字 TODO 
-	public void ShowText(string text)
+	public void ShowText(string text,float time = 0)
 	{
 		Dialog.text = text;
+		if (time != 0) StartCoroutine(Statics.WorkAfterSeconds(() => { Dialog.text = ""; }, time));
 	}
 
 	//隐藏文字和对话框 TODO
@@ -127,17 +129,17 @@ public class UIManager : MonoBehaviour
 	{
 		updateUI();
 		//test
-		if (Input.GetKey(KeyCode.A))
-			ShowDialog();
-		if (Input.GetKey(KeyCode.S))
-			HideDialogAndText();
-		if (Input.GetKey(KeyCode.D))
-			ShowText("dddddddddddd");
-        if (Input.GetKey(KeyCode.F))
-        {
-            BloodFlash();
-            EffectManager.Instance.CameraShake(0.2f, 0.5f);
-        }
+		//if (Input.GetKey(KeyCode.A))
+		//	ShowDialog();
+		//if (Input.GetKey(KeyCode.S))
+		//	HideDialogAndText();
+		//if (Input.GetKey(KeyCode.D))
+		//	ShowText("dddddddddddd");
+  //      if (Input.GetKey(KeyCode.F))
+  //      {
+  //          BloodFlash();
+  //          EffectManager.Instance.CameraShake(0.2f, 0.5f);
+  //      }
 
 	}
 }

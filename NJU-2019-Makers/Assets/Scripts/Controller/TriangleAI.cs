@@ -44,10 +44,12 @@ public class TriangleAI : MonoBehaviour
 			//enemyBullet.move.SetAIFollowType(PlayerManager.Instance.transform.gameObject, speed, bullet.GetComponent<Rigidbody2D>());
 
 			//切削子弹
-			var cut = bullet.AddComponent<EnemyCut>();
-			bullet.tag = "EnemyCut";
-			cut.Init(false, bullet.AddComponent<Move>());
-			cut.move.SetLineType(transform.position, PlayerManager.Instance.transform.position - transform.position, speed, bullet.GetComponent<Rigidbody2D>());
+			var cut = bullet.AddComponent<EnemyBullet>();
+			cut.Init(damage,false,
+				bullet.AddComponent<Move>().
+				SetLineType(transform.position, PlayerManager.Instance.transform.position - transform.position, speed, bullet.GetComponent<Rigidbody2D>()), 
+				EnemyBullet.Type.EnemyCut,
+				EffectManager.EffectType.PlayerTanOut);
 			//enemyBullet.tag = "EnemyCut";
 			//enemyBullet.move.SetAIFollowType(PlayerManager.Instance.transform.gameObject,speed,bullet.GetComponent<Rigidbody2D>());
 

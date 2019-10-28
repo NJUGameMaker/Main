@@ -10,6 +10,7 @@ public class Statics : MonoBehaviour
 	public delegate void vFunv();
 	public delegate bool bFunv();
 	public delegate Vector2 V2Funv();
+	public delegate Vector3 V3Funv();
 
 	//表示的是类型：X2表示X^2速度增长，表示先慢后快递增，先快后慢递减
 	//X表示匀速递增或递减
@@ -34,13 +35,13 @@ public class Statics : MonoBehaviour
 	//将size从startsize到endsize的平滑移动，这里的step是百分比
 	public static float FixFun(FunType type, float startsize, float endsize, float step)
 	{
-		if (startsize > endsize)//若是下降形式，那么将其反向处理，转成上升
-		{
-			float tmp = startsize;
-			startsize = endsize;
-			endsize = tmp;
-			step = 1 - step;
-		}
+		//if (startsize > endsize)//若是下降形式，那么将其反向处理，转成上升
+		//{
+		//	float tmp = startsize;
+		//	startsize = endsize;
+		//	endsize = tmp;
+		//	step = 1 - step;
+		//}
 		//保证startsize < endsize且step在（0，1）
 		switch (type)
 		{
@@ -70,6 +71,17 @@ public class Statics : MonoBehaviour
 		return new Vector3(v.x, v.y, 0);
 	}
 
+	public static Quaternion FaceTo(Vector2 v,int offset = 0)
+	{
+		return Quaternion.Euler(0, 0, Mathf.Atan2(v.y, v.x) * 180 / Mathf.PI + offset);
+	}
+
+	public static Vector2 FaceVec(Quaternion q)
+	{
+		var tmp = q.eulerAngles.z / 180 * Mathf.PI;
+		return new Vector2(Mathf.Cos(tmp), Mathf.Sin(tmp));
+	}
+
 	public static IEnumerator WorkAfterSeconds(vFunv fun, float time)
 	{
 		yield return new WaitForSeconds(time);
@@ -92,7 +104,7 @@ public class Statics : MonoBehaviour
 
 	public static IEnumerator Flash(Image img,Color st, Color ed, float time,FunType t = FunType.X)
 	{
-		float delta = Time.fixedDeltaTime / time, p = 0;
+		float delta = Mathf.Min(1,Time.fixedDeltaTime / time), p = 0;
 		while (p<1)
 		{
 			p += delta;
@@ -103,11 +115,36 @@ public class Statics : MonoBehaviour
 
 	public static IEnumerator Move(Transform transform, Vector3 st, Vector3 ed, float time, FunType t = FunType.X)
 	{
-		float delta = Time.fixedDeltaTime / time, p = 0;
+		float delta = Mathf.Min(1, Time.fixedDeltaTime / time), p = 0;
 		while (p < 1)
 		{
 			p += delta;
 			transform.localPosition = new Vector3(FixFun(t, st.x, ed.x, p), FixFun(t, st.y, ed.y, p), FixFun(t, st.z, ed.z, p));
+			yield return new WaitForFixedUpdate();
+		}
+	}
+
+	public static IEnumerator MoveWorld(Transform transform, Vector3 st, Vector3 ed, float time, FunType t = FunType.X)
+	{
+		float delta = Mathf.Min(1, Time.fixedDeltaTime / time), p = 0;
+		while (p < 1)
+		{
+			p += delta;
+			transform.position = new Vector3(FixFun(t, st.x, ed.x, p), FixFun(t, st.y, ed.y, p), FixFun(t, st.z, ed.z, p));
+			yield return new WaitForFixedUpdate();
+		}
+	}
+
+	public static IEnumerator MoveWorld(Transform transform, Vector3 st,Transform ted, float time, FunType t = FunType.X,float offset = 0)
+	{
+		float delta = Mathf.Min(1, Time.fixedDeltaTime / time), p = 0;
+		while (p < 1)
+		{
+			p += delta;
+			var ed = ted.position;
+			ed.z = offset;
+			//Debug.Log(ed);
+			transform.position = new Vector3(FixFun(t, st.x, ed.x, p), FixFun(t, st.y, ed.y, p), FixFun(t, st.z, ed.z, p));
 			yield return new WaitForFixedUpdate();
 		}
 	}

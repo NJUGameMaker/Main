@@ -69,7 +69,7 @@ public class EffectManager : MonoBehaviour
 		for (float deltime = 0; deltime<time; deltime += Time.deltaTime)
 		{
 			//TODO 设置type
-			Camera.main.orthographicSize = Statics.FixFun(Statics.FunType.X2, st, ed, deltime / time);
+			Camera.main.orthographicSize = Statics.FixFun(Statics.FunType.X, st, ed, deltime / time);
 			yield return new WaitForEndOfFrame();
 		}
 	}
@@ -92,18 +92,28 @@ public class EffectManager : MonoBehaviour
 	}
 
 	//镜头跟踪 TODO csk
-	public void CameraFocus(float time, Vector2 focus)
+	public void CameraFocus(float time, Vector3 focus, Statics.FunType type)
 	{
-		StartCoroutine(IECameraFocus(Camera.main.transform.position, focus, time));
+		focus.z = -10;
+		StartCoroutine(Statics.MoveWorld(Camera.main.transform, Camera.main.transform.position, focus, time, type));
+		//StartCoroutine(IECameraFocus(Camera.main.transform.position, focus, time));
 	}
 
+	public void CameraFocus(float time, Transform focus, Statics.FunType type)
+	{
+		StartCoroutine(Statics.MoveWorld(Camera.main.transform, Camera.main.transform.position, focus, time, type,-10));
+	}
+
+	//跟踪速度
+	private float FocusSpeed;
 	//是否持续跟踪
 	private bool keepFocus;
 	//持续跟踪的位置
 	private Statics.V2Funv funFocus;
 	//设置镜头是否持续跟踪 TODO csk
-	public void SetCameraContinueFocus(Statics.V2Funv fun,bool f)
+	public void SetCameraContinueFocus(Statics.V2Funv fun,bool f,float sp = 0.07f)
 	{
+		FocusSpeed = sp;
 		funFocus = fun;
 		keepFocus = f;
 	}
@@ -112,10 +122,10 @@ public class EffectManager : MonoBehaviour
 	{
 		if (keepFocus)
 		{
-			const float con = 2;
+			//const float con = 4;
 			//调参数 TODO
 			//Debug.Log((Vector3)funFocus());
-			Vector3 tmp = Camera.main.transform.position + ((Vector3)funFocus() - Camera.main.transform.position) * Time.deltaTime * con;
+			Vector3 tmp = Camera.main.transform.position + ((Vector3)funFocus() - Camera.main.transform.position) * FocusSpeed;
 			tmp.z = -10;
 			Camera.main.transform.position = tmp;
 		}
@@ -140,8 +150,11 @@ public class EffectManager : MonoBehaviour
 		}
 	}
 
-	private void Update()
+	private void FixedUpdate()
 	{
+		//镜头持续跟踪
+		CameraContinueFocus();
+
 		//暂停
 		if (GameManager.Instance.pause)
 		{
@@ -152,11 +165,15 @@ public class EffectManager : MonoBehaviour
 		{
 			return;
 		}
-		//镜头持续跟踪
-		CameraContinueFocus();
+	}
+
+	private void Update()
+	{
+
+
 		//test
-		if (Input.GetKeyDown(KeyCode.Z))
-			SetCameraContinueFocus(() => Input.mousePosition, true);
+		//if (Input.GetKeyDown(KeyCode.Z))
+		//	SetCameraContinueFocus(() => Input.mousePosition, true);
 		//gameObject.AddComponent<PlayerBullet>();
 	}
 }

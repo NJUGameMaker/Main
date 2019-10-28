@@ -55,16 +55,17 @@ public class Move : MonoBehaviour
 		rb2 = rb;
 	}
 	//设置为静止的状态，参数为静止点
-	public void SetStopType(Vector2 position, Rigidbody2D rb = null)
+	public Move SetStopType(Vector2 position, Rigidbody2D rb = null)
 	{
 		moveType = MoveType.Stop;
 		heart = position;
 		rb2 = rb;
+		return this;
 	}
 
 
 	//直线移动，设定开始点和移动方向
-	public void SetLineType(Vector2 position, Vector2 dt, float sp, Rigidbody2D rb = null)
+	public Move SetLineType(Vector2 position, Vector2 dt, float sp, Rigidbody2D rb = null)
 	{
 		moveType = MoveType.Line;
 		heart = position;
@@ -72,25 +73,28 @@ public class Move : MonoBehaviour
 		speed = sp;
 		rb2 = rb;
 		transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dt.y, dt.x) * 180f / Mathf.PI);
+		return this;
 	}
 
 	//直线移动，设定开始点和移动方向(加速度)
-	public void SetLineType(Vector2 position, Vector2 dt, float sp, float a, Rigidbody2D rb = null)
+	public Move SetLineType(Vector2 position, Vector2 dt, float sp, float a, Rigidbody2D rb = null)
 	{
 		SetLineType(position, dt, sp, rb);
 		acc = a;
+		return this;
 	}
 
 	//曲线移动，传入曲线开始和结束的点
-	public void SetCurveType(Vector2 start_point, Vector2 end_point, Rigidbody2D rb = null)
+	public Move SetCurveType(Vector2 start_point, Vector2 end_point, Rigidbody2D rb = null)
 	{
 		moveType = MoveType.Cruve;
 		startPoint = start_point;
 		endPoint = end_point;
 		rb2 = rb;
+		return this;
 	}
 	//圆形移动
-	public void SetRoundType(Vector2 position, float r, float roundt, Rigidbody2D rb = null)
+	public Move SetRoundType(Vector2 position, float r, float roundt, Rigidbody2D rb = null)
 	{
 		moveType = MoveType.Round;
 		heart = position;
@@ -99,15 +103,17 @@ public class Move : MonoBehaviour
 		currentTime = 0;
 		transform.position = new Vector3(heart.x + r, heart.y, transform.position.z);
 		rb2 = rb;
+		return this;
 	}
 
 	//跟踪主角视角,参数为主角
-	public void SetAIFollowType(GameObject player, float sp = 1, Rigidbody2D rb = null)
+	public Move SetAIFollowType(GameObject player, float sp = 1, Rigidbody2D rb = null)
 	{
 		moveType = MoveType.AIFollow;
 		follow = player;
 		rb2 = rb;
 		speed = sp;
+		return this;
 	}
 	//设置各种类型移动的参数并且设置各种初始化函数 TODO
 	public void Init()
@@ -219,8 +225,8 @@ public class Move : MonoBehaviour
 		}
 		return new Vector2(0, 0);
 	}
-	// Update is called once per frame
-	void Update()
+
+	private void FixedUpdate()
 	{
 		//暂停
 		if (GameManager.Instance.pause)
@@ -230,9 +236,16 @@ public class Move : MonoBehaviour
 		//播放剧情
 		if (GameManager.Instance.playVideo)
 		{
+			addSpeed = addSpeed * declineSpeed;
+			work();
 			return;
 		}
 		addSpeed = addSpeed * declineSpeed;
 		work();
+	}
+	// Update is called once per frame
+	void Update()
+	{
+
 	}
 }
