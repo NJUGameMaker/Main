@@ -20,7 +20,13 @@ public class EnemyCut : MonoBehaviour
 	//攻击到玩家 应该写完了 还有特效 音效 TODO
 	public void Attack()
 	{
-		PlayerManager.Instance.BeingCut(gameObject,transform.position,rigidbody2.velocity);
+		Vector2 v = rigidbody2.velocity;
+		var cast = Physics2D.Raycast(transform.position, v, 100, 1 << 8);
+		if (cast)
+		{
+			PlayerManager.Instance.BeingCut(gameObject, cast.point, v);
+			Debug.DrawLine(Vector3.zero, cast.point, Color.red, 100);
+		}
 		Destroy(gameObject);
 	}
 

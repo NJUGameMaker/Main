@@ -327,7 +327,7 @@ public class PlayerManager : MonoBehaviour
 //		//判断是否切到核心
 //		float distance = Mathf.Abs((dir.y*center.x - dir.x*center.y + dir.x*point.y-dir.y*point.x) / (Mathf.Pow(dir.y*dir.y+dir.x*dir.x,0.5f)));
 //=======
-        Debug.DrawLine(point, point1, Color.red, 100);
+        //Debug.DrawLine(point, point1, Color.red, 100);
         //判断是否切到核心
         float distance = Mathf.Abs((dir.y*center.x - dir.x*center.y + dir.x*point.y-dir.y*point.x) / (Mathf.Pow(dir.y*dir.y+dir.x*dir.x,0.5f)));
 //>>>>>>> 6909aaace8ae77b650e63399e77f21b682b71fa7
@@ -362,7 +362,7 @@ public class PlayerManager : MonoBehaviour
                 vec.x = -vec.x;
             }
         }
-        Debug.DrawLine(transform.position, (Vector2)transform.position + vec, Color.blue, 100);
+        //Debug.DrawLine(transform.position, (Vector2)transform.position + vec, Color.blue, 100);
         addCutMask(EdgeCollider.transform.InverseTransformVector(vec));
         Debug.Log(vec.magnitude);
         Debug.Log(EdgeCollider.transform.InverseTransformVector(vec).magnitude);
