@@ -7,6 +7,16 @@ using UnityEngine;
 //不具有移动功能 移动功能另加Move组件
 public class Enemy : MonoBehaviour
 {
+	//形状_运动形式_子弹类型_子弹运动形式
+	//运动形式: S--停止 L--直线 C--圆周 AI--跟踪
+	//子弹类型: D--伤害 C--切削 N--无 
+	//形状: Tri--三角形 
+	public enum EnemyType
+	{
+		Tri_L_D_L,
+		Tri_L_N_S,
+	};
+
 	//动画组件
 	public Animator animator;
 

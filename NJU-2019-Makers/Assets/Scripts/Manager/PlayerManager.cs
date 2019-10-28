@@ -320,7 +320,8 @@ public class PlayerManager : MonoBehaviour
 				vec.x = -vec.x;
 			}
 		}
-		Debug.DrawLine(transform.position,(Vector2)transform.position+vec,Color.blue,100);
+		Debug.Log(vec);
+		Debug.DrawLine((Vector2)transform.position+vec, new Vector2(0f,0f),Color.blue,100);
 		addCutMask(vec);
 		//判断是否切到核心
 		float distance = Mathf.Abs((dir.y*center.x - dir.x*center.y + dir.x*point.y-dir.y*point.x) / (Mathf.Pow(dir.y*dir.y+dir.x*dir.x,0.5f)));
