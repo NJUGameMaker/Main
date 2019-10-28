@@ -296,43 +296,80 @@ public class PlayerManager : MonoBehaviour
 	public void BeingCut(GameObject other, Vector2 point, Vector2 dir)
 	{
 		Debug.Log("cut");
-		Debug.DrawRay(point, dir,Color.red,100,false);
+		
 		//Debug.DrawLine(Vector3.zero, new Vector3(1, 1),Color.red,100);
 
         //求交点
-        Vector2 center = Statics.V3toV2(EdgeCollider.bounds.center);
+        Vector2 center = Statics.V3toV2(EdgeCollider.transform.position);
         Vector2 point1;
         point1.x = (2*Mathf.Pow(dir.x,2)*center.x + (Mathf.Pow(dir.y,2)-Mathf.Pow(dir.x,2))*point.x + 2*dir.x*dir.y*(center.y-point.y)) / (Mathf.Pow(dir.x,2) + Mathf.Pow(dir.y,2));
         point1.y = 2 * (dir.y / dir.x) * ((Mathf.Pow(dir.x,2)*(center.x-point.x) + dir.x*dir.y*(center.y-point.y)) / (Mathf.Pow(dir.x,2) + Mathf.Pow(dir.y,2))) + point.y;
-		//添加遮罩
-		Vector2 vec = new Vector2(dir.y,dir.x);
-		float y = (dir.y / dir.x) * (center.x - point.x) + point.y;
-		if(y > center.y){
-			if(vec.y > 0){
-				vec.x = -vec.x;
-			}else{
-				vec.y = -vec.y;
-			}
-		}else{
-			if(vec.y > 0){
-				vec.y = -vec.y;
-			}else{
-				vec.x = -vec.x;
-			}
-		}
-		Debug.Log(vec);
-		Debug.DrawLine((Vector2)transform.position+vec, new Vector2(0f,0f),Color.blue,100);
-		addCutMask(vec);
-		//判断是否切到核心
-		float distance = Mathf.Abs((dir.y*center.x - dir.x*center.y + dir.x*point.y-dir.y*point.x) / (Mathf.Pow(dir.y*dir.y+dir.x*dir.x,0.5f)));
+////<<<<<<< HEAD
+//		//添加遮罩
+//		Vector2 vec = new Vector2(dir.y,dir.x);
+//		float y = (dir.y / dir.x) * (center.x - point.x) + point.y;
+//		if(y > center.y){
+//			if(vec.y > 0){
+//				vec.x = -vec.x;
+//			}else{
+//				vec.y = -vec.y;
+//			}
+//		}else{
+//			if(vec.y > 0){
+//				vec.y = -vec.y;
+//			}else{
+//				vec.x = -vec.x;
+//			}
+//		}
+//		Debug.Log(vec);
+//		Debug.DrawLine((Vector2)transform.position+vec, new Vector2(0f,0f),Color.blue,100);
+//		addCutMask(vec);
+//		//判断是否切到核心
+//		float distance = Mathf.Abs((dir.y*center.x - dir.x*center.y + dir.x*point.y-dir.y*point.x) / (Mathf.Pow(dir.y*dir.y+dir.x*dir.x,0.5f)));
+//=======
+        Debug.DrawLine(point, point1, Color.red, 100);
+        //判断是否切到核心
+        float distance = Mathf.Abs((dir.y*center.x - dir.x*center.y + dir.x*point.y-dir.y*point.x) / (Mathf.Pow(dir.y*dir.y+dir.x*dir.x,0.5f)));
+//>>>>>>> 6909aaace8ae77b650e63399e77f21b682b71fa7
 		if(distance <= HeartCollider.radius)
 		{
 			AttackHeart(other);
 		}
-		//找插入位置
-		int x1 = -1,x2 = -1;
-		point = point - center;	//相对距离
-		point1 = point1 - center;
+        //添加遮罩
+        Vector2 vec = new Vector2(dir.y, dir.x);
+        vec.Normalize();
+        vec = vec * distance;
+        float y = (dir.y / dir.x) * (center.x - point.x) + point.y;
+        if (y > center.y)
+        {
+            if (vec.y > 0)
+            {
+                vec.x = -vec.x;
+            }
+            else
+            {
+                vec.y = -vec.y;
+            }
+        }
+        else
+        {
+            if (vec.y > 0)
+            {
+                vec.y = -vec.y;
+            }
+            else
+            {
+                vec.x = -vec.x;
+            }
+        }
+        Debug.DrawLine(transform.position, (Vector2)transform.position + vec, Color.blue, 100);
+        addCutMask(EdgeCollider.transform.InverseTransformVector(vec));
+        Debug.Log(vec.magnitude);
+        Debug.Log(EdgeCollider.transform.InverseTransformVector(vec).magnitude);
+        //找插入位置
+        int x1 = -1,x2 = -1;
+        point = EdgeCollider.transform.InverseTransformPoint(point);// 相对距离
+        point1 = EdgeCollider.transform.InverseTransformPoint(point1);
 		for(int i = 0; i < Points.Length; i++){
 			if(Statics.IsPointCut(point,Points[i],Points[(i+1)%Points.Length])){
 				x1 = i;
@@ -341,7 +378,7 @@ public class PlayerManager : MonoBehaviour
 				x2 = i;
 			}
 		}
-		//插入与删除，维护边界点集
+        //插入与删除，维护边界点集
 		if(x1 > x2){
 			int temp = x1;
 			x1 = x2;
@@ -370,6 +407,9 @@ public class PlayerManager : MonoBehaviour
 			temp_array[x2-x1+1] = point1;
 			Points = temp_array;
 		}
+        EdgeCollider.points = Points;
+        //Vector2[] test = new Vector2[2] { point,point1};
+        //EdgeCollider.points = test;
 		//添加切削点，维护切削点集
 		KeyPoints.Add(point);
 		KeyPoints.Add(point1);
