@@ -29,14 +29,16 @@ public class EffectManager : MonoBehaviour
 	public enum EffectType
 	{
 		PlayerNormalOn,
-		PlayerNormalOut0,
-		PlayerNormalOut1,
+		PlayerNormalOut,
 		PlayerTanOn,
 		PlayerTanOut,
 		PlayerStrongOn,
 		PlayerStrongOut,
 		EnemyNormalOn,
 		EnemyNormalOut,
+		EnemyCutOn,
+		EnemyCutOut,
+
 
 		End
 	}

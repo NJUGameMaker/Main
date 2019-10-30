@@ -13,7 +13,9 @@ public class BulletShorter : MonoBehaviour
 	//发射状态
 	public ShotType shotType;
 	//子弹prefab
-	public GameObject Bullet;
+	private GameObject Bullet;
+	public GameObject CutBullet;
+	public GameObject DamageBullet;
 	//跟踪目标
 	public GameObject Target;
 	//单轮攻击间隔
@@ -46,9 +48,20 @@ public class BulletShorter : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+		switch (bulletType)
+		{
+			case EnemyBullet.Type.EnemyBullet:
+				Bullet = DamageBullet;
+				break;
+			case EnemyBullet.Type.EnemyCut:
+				Bullet = CutBullet;
+				break;
+			default:
+				break;
+		}
 		rigidbody2 = GetComponent<Rigidbody2D>();
-		StartCoroutine(Shot()); 
-    }
+		StartCoroutine(Shot());
+	}
 
 	IEnumerator Shot()
 	{

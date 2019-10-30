@@ -775,7 +775,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shotType: 0
-  Bullet: {fileID: 675350599}
+  CutBullet: {fileID: 4626859448097340834, guid: 16fa2eaa2201c9b4b8cb0ed4a331ef91,
+    type: 3}
+  DamageBullet: {fileID: 2491762746154822245, guid: d7b3a501e414018478f5284a94294b82,
+    type: 3}
   Target: {fileID: 0}
   Interval: 2
   StartRotate: 0
@@ -784,8 +787,8 @@ MonoBehaviour:
   Velocity: 0.1
   Acceleration: 0.01
   Damage: 0
-  OutType: 2
-  HitType: 0
+  OutType: 9
+  HitType: 8
   bulletType: 0
   ShotPoint: {fileID: 251598625}
 --- !u!4 &1150969877
@@ -1335,5 +1338,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8878478251110559503, guid: 661162c083ba52e4eb6f663838c5e20e,
+        type: 3}
+      propertyPath: BulletNormal
+      value: 
+      objectReference: {fileID: 3035255369970912403, guid: 7478d9e4ce121204eac04b165acac3bd,
+        type: 3}
+    - target: {fileID: 8878478251110559503, guid: 661162c083ba52e4eb6f663838c5e20e,
+        type: 3}
+      propertyPath: BulletStrong
+      value: 
+      objectReference: {fileID: 4644864380035600281, guid: 07d54ccfbcd75054babe336fbff5a490,
+        type: 3}
+    - target: {fileID: 8878478251110559503, guid: 661162c083ba52e4eb6f663838c5e20e,
+        type: 3}
+      propertyPath: BulletTan
+      value: 
+      objectReference: {fileID: 2871763751108818020, guid: 8c75593b8ddab714abd1ca3604d3bea1,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 661162c083ba52e4eb6f663838c5e20e, type: 3}

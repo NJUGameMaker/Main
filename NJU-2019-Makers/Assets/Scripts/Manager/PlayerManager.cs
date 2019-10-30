@@ -89,17 +89,17 @@ public class PlayerManager : MonoBehaviour
 	//动画
 	private Animator EdgeAnimator;
 	private Animator HeartAnimator;
-	//子弹图片
-	public Sprite BulletNormal;
-	public Sprite BulletStrong;
-	public Sprite BulletTan;
+	//子弹Prefeb
+	public GameObject BulletNormal;
+	public GameObject BulletStrong;
+	public GameObject BulletTan;
 
 
 	//子弹发射位置
 	public Transform FirePos;
 
 	//图形界面加预设物体 TODO
-	public GameObject BulletPrefab;
+	//public GameObject BulletPrefab;
 
 	//子弹类型伤害 和 速度
 	public const float NoneDamage = 10;
@@ -154,26 +154,26 @@ public class PlayerManager : MonoBehaviour
 			float damage = 0;
 			float speed = 0;
 			EffectManager.EffectType effectType = EffectManager.EffectType.End;
-			Sprite sprite = BulletNormal;
+			GameObject BulletPrefab = BulletNormal;
 			switch (bulletType)
 			{
 				case BulletType.None:
 					damage = NoneDamage;
 					speed = NoneSpeed;
 					effectType = EffectManager.EffectType.EnemyNormalOut;
-					sprite = BulletNormal;
+					BulletPrefab = BulletNormal;
 					break;
 				case BulletType.Strong:
 					damage = StrongDamage;
 					speed = StrongSpeed;
 					effectType = EffectManager.EffectType.PlayerStrongOut;
-					sprite = BulletStrong;
+					BulletPrefab = BulletStrong;
 					break;
 				case BulletType.Bounce:
 					damage = BounceDamage;
 					speed = BounceSpeed;
 					effectType = EffectManager.EffectType.PlayerTanOut;
-					sprite = BulletTan;
+					BulletPrefab = BulletTan;
 					break;
 				default:
 					break;
@@ -183,7 +183,7 @@ public class PlayerManager : MonoBehaviour
 			var pos = Statics.V3toV2(transform.position);
 			GameObject bullet = GameObject.Instantiate(BulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
 			bullet.SetActive(true);
-			bullet.GetComponent<SpriteRenderer>().sprite = sprite;
+			//bullet.GetComponent<SpriteRenderer>().sprite = sprite;
 			PlayerBullet playerBullet = bullet.AddComponent<PlayerBullet>();
 			playerBullet.Init(bulletType, damage, false, bullet.AddComponent<Move>());
 			float angle = Mathf.Atan2((MOUSE - pos).y, (MOUSE - pos).x) * Mathf.Rad2Deg + Random.Range(-deviation, deviation) * (1 - energy / maxEnergy);
@@ -466,7 +466,7 @@ public class PlayerManager : MonoBehaviour
 		energy = 0;
 		bullet = maxBullet;
 		protect = false;
-		bulletType = BulletType.Bounce;
+		bulletType = BulletType.Strong;
 		skillType = SkillType.None;
         GOEdge.transform.localScale = new Vector3(1, 1, 1);
         GOHeart.transform.localScale = new Vector3(1, 1, 1);
