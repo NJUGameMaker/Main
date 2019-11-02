@@ -13,7 +13,8 @@ public class Move : MonoBehaviour
 		Line,
 		Cruve,
 		Round,
-		AIFollow
+		AIFollow,
+		InOrder
 		//TODO ...BJY
 	};
 	//移动的类型
@@ -37,7 +38,7 @@ public class Move : MonoBehaviour
 
 	//附加的速度，用于被撞击后后退
 	private Vector3 addSpeed = new Vector3(0, 0, 0);
-	private const float declineSpeed = 0.9f;//衰减常量
+	private const float declineSpeed = 0.6f;//衰减常量
 
 	public void AddForceSpeed(Vector3 vect)
 	{
@@ -63,6 +64,12 @@ public class Move : MonoBehaviour
 		return this;
 	}
 
+	//设置为巡逻状态，具体参数参考GoAround
+	public Move SetInOrder()
+	{
+		moveType = MoveType.InOrder;
+		return this;
+	}
 
 	//直线移动，设定开始点和移动方向
 	public Move SetLineType(Vector2 position, Vector2 dt, float sp, Rigidbody2D rb = null)
@@ -130,6 +137,9 @@ public class Move : MonoBehaviour
 		//分开判断处理
 		switch (moveType)
 		{
+			case MoveType.InOrder:
+				{ };
+				break;
 			case MoveType.Stop:
 				{
 					transform.position = new Vector3(heart.x, heart.y, transform.position.z);

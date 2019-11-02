@@ -188,4 +188,18 @@ public class Statics : MonoBehaviour
 		}
 		return false;
 	}
+
+	public static void SwapPos(Transform a,Transform b)
+	{
+		var tmp = a.position;
+		a.position = b.position;
+		b.position = tmp;
+	}
+
+	public static void Swap<T>(ref T a, ref T b)
+	{
+		T t = a;
+		a = b;
+		b = t;
+	}
 }

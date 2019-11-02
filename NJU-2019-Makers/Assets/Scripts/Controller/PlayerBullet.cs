@@ -51,7 +51,7 @@ public class PlayerBullet : MonoBehaviour
 	//碰到墙 应该写完了 TODO
 	public void Wall()
 	{
-		Debug.Log(isStatic);
+		//Debug.Log(isStatic);
 		if (!isStatic)
 		{
 			switch (bulletType)
