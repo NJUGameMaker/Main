@@ -60,8 +60,8 @@ public class PlayerManager : MonoBehaviour
 	public float energy;
 
 	//子弹条
-	private float maxBullet = 100;
-	private float bullet;
+	public float maxBullet = 100;
+	public float bullet;
 
 
 	//弹开之后的保护状态
@@ -114,8 +114,14 @@ public class PlayerManager : MonoBehaviour
 	public const float deviation = 25;
 	//发射帧间隔(s)：
 	public const float shoot_interval = 0.2f;
-	//能够发射子弹
+	//能够发射子弹（子弹间隔）
 	private bool canFire;
+	//装弹冷却
+	private bool noBullet;
+	//每发子弹消耗的百分比
+	private float fireCost = 5;
+	//子弹回复速度
+	private float reBullet = 3;
 
 	// 放缩所需参数：
 	public const float small_interval = 0.01f;
@@ -151,6 +157,7 @@ public class PlayerManager : MonoBehaviour
 	{
 		if (canFire)
 		{
+			bullet -= fireCost;
 			float damage = 0;
 			float speed = 0;
 			EffectManager.EffectType effectType = EffectManager.EffectType.End;
@@ -181,15 +188,15 @@ public class PlayerManager : MonoBehaviour
 			canFire = false;
 			StartCoroutine(Statics.WorkAfterSeconds(() => canFire = true, shoot_interval));
 			var pos = Statics.V3toV2(transform.position);
-			GameObject bullet = GameObject.Instantiate(BulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
-			bullet.SetActive(true);
+			GameObject GObullet = GameObject.Instantiate(BulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
+			GObullet.SetActive(true);
 			//bullet.GetComponent<SpriteRenderer>().sprite = sprite;
-			PlayerBullet playerBullet = bullet.AddComponent<PlayerBullet>();
-			playerBullet.Init(bulletType, damage, false, bullet.AddComponent<Move>());
+			PlayerBullet playerBullet = GObullet.AddComponent<PlayerBullet>();
+			playerBullet.Init(bulletType, damage, false, GObullet.AddComponent<Move>());
 			float angle = Mathf.Atan2((MOUSE - pos).y, (MOUSE - pos).x) * Mathf.Rad2Deg + Random.Range(-deviation, deviation) * (1 - energy / maxEnergy);
-			bullet.transform.rotation = Quaternion.Euler(0, 0, angle);
+			GObullet.transform.rotation = Quaternion.Euler(0, 0, angle);
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-			playerBullet.move.SetLineType(pos, direct, speed,bullet.GetComponent<Rigidbody2D>());
+			playerBullet.move.SetLineType(pos, direct, speed,GObullet.GetComponent<Rigidbody2D>());
 			EffectManager.Instance.PlayEffect(effectType, FirePos.position, transform.rotation, 1f);
 		}
 	}
@@ -486,9 +493,24 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    // Update is called once per frame
+	void StartReBullet()
+	{
+		noBullet = true;
+	}
+
+	void ReBullet(float x)
+	{
+		bullet += x * reBullet;
+		if (bullet >= maxBullet)
+		{
+			bullet = maxBullet;
+			noBullet = false;
+		}
+	}
+
+	// Update is called once per frame
 	// 添加了随每帧缓慢恢复血量、改变大小
-    void Update()
+	void Update()
     {
 		//暂停
         if (GameManager.Instance.pause)
@@ -501,9 +523,19 @@ public class PlayerManager : MonoBehaviour
 			return;
 		}
 
-		if (FIRE)
+		if (FIRE && bullet > 0 && !noBullet)
 		{
 			Fire();
+		}
+		else if (bullet <= 0 && !noBullet)
+		{
+			StartReBullet();
+		}else if (noBullet)
+		{
+			ReBullet(2);
+		}else if (!FIRE)
+		{
+			ReBullet(1);
 		}
 
 		if (SMALL)
@@ -520,6 +552,7 @@ public class PlayerManager : MonoBehaviour
 		ReHealth(reBlood);
         ReShape();
 		FaceToMouse();
-		//Debug.Log(EdgeCollider.points[0]);
+		Debug.Log(bullet);
+		Debug.Log(noBullet);
 	}
 }
