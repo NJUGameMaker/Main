@@ -60,55 +60,11 @@ public class LaserManager : MonoBehaviour
 		if (Input.GetMouseButtonDown(0))
 		{
 			st = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            laserBullet.enabled = true;
-            FireLaser();
 		}
 		else if (Input.GetMouseButtonUp(0))
 		{
 			ed = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			MakeLaser(st, ed - st, false,ref tmp);
-            laserBullet.enabled = false;
         }
 	}
-
-    public LineRenderer laserBullet;
-    public void FireLaser()
-    {
-        RaycastHit2D hit;
-        //hit = Physics2D.Raycast(PlayerManager.Instance.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        Vector2 startpoint;
-        startpoint.x = 20;
-        startpoint.y = 20;
-        Vector2 endpoint;
-        endpoint.x = 0;
-        endpoint.y = 0;
-        hit = Physics2D.Raycast(startpoint, Camera.main.ScreenToWorldPoint(Input.mousePosition));
-        //激光发射碰撞
-        if (hit && laserBullet.enabled == true)
-        {
-            Debug.Log("collider");
-            switch(hit.collider.tag)
-            {
-                case "Enemy": { };break;
-                default:break;
-            }
-            
-            //射线的起始点
-            laserBullet.SetPosition(0, startpoint);
-
-            //因为激光只有一个终点，所以障碍物位置为终点
-            //laserBullet.SetPosition(1, hit.point);
-            laserBullet.SetPosition(1, endpoint);
-        }
-        else
-        {
-            Debug.Log(" no collider");
-            //射线的起始点
-            laserBullet.SetPosition(0, startpoint);
-
-            //因为激光只有一个终点，所以障碍物位置为终点
-            laserBullet.SetPosition(1, endpoint);
-        }
-        Debug.Log(startpoint + (100 * (Vector2)Camera.main.ScreenToWorldPoint(Input.mousePosition)));
-    }
 }
