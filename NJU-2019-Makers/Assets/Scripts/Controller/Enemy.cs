@@ -11,6 +11,11 @@ public class Enemy : MonoBehaviour
 	//动画组件
 	public Animator animator;
 
+	//自身撞击伤害
+	public float damage;
+	//撞击玩家后自身是否死亡
+	public bool AttackDie;
+
 	//被攻击闪烁时间
 	const float atktime = 0.5f;
 	//死亡动画时间
@@ -30,13 +35,20 @@ public class Enemy : MonoBehaviour
 	public void Init(float h, Move m) { maxHealth = health = h; move = m; }
 
 	//敌人本体撞到玩家 需要考虑 玩家是否无敌 （玩家在无敌状态需要被弹开 或者 对玩家造成伤害自己死亡） TODO
-	public void Attack()
+	public void AttackPlayer()
 	{
+		PlayerManager.Instance.BeingAttack(damage);
+		if (AttackDie)
+		{
+			Statics.AnimatorPlay(this, animator, Statics.AnimatorType.Die);
+			Destroy(gameObject, dietime);
+		}
 	}
 
 	//攻击到玩家核心 判断游戏结束或者读取存档等 TODO
 	public void AttackHeart()
 	{
+		PlayerManager.Instance.AttackHeart(gameObject);
 	}
 
 	//被玩家子弹攻击 受到伤害血量计算 特效 音效等 TODO
@@ -68,7 +80,7 @@ public class Enemy : MonoBehaviour
 		}
 		if (collision.gameObject.tag == "PlayerEdge")
 		{
-			Attack();
+			AttackPlayer();
 		}
 		if (collision.gameObject.tag == "PlayerBullet")
 		{

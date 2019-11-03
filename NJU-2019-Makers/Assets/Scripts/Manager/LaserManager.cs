@@ -65,7 +65,6 @@ public class LaserManager : MonoBehaviour
 		{
 			ed = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 			MakeLaser(st, ed - st, false,ref tmp);
-		}
+        }
 	}
-
 }
