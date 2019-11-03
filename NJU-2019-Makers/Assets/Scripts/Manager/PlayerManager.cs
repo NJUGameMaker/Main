@@ -304,33 +304,8 @@ public class PlayerManager : MonoBehaviour
         Vector2 point1;
         point1.x = (2*Mathf.Pow(dir.x,2)*center.x + (Mathf.Pow(dir.y,2)-Mathf.Pow(dir.x,2))*point.x + 2*dir.x*dir.y*(center.y-point.y)) / (Mathf.Pow(dir.x,2) + Mathf.Pow(dir.y,2));
         point1.y = 2 * (dir.y / dir.x) * ((Mathf.Pow(dir.x,2)*(center.x-point.x) + dir.x*dir.y*(center.y-point.y)) / (Mathf.Pow(dir.x,2) + Mathf.Pow(dir.y,2))) + point.y;
-////<<<<<<< HEAD
-//		//添加遮罩
-//		Vector2 vec = new Vector2(dir.y,dir.x);
-//		float y = (dir.y / dir.x) * (center.x - point.x) + point.y;
-//		if(y > center.y){
-//			if(vec.y > 0){
-//				vec.x = -vec.x;
-//			}else{
-//				vec.y = -vec.y;
-//			}
-//		}else{
-//			if(vec.y > 0){
-//				vec.y = -vec.y;
-//			}else{
-//				vec.x = -vec.x;
-//			}
-//		}
-//		Debug.Log(vec);
-//		Debug.DrawLine((Vector2)transform.position+vec, new Vector2(0f,0f),Color.blue,100);
-//		addCutMask(vec);
-//		//判断是否切到核心
-//		float distance = Mathf.Abs((dir.y*center.x - dir.x*center.y + dir.x*point.y-dir.y*point.x) / (Mathf.Pow(dir.y*dir.y+dir.x*dir.x,0.5f)));
-//=======
-        //Debug.DrawLine(point, point1, Color.red, 100);
         //判断是否切到核心
         float distance = Mathf.Abs((dir.y*center.x - dir.x*center.y + dir.x*point.y-dir.y*point.x) / (Mathf.Pow(dir.y*dir.y+dir.x*dir.x,0.5f)));
-//>>>>>>> 6909aaace8ae77b650e63399e77f21b682b71fa7
 		if(distance <= HeartCollider.radius)
 		{
 			AttackHeart(other);
@@ -364,8 +339,8 @@ public class PlayerManager : MonoBehaviour
         }
         //Debug.DrawLine(transform.position, (Vector2)transform.position + vec, Color.blue, 100);
         addCutMask(EdgeCollider.transform.InverseTransformVector(vec));
-        Debug.Log(vec.magnitude);
-        Debug.Log(EdgeCollider.transform.InverseTransformVector(vec).magnitude);
+        //Debug.Log(vec.magnitude);
+        //Debug.Log(EdgeCollider.transform.InverseTransformVector(vec).magnitude);
         //找插入位置
         int x1 = -1,x2 = -1;
         point = EdgeCollider.transform.InverseTransformPoint(point);// 相对距离
