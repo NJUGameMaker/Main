@@ -18,10 +18,11 @@ public class LaserManager : MonoBehaviour
 	private Vector3 st = new Vector3();
 	private Vector3 ed = new Vector3();
 
-	public void MakeLaser(Vector2 pos,Vector2 dir,bool isplayer,RaycastHit2D[] res,float time = 0.5f)
-	{
-		RaycastHit2D end = Physics2D.Raycast(pos, dir, maxdis, wallmask);
 
+	public void MakeLaser(Vector2 pos,Vector2 dir,bool isplayer,ref RaycastHit2D[] res,float time = 0.5f)
+	{
+		//物理碰撞
+		RaycastHit2D end = Physics2D.Raycast(pos, dir, maxdis, wallmask);
 		if (isplayer)
 		{
 			res = Physics2D.RaycastAll(pos, dir,maxdis,enemymask);
@@ -31,6 +32,7 @@ public class LaserManager : MonoBehaviour
 			res = Physics2D.RaycastAll(pos, dir, maxdis, playermask);
 		}
 
+		//图形渲染
 		var laser = Instantiate(Laser);
 		var lr = laser.GetComponent<LineRenderer>();
 		lr.SetPosition(0, pos);
@@ -62,7 +64,7 @@ public class LaserManager : MonoBehaviour
 		else if (Input.GetMouseButtonUp(0))
 		{
 			ed = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-			MakeLaser(st, ed - st, false, tmp);
+			MakeLaser(st, ed - st, false,ref tmp);
 		}
 	}
 
