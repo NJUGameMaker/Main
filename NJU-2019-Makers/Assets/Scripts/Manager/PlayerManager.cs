@@ -48,7 +48,7 @@ public class PlayerManager : MonoBehaviour
 	public HashSet<GameObject> Angles = new HashSet<GameObject>();
 	//边界点 (改成了动态数组和类型)
 	public Vector2[] Points = null;
-	//切削产生的点的编号(改成了记录点的vector)
+	//切削产生的点的编号(改成了记录点的vector,是相对位置！)
 	public HashSet<Vector2> KeyPoints = new HashSet<Vector2>();
 
 	//血量
@@ -296,12 +296,7 @@ public class PlayerManager : MonoBehaviour
 
 	//受到切削 改变外壳形状 新增角的攻击点 维护Mask （需要判断是否切到核心） 音效 特效 TODO
 	public void BeingCut(GameObject other)
-	{
-
-	}
-
-	public void BeingCut(GameObject other, Vector2 point, Vector2 dir)
-	{
+	{/*
 		Debug.Log("cut");
 		
 		//Debug.DrawLine(Vector3.zero, new Vector3(1, 1),Color.red,100);
@@ -394,7 +389,92 @@ public class PlayerManager : MonoBehaviour
         //EdgeCollider.points = test;
 		//添加切削点，维护切削点集
 		KeyPoints.Add(point);
-		KeyPoints.Add(point1);
+		KeyPoints.Add(point1);*/
+	}
+
+	public void BeingCut(GameObject other, Vector2 point, Vector2 dir)
+	{
+		//求交点
+		Vector2[] intersectPs = new Vector2[2];
+		int[] pos = new int[2];
+		int pointer = 0; //工具人，后续会重新使用这个变量，不用管
+		for(int i = 0; i < Points.Length; i++){
+			Vector2 intersect = Statics.IntersectPoint(point,dir,EdgeCollider.transform.TransformPoint(Points[i]),EdgeCollider.transform.TransformPoint(Points[(i+1)%Points.Length]));
+			if(!float.IsNaN(intersect.x)){
+				intersectPs[pointer] = intersect;
+				pos[pointer] = i;
+				pointer++;
+			}
+		}
+		//判断是否切到核心
+		Vector2 center = Statics.V3toV2(EdgeCollider.transform.position);
+		float distance = Mathf.Abs((dir.y*center.x - dir.x*center.y + dir.x*point.y-dir.y*point.x) / (Mathf.Pow(dir.y*dir.y+dir.x*dir.x,0.5f)));
+		if(distance <= HeartCollider.radius)
+		{
+			AttackHeart(other);
+		}
+		//维护边界点集和碰撞器
+		Vector2[] tmp = new Vector2[Points.Length+2];
+		pointer = 0;
+		for(int i = 0; i <= pos[0]; i++){
+			if(!Statics.WhetherDelete(point,dir,center,EdgeCollider.transform.TransformPoint(Points[i]))){
+				tmp[pointer] = Points[i];
+				pointer++;
+			}
+		}
+		tmp[pointer] = EdgeCollider.transform.InverseTransformPoint(intersectPs[0]);
+		pointer++;
+		for(int i = pos[0]+1; i <= pos[1]; i++){
+			if(!Statics.WhetherDelete(point,dir,center,EdgeCollider.transform.TransformPoint(Points[i]))){
+				tmp[pointer] = Points[i];
+				pointer++;
+			}
+		}
+		tmp[pointer] = EdgeCollider.transform.InverseTransformPoint(intersectPs[1]);
+		pointer++;
+		for(int i = pos[1]+1; i < Points.Length; i++){
+			if(!Statics.WhetherDelete(point,dir,center,EdgeCollider.transform.TransformPoint(Points[i]))){
+				tmp[pointer] = Points[i];
+				pointer++;
+			}
+		}
+		Points = new Vector2[pointer];
+		for(int i = 0; i < pointer; i++){
+			Points[i] = tmp[i];
+		}
+		EdgeCollider.points = Points;
+		//添加切削点，维护切削点集
+		for(int i = 0; i < intersectPs.Length; i++){
+			KeyPoints.Add(EdgeCollider.transform.InverseTransformPoint(intersectPs[i]));
+		}
+		//添加遮罩
+        Vector2 vec = new Vector2(dir.y, dir.x);
+        vec.Normalize();
+        vec = vec * distance;
+        float y = (dir.y / dir.x) * (center.x - point.x) + point.y;
+        if (y > center.y)
+        {
+            if (vec.y > 0)
+            {
+                vec.x = -vec.x;
+            }
+            else
+            {
+                vec.y = -vec.y;
+            }
+        }
+        else
+        {
+            if (vec.y > 0)
+            {
+                vec.y = -vec.y;
+            }
+            else
+            {
+                vec.x = -vec.x;
+            }
+        }
+        addCutMask(EdgeCollider.transform.InverseTransformVector(vec));
 	}
 
 	//回血 TODO: done.

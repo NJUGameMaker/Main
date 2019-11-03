@@ -176,7 +176,7 @@ public class Statics : MonoBehaviour
 		}
 	}
 
-	public static bool IsPointCut(Vector2 point, Vector2 point1, Vector2 point2){
+	/*public static bool IsPointCut(Vector2 point, Vector2 point1, Vector2 point2){
 		float x1 = (point1.x < point2.x)?(point1.x):(point2.x);
 		float x2 = (point1.x >= point2.x)?(point1.x):(point2.x);
 		float y1 = (point1.y < point2.y)?(point1.y):(point2.y);
@@ -187,6 +187,33 @@ public class Statics : MonoBehaviour
 			return true;
 		}
 		return false;
+	}*/
+
+	public static Vector2 IntersectPoint(Vector2 point, Vector2 dir, Vector2 point1, Vector2 point2){
+		float k1 = dir.y / dir.x;
+		float k2 = (point2.y-point1.y) / (point2.x-point1.x);
+		float x = (point2.y - point.y - k2*point2.x + k1*point.x) / (k1-k2);
+		float y = k2*(x-point2.x) + point2.y;
+		float x1 = (point1.x < point2.x)?(point1.x):(point2.x);
+		float x2 = (point1.x >= point2.x)?(point1.x):(point2.x);
+		if(x >= x1 & x <= x2){
+			Vector2 result = new Vector2(x,y);
+			return result;
+		}else{
+			Vector2 result = new Vector2(float.NaN,float.NaN);
+			return result;
+		}
+	}
+
+	public static bool WhetherDelete(Vector2 cutP, Vector2 dir, Vector2 center, Vector2 point){
+		float k1 = dir.y / dir.x;
+		float y1 = k1*(center.x-cutP.x) + cutP.y;
+		float y2 = k1*(point.x-cutP.x) + cutP.y;
+		if((center.y-y1)*(point.y-y2) < 0){
+			return true;
+		}else{
+			return false;
+		}
 	}
 
 	public static void SwapPos(Transform a,Transform b)
