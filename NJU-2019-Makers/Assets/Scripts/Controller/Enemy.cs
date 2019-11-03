@@ -9,12 +9,14 @@ public class Enemy : MonoBehaviour
 {
 
 	//动画组件
-	public Animator animator;
+	private Animator animator;
 
 	//自身撞击伤害
 	public float damage;
 	//撞击玩家后自身是否死亡
 	public bool AttackDie;
+	//被子弹击中后 击退参数
+	public float HitForce = 5;
 
 	//被攻击闪烁时间
 	const float atktime = 0.5f;
@@ -23,6 +25,9 @@ public class Enemy : MonoBehaviour
 
 	//自身刚体
 	private Rigidbody2D m_rb;
+	//自身碰撞器
+	private Collider2D m_collider;
+
 
 	//血量
 	public float maxHealth;
@@ -41,6 +46,8 @@ public class Enemy : MonoBehaviour
 		if (AttackDie)
 		{
 			Statics.AnimatorPlay(this, animator, Statics.AnimatorType.Die);
+			health = -1;
+			m_collider.enabled = false;
 			Destroy(gameObject, dietime);
 		}
 	}
@@ -57,8 +64,9 @@ public class Enemy : MonoBehaviour
 		EffectManager.Instance.CameraShake(0.1f, 0.1f);
 		//if (health < 0) return;
         health -= bullet.GetComponent<PlayerBullet>().damage;
-        if(health < 0)
+        if(health <= 0)
         {
+			m_collider.enabled = false;
 			Statics.AnimatorPlay(this,animator, Statics.AnimatorType.Die);
 			Destroy(gameObject, dietime);
 		}
@@ -66,23 +74,27 @@ public class Enemy : MonoBehaviour
         {
             Vector3 shootin = bullet.GetComponent<Rigidbody2D>().velocity;
             shootin.z = 0;
-            GetComponent<Move>().AddForceSpeed(shootin.normalized * 0.5f);
+            GetComponent<Move>().AddForceSpeed(shootin.normalized * HitForce);
 			Statics.AnimatorPlay(this,animator, Statics.AnimatorType.Attack);
 
 		}
 	}
 
-	private void OnTriggerEnter2D(Collider2D collision)
+	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (collision.gameObject.tag == "PlayerHeart")
+		if (collision.collider.gameObject.tag == "PlayerHeart" && health > 0)
 		{
 			AttackHeart();
 		}
-		if (collision.gameObject.tag == "PlayerEdge")
+		if (collision.collider.gameObject.tag == "PlayerEdge" && health > 0)
 		{
 			AttackPlayer();
 		}
-		if (collision.gameObject.tag == "PlayerBullet")
+	}
+
+	private void OnTriggerEnter2D(Collider2D collision)
+	{
+		if (collision.gameObject.tag == "PlayerBullet" && health > 0)
 		{
 			BeingAttack(collision.gameObject);
 		}
@@ -94,6 +106,8 @@ public class Enemy : MonoBehaviour
 		animator = GetComponent<Animator>();
 		animator.SetInteger("State", 0);
 		m_rb = GetComponent<Rigidbody2D>();
+		m_collider = GetComponent<Collider2D>();
+		health = maxHealth;
 	}
 
 	private void Update()
