@@ -66,7 +66,6 @@ public class CameraManager : MonoBehaviour
 				tmp.transform.localRotation = Quaternion.Euler(0,0,Rr);
 			}
 		}
-		Debug.Log("OK");
 	}
 
 	//加载花纹
