@@ -24,21 +24,26 @@ public class Move : MonoBehaviour
 	//移动加速度
 	public float acc = 0;
 	//中心和半径
-	private Vector2 heart = new Vector2(2, 0);
-	private float radius = 3f;
-	private float roundTime = 3;//一圈的时间
-	private float currentTime = 0;
+	public Vector2 heart = new Vector2(2, 0);
+	public float radius = 3f;
+	public float roundTime = 3;//一圈的时间
+	public float currentTime = 0;
 	//方向
-	private Vector2 direction = new Vector2(1, 0);
+	public Vector2 direction = new Vector2(1, 0);
 	//开始点
-	private Vector2 startPoint;
-	private Vector2 endPoint;
+	public Vector2 startPoint;
+	public Vector2 endPoint;
 	//跟踪的主角
-	GameObject follow;
+	public GameObject follow;
+	//固定旋转角
+	//public bool ConstRotation = false;
 
 	//附加的速度，用于被撞击后后退
 	private Vector3 addSpeed = new Vector3(0, 0, 0);
 	private const float declineSpeed = 0.6f;//衰减常量
+
+	//间隔更新
+	private bool canMove;
 
 	public void AddForceSpeed(Vector3 vect)
 	{
@@ -46,7 +51,7 @@ public class Move : MonoBehaviour
 	}
 
 	//控制的物体的刚体(test)
-	private Rigidbody2D rb2;
+	public Rigidbody2D rb2;
 
 	//设置移动的类型
 	public void SetMoveType(MoveType mt, Vector2 position, Rigidbody2D rb = null)
@@ -162,7 +167,8 @@ public class Move : MonoBehaviour
 						currentTime = 0;
 					//Vector3 v = new Vector3(nextX - radius * Mathf.Cos(currentTime), heart.y + nextY - transform.position.y, 0);
 					v = new Vector3(nextX - radius * Mathf.Cos(oldTime), nextY - radius * Mathf.Sin(oldTime), 0);
-					//v = v.normalized ;
+					v = v.normalized ;
+					v = v * speed;
 					//v = v * Time.deltaTime;
 					//transform.Translate(v);
 
@@ -195,6 +201,11 @@ public class Move : MonoBehaviour
 		{
 			transform.Translate(v);
 		}
+
+		//if (!ConstRotation)
+		//{
+		//	transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(v.y, v.x) * 180f / Mathf.PI);
+		//}
 
 	}
 	public Vector2 GetSpeedDirection()
@@ -253,6 +264,12 @@ public class Move : MonoBehaviour
 		addSpeed = addSpeed * declineSpeed;
 		work();
 	}
+
+	private void Start()
+	{
+		rb2 = GetComponent<Rigidbody2D>();
+	}
+
 	// Update is called once per frame
 	void Update()
 	{
