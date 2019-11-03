@@ -124,11 +124,19 @@ public class PlayerManager : MonoBehaviour
 	private float reBullet = 20;
 
 	// 放缩所需参数：
+	//初始壳大小
+	public const float initial_size = 2;
+	//逐渐缩小过程中的时间间隔
 	public const float small_interval = 0.01f;
+	//具有攻击力的最小缩小程度（反弹阈值）
 	public const float bounce_thresold = 0.4f;
+	//缩小进度（最大为1），用于使用曲线渐变函数的
 	private float step_percent;
-	public const float step_interval = 0.002f;
-	public const float bounce_cd = 3;
+	//缩小进度的单位增长值，用于使用曲线渐变函数的
+	public const float step_interval = 0.008f;
+	//放缩技能冷却时间
+	public const float bounce_cd = 2;
+	//反弹后的无敌时间
 	public const float invincible_time = 0.5f;
 	private bool canBomb;
 	private bool canSmall;
@@ -495,13 +503,13 @@ public class PlayerManager : MonoBehaviour
         if(energy == 0)
         {
             float scale = health / maxHealth;
-            GOEdge.transform.localScale = new Vector3(scale, scale, 1);
+            GOEdge.transform.localScale = new Vector3(initial_size*scale, initial_size*scale, 1);
             GOHeart.transform.localScale = new Vector3(1, 1, 1);
         }
         else
         {
             float scale = energy / maxEnergy;
-            GOEdge.transform.localScale = new Vector3(1 - scale, 1 - scale, 1);
+            GOEdge.transform.localScale = new Vector3(initial_size*(1 - scale), initial_size*(1 - scale), 1);
             if(canBomb)
             {
                 float heartScale = (scale - bounce_thresold) / (1 - bounce_thresold);
@@ -530,7 +538,7 @@ public class PlayerManager : MonoBehaviour
 		protect = false;
 		bulletType = BulletType.None;
 		skillType = SkillType.None;
-        GOEdge.transform.localScale = new Vector3(1, 1, 1);
+        GOEdge.transform.localScale = new Vector3(initial_size, initial_size, 1);
         GOHeart.transform.localScale = new Vector3(1, 1, 1);
 		canFire = true;
 		step_percent = 0;
