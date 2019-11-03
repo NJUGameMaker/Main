@@ -119,9 +119,9 @@ public class PlayerManager : MonoBehaviour
 	//装弹冷却
 	private bool noBullet;
 	//每发子弹消耗的百分比
-	private float fireCost = 5;
+	private float fireCost = 12;
 	//子弹回复速度
-	private float reBullet = 3;
+	private float reBullet = 20;
 
 	// 放缩所需参数：
 	public const float small_interval = 0.01f;
@@ -448,7 +448,7 @@ public class PlayerManager : MonoBehaviour
 		energy = 0;
 		bullet = maxBullet;
 		protect = false;
-		bulletType = BulletType.Strong;
+		bulletType = BulletType.None;
 		skillType = SkillType.None;
         GOEdge.transform.localScale = new Vector3(1, 1, 1);
         GOHeart.transform.localScale = new Vector3(1, 1, 1);
@@ -475,7 +475,7 @@ public class PlayerManager : MonoBehaviour
 
 	void ReBullet(float x)
 	{
-		bullet += x * reBullet;
+		bullet += x * reBullet * Time.deltaTime;
 		if (bullet >= maxBullet)
 		{
 			bullet = maxBullet;
@@ -527,7 +527,5 @@ public class PlayerManager : MonoBehaviour
 		ReHealth(reBlood);
         ReShape();
 		FaceToMouse();
-		Debug.Log(bullet);
-		Debug.Log(noBullet);
 	}
 }

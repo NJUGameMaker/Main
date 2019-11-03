@@ -637,7 +637,7 @@ SpriteMask:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 05fdfac8020566642896790e1c482c2d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 925876d4003bc7e4d965d7a75b55452b, type: 3}
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: -260397947
   m_BackSortingLayerID: -260397947
@@ -655,7 +655,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 571671177}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14, y: -6.4, z: 0}
+  m_LocalPosition: {x: 457.1, y: 45.9, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1827,12 +1827,12 @@ PrefabInstance:
     - target: {fileID: 1442680680167358585, guid: e19aeef56bf03ae49b7af323a2dd2f6e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -48.5
+      value: -882
       objectReference: {fileID: 0}
     - target: {fileID: 1442680680167358585, guid: e19aeef56bf03ae49b7af323a2dd2f6e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -64.1
+      value: -465
       objectReference: {fileID: 0}
     - target: {fileID: 1442680680167358585, guid: e19aeef56bf03ae49b7af323a2dd2f6e,
         type: 3}
@@ -1843,6 +1843,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 17.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442680680167358585, guid: e19aeef56bf03ae49b7af323a2dd2f6e,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442680680167358585, guid: e19aeef56bf03ae49b7af323a2dd2f6e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442680680167358585, guid: e19aeef56bf03ae49b7af323a2dd2f6e,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2050291243032879354, guid: e19aeef56bf03ae49b7af323a2dd2f6e,
         type: 3}
