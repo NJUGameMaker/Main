@@ -7,6 +7,7 @@ public abstract class EnemyAI : MonoBehaviour
 	public Enemy enemy;
 	public Move move;
 	public GoAround goAround;
+	public Rigidbody2D rigidbody2;
 	public abstract void AfterDie();
 	public abstract void SetMove(Move m);
 
@@ -34,15 +35,14 @@ public abstract class EnemyAI : MonoBehaviour
 
 		goAround = GetComponent<GoAround>();
 		goAround.enabled = true;
+
+		rigidbody2 = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
 		if (enemy.health <= 0 && Alive) { AfterDie(); Alive = false; }
-		if ((transform.position - PlayerManager.Instance.transform.position).magnitude < goAround.Distance)
-		{
-			StartMove();
-		}
+		if (goAround.enabled && (enemy.Active || (transform.position - PlayerManager.Instance.transform.position).magnitude < goAround.Distance) ) { StartMove(); }
     }
 }

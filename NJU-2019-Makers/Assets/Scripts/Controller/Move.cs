@@ -21,6 +21,8 @@ public class Move : MonoBehaviour
 	public MoveType moveType = MoveType.Stop;
 	//移动的速度
 	public float speed = 1;
+	//初始速度
+	public float StartSpeed = 1;
 	//移动加速度
 	public float acc = 0;
 	//中心和半径
@@ -40,13 +42,14 @@ public class Move : MonoBehaviour
 
 	//附加的速度，用于被撞击后后退
 	private Vector3 addSpeed = new Vector3(0, 0, 0);
-	private const float declineSpeed = 0.6f;//衰减常量
+	private const float declineSpeed = 0.7f;//衰减常量
 
 	//间隔更新
 	private bool canMove;
 
 	public void AddForceSpeed(Vector3 vect)
 	{
+		speed = StartSpeed;
 		addSpeed = vect;
 	}
 
@@ -82,7 +85,7 @@ public class Move : MonoBehaviour
 		moveType = MoveType.Line;
 		heart = position;
 		direction = dt;
-		speed = sp;
+		StartSpeed = speed = sp;
 		rb2 = rb;
 		transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dt.y, dt.x) * 180f / Mathf.PI);
 		return this;
@@ -124,7 +127,7 @@ public class Move : MonoBehaviour
 		moveType = MoveType.AIFollow;
 		follow = player;
 		rb2 = rb;
-		speed = sp;
+		StartSpeed = speed = sp;
 		return this;
 	}
 	//设置各种类型移动的参数并且设置各种初始化函数 TODO
@@ -201,6 +204,7 @@ public class Move : MonoBehaviour
 		{
 			transform.Translate(v);
 		}
+		addSpeed = addSpeed * declineSpeed;
 
 		//if (!ConstRotation)
 		//{
@@ -257,11 +261,9 @@ public class Move : MonoBehaviour
 		//播放剧情
 		if (GameManager.Instance.playVideo)
 		{
-			addSpeed = addSpeed * declineSpeed;
 			work();
 			return;
 		}
-		addSpeed = addSpeed * declineSpeed;
 		work();
 	}
 

@@ -129,7 +129,7 @@ public class PlayerManager : MonoBehaviour
 	//逐渐缩小过程中的时间间隔
 	public const float small_interval = 0.01f;
 	//具有攻击力的最小缩小程度（反弹阈值）
-	public const float bounce_thresold = 0.4f;
+	public const float bounce_thresold = 0.5f;
 	//缩小进度（最大为1），用于使用曲线渐变函数的
 	private float step_percent;
 	//缩小进度的单位增长值，用于使用曲线渐变函数的
@@ -143,6 +143,9 @@ public class PlayerManager : MonoBehaviour
 
 	// 缓慢自愈单次血量：
 	public const float reBlood = 0.03f;
+
+	public Animator EdgeBomb;
+	public Animator HeartBomb;
 
 	//增加切削遮罩
 	private void addCutMask(Vector2 vec)
@@ -175,7 +178,7 @@ public class PlayerManager : MonoBehaviour
 				case BulletType.None:
 					damage = NoneDamage;
 					speed = NoneSpeed;
-					effectType = EffectManager.EffectType.EnemyNormalOut;
+					effectType = EffectManager.EffectType.PlayerNormalOut;
 					BulletPrefab = BulletNormal;
 					break;
 				case BulletType.Strong:
@@ -223,17 +226,27 @@ public class PlayerManager : MonoBehaviour
 			//当形状足够小的时候把外壳设置为false 能够穿进敌人
 			if (energy > 80)
 			{
-				GOEdge.SetActive(false);
+				EdgeCollider.enabled = false;
 			}
 
 		}
+	}
+
+	public void PlayBomb()
+	{
+		int num = Mathf.CeilToInt(energy / maxEnergy / (bounce_thresold/2));
+		num = num >= 5 ? 4 : num;
+		Statics.BombPlay(this, HeartBomb, num == 1 ? 2 : num);
+		Statics.BombPlay(this, EdgeBomb, num);
+
 	}
 
 	//当放开缩小键 恢复外壳大小 恢复内核大小 设置短时间无敌 改变enegy数值（可能要设置缩放CD） 音效 特效
 	//考虑技能释放 考虑角的攻击 TODO
 	public void Bomb()
 	{
-		GOEdge.SetActive(true);
+		PlayBomb();
+		EdgeCollider.enabled = true;
 		if (canBomb){
 			energy = 0;
 			step_percent = 0;
@@ -242,7 +255,8 @@ public class PlayerManager : MonoBehaviour
 			StartCoroutine(Statics.WorkAfterSeconds(() => canSmall = true,bounce_cd));
 			protect = true;
 			StartCoroutine(Statics.WorkAfterSeconds(() => protect = false,protect_time));
-		}else{
+		}
+		else{
 			energy = 0;
 			step_percent = 0;
 		}

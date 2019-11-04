@@ -12,6 +12,7 @@ public class Map1Manager : MonoBehaviour
 	public Transform[] StoryEnemy1Ed;
 	public GameObject StoryEnemy1;
 	public GameObject StoryShotBullet;
+	public GameObject Level1;
 
 	private List<GameObject> objs = new List<GameObject>();
 
@@ -78,7 +79,7 @@ public class Map1Manager : MonoBehaviour
 		yield return new WaitForSeconds(1.5f);
 		UIManager.Instance.ShowText("“现在不掏枪就死定啦！”", 1.5f);
 		yield return new WaitForSeconds(0.5f);
-		EffectManager.Instance.CameraZoom(1f, 5f);
+		EffectManager.Instance.CameraZoom(1f, 6f);
 		yield return new WaitForSeconds(1f);
 		StoryShotBullet.SetActive(true);
 		StartCoroutine(Statics.WorkAfterSeconds(() => { StoryShotBullet.SetActive(false); }, 1));
@@ -101,6 +102,7 @@ public class Map1Manager : MonoBehaviour
 
 		UIManager.Instance.HideDialogAndText();
 		GameManager.Instance.GameRestart();
+		Level1.SetActive(true);
 	}
 
 	public IEnumerator Story1()

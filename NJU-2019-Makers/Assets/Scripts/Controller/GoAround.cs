@@ -16,6 +16,7 @@ public class GoAround : MonoBehaviour
 	public float Distance;
 	public float RunTime;
 	public float StopTime;
+	public float StartTime;
 	private Rigidbody2D rigidbody2;
 	private int now;
 	private int maxSize;
@@ -23,6 +24,7 @@ public class GoAround : MonoBehaviour
 
 	IEnumerator Go()
 	{
+		yield return new WaitForSeconds(StartTime);
 		while (true)
 		{
 			int next;

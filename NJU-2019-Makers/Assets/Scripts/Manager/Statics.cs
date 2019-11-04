@@ -76,9 +76,9 @@ public class Statics : MonoBehaviour
 		return Quaternion.Euler(0, 0, Mathf.Atan2(v.y, v.x) * 180 / Mathf.PI + offset);
 	}
 
-	public static Vector2 FaceVec(Quaternion q)
+	public static Vector2 FaceVec(Quaternion q,int offset = 0)
 	{
-		var tmp = q.eulerAngles.z / 180 * Mathf.PI;
+		var tmp = q.eulerAngles.z / 180 * Mathf.PI + offset;
 		return new Vector2(Mathf.Cos(tmp), Mathf.Sin(tmp));
 	}
 
@@ -154,6 +154,13 @@ public class Statics : MonoBehaviour
 		Attack,
 		Die,
 		Null
+	}
+
+	public static void BombPlay(MonoBehaviour mono, Animator animator, int num)
+	{
+		if (animator.GetInteger("Bomb") == 0)
+			mono.StartCoroutine(WorkAfterFrame(() => { animator.SetInteger("Bomb", 0); }, 2));
+		animator.SetInteger("Bomb", num);
 	}
 
 	public static void AnimatorPlay(MonoBehaviour mono,Animator animator,AnimatorType type)
