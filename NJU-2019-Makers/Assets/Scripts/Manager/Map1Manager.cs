@@ -41,6 +41,7 @@ public class Map1Manager : MonoBehaviour
 			objs.Add(tmp);
 			tmp.SetActive(true);
 			tmp.transform.rotation = Statics.FaceTo(ed.position - st.position, -90);
+			objs[i].GetComponent<Move>().direction = ed.position - st.position;
 			StartCoroutine(Statics.MoveWorld(tmp.transform, st.position, mid, MoveTime, Statics.FunType.X));
 			StartCoroutine(Statics.WorkAfterSeconds(() => { StartCoroutine(Statics.MoveWorld(tmp.transform, mid, ed.position, SlowTime, Statics.FunType.SqrtX)); }, MoveTime+WaitTime));
 		}
@@ -50,11 +51,11 @@ public class Map1Manager : MonoBehaviour
 	public IEnumerator Story1_Dialog1()
 	{
 		EffectManager.Instance.SetCameraContinueFocus(() => { return objs[2].transform.position; }, true);
-		EffectManager.Instance.CameraZoom(0.8f,2.5f);
+		EffectManager.Instance.CameraZoom(0.8f, 2.5f);
 		yield return new WaitForSeconds(1f);
 		UIManager.Instance.ShowDialog();
 		yield return new WaitForSeconds(1f);
-		UIManager.Instance.ShowText("快跟上！杀了它！",1f);
+		UIManager.Instance.ShowText("快跟上！杀了它！", 1f);
 		yield return new WaitForSeconds(1.2f);
 		EffectManager.Instance.SetCameraContinueFocus(() => { return objs[0].transform.position; }, true);
 		yield return new WaitForSeconds(1f);
@@ -64,11 +65,11 @@ public class Map1Manager : MonoBehaviour
 		yield return new WaitForSeconds(1f);
 		UIManager.Instance.ShowText("冲鸭！！！", 1f);
 		yield return new WaitForSeconds(1.2f);
-		EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true,0.008f);
+		EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true, 0.008f);
 		EffectManager.Instance.CameraZoom(2f, 6f);
 		UIManager.Instance.HideDialogAndText();
 		yield return new WaitForSeconds(2f);
-		EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true,0.04f);
+		EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true, 0.04f);
 		EffectManager.Instance.CameraZoom(2f, 1.5f);
 		yield return new WaitForSeconds(1f);
 		UIManager.Instance.ShowDialog();
@@ -93,19 +94,13 @@ public class Map1Manager : MonoBehaviour
 		UIManager.Instance.ShowText("【WASD上下左右，鼠标左键发射子弹】 [左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 
+		for (int i = 0; i < 3; i++)
+		{
+			Statics.SetEnable(objs[i], true);
+		}
 
 		UIManager.Instance.HideDialogAndText();
 		GameManager.Instance.GameRestart();
-		//yield return new WaitForSeconds(2.8f);
-		//UIManager.Instance.HideDialogAndText();
-
-		//UIManager.Instance.ShowText("【WASD上下左右，鼠标左键发射子弹】", 4f);
-		//yield return new WaitForSeconds(4f);
-
-
-
-
-
 	}
 
 	public IEnumerator Story1()

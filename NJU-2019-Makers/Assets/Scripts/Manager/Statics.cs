@@ -229,4 +229,10 @@ public class Statics : MonoBehaviour
 		a = b;
 		b = t;
 	}
+
+	public static void SetEnable(GameObject obj,bool t)
+	{
+		obj.GetComponent<Enemy>().enabled = t;
+		obj.GetComponent<Move>().enabled = t;
+	}
 }

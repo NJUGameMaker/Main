@@ -46,7 +46,7 @@ public class GoAround : MonoBehaviour
 	void Start()
     {
 		now = 0;
-		transform.position = KeyPoints[now].position;
+		//transform.position = KeyPoints[now].position;
 		maxSize = KeyPoints.Length;
 		rigidbody2 = GetComponent<Rigidbody2D>();
 		StartCoroutine(Go());

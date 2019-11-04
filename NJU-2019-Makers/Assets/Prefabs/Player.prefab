@@ -126,7 +126,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.11
+  m_Radius: 0.57
 --- !u!95 &8878478249602557902
 Animator:
   serializedVersion: 3
@@ -439,11 +439,15 @@ MonoBehaviour:
   CutMask: {fileID: 8878478250640639694}
   Points: []
   energy: 0
-  BulletNormal: {fileID: 21300000, guid: e45789ee5b034b84e847c844cb5308c6, type: 3}
-  BulletStrong: {fileID: 21300000, guid: 34f7ceac8f11bf341b28e01dfb3ff3c5, type: 3}
-  BulletTan: {fileID: 21300000, guid: 4c17add873597ab4a8f53a8b3053ce19, type: 3}
+  maxBullet: 100
+  bullet: 0
+  BulletNormal: {fileID: 3035255369970912403, guid: 7478d9e4ce121204eac04b165acac3bd,
+    type: 3}
+  BulletStrong: {fileID: 4644864380035600281, guid: 07d54ccfbcd75054babe336fbff5a490,
+    type: 3}
+  BulletTan: {fileID: 2871763751108818020, guid: 8c75593b8ddab714abd1ca3604d3bea1,
+    type: 3}
   FirePos: {fileID: 2719228367443448842}
-  BulletPrefab: {fileID: 8878478250273834453}
 --- !u!50 &8878478251110559489
 Rigidbody2D:
   serializedVersion: 4

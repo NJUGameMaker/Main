@@ -14,7 +14,9 @@ public class Enemy : MonoBehaviour
 	//自身撞击伤害
 	public float damage;
 	//撞击玩家后自身是否死亡
-	public bool AttackDie;
+	public bool AttackDie; 
+	//撞墙后是否死亡
+	public bool HitWallDie;
 	//被子弹击中后 击退参数
 	public float HitForce = 5;
 
@@ -82,6 +84,7 @@ public class Enemy : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
+		Debug.Log(collision.collider.gameObject.tag);
 		if (collision.collider.gameObject.tag == "PlayerHeart" && health > 0)
 		{
 			AttackHeart();
@@ -90,10 +93,19 @@ public class Enemy : MonoBehaviour
 		{
 			AttackPlayer();
 		}
+		if (collision.collider.gameObject.tag == "Wall" && health > 0 && HitWallDie)
+		{
+			Statics.AnimatorPlay(this, animator, Statics.AnimatorType.Die);
+			health = -1;
+			m_collider.enabled = false;
+			Destroy(gameObject, dietime);
+		}
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
+		Debug.Log(collision.tag);
+
 		if (collision.gameObject.tag == "PlayerBullet" && health > 0)
 		{
 			BeingAttack(collision.gameObject);

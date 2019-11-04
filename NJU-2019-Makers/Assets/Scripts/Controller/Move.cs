@@ -35,8 +35,8 @@ public class Move : MonoBehaviour
 	public Vector2 endPoint;
 	//跟踪的主角
 	public GameObject follow;
-	//固定旋转角
-	//public bool ConstRotation = false;
+	//旋转偏移角
+	public float rotate;
 
 	//附加的速度，用于被撞击后后退
 	private Vector3 addSpeed = new Vector3(0, 0, 0);
@@ -187,7 +187,7 @@ public class Move : MonoBehaviour
 					v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
 					v = v * speed;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
 												  //transform.Translate(v);                       //移动
-					transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(v.y, v.x) * 180f / Mathf.PI);
+					transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(v.y, v.x) * 180f / Mathf.PI + rotate);
 				}; break;
 			default: Debug.LogAssertion("Wrong move type"); break;
 		}
