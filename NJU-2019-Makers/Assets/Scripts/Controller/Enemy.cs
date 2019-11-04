@@ -30,7 +30,8 @@ public class Enemy : MonoBehaviour
 	//自身碰撞器
 	private Collider2D m_collider;
 	//是否激活（被攻击过）
-	public bool Active { get; private set; }
+	public bool Active;
+	public bool AttackToActive;
 
 
 	//血量
@@ -47,6 +48,12 @@ public class Enemy : MonoBehaviour
 	public void AttackPlayer()
 	{
 		PlayerManager.Instance.BeingAttack(damage);
+		Debug.Log(PlayerManager.Instance.protect);
+		if (PlayerManager.Instance.protect)
+		{
+			move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5);
+			return;
+		}
 		if (AttackDie)
 		{
 			Statics.AnimatorPlay(this, animator, Statics.AnimatorType.Die);
@@ -65,7 +72,11 @@ public class Enemy : MonoBehaviour
 	//被玩家子弹攻击 受到伤害血量计算 特效 音效等 TODO
 	public void BeingAttack(GameObject bullet)
 	{
-		Active = true;
+		if (!Active)
+		{
+			Active = AttackToActive;
+			return;
+		}
 		EffectManager.Instance.CameraShake(0.2f, 0.3f);
 		//if (health < 0) return;
         health -= bullet.GetComponent<PlayerBullet>().damage;
@@ -122,8 +133,9 @@ public class Enemy : MonoBehaviour
 		animator.SetInteger("State", 0);
 		m_rb = GetComponent<Rigidbody2D>();
 		m_collider = GetComponent<Collider2D>();
+		move = GetComponent<Move>();
 		health = maxHealth;
-		Active = false;
+		//Active = false;
 	}
 
 	private void Update()

@@ -65,8 +65,8 @@ public class PlayerManager : MonoBehaviour
 
 
 	//弹开之后的保护状态
-	private bool protect;
-	public const float protect_time = 0.1f;
+	public bool protect { get; private set; }
+	public const float protect_time = 0.6f;
 
 	private BulletType bulletType;
 	private SkillType skillType;
@@ -263,7 +263,7 @@ public class PlayerManager : MonoBehaviour
 	}
 
     //表示移动的速度
-    const float speed = 10;
+    const float speed = 6;
     //移动 TODO
     public void Move()
 	{
@@ -308,6 +308,7 @@ public class PlayerManager : MonoBehaviour
 	//受到攻击 减少生命 减少外壳大小 音效 特效 TODO
 	public void BeingAttack(float damage)
 	{
+		if (protect) return;
         health -= damage;
 		maxEnergy = health;
 		Statics.AnimatorPlay(this, EdgeAnimator, Statics.AnimatorType.Attack);
@@ -416,6 +417,7 @@ public class PlayerManager : MonoBehaviour
 
 	public void BeingCut(GameObject other, Vector2 point, Vector2 dir)
 	{
+		if (protect) return;
 		//求交点
 		Vector2[] intersectPs = new Vector2[2];
 		int[] pos = new int[2];

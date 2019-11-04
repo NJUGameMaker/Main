@@ -13,10 +13,10 @@ public class GoAround : MonoBehaviour
 
 	public Type type;
 	public Transform[] KeyPoints;
-	public float Distance;
 	public float RunTime;
 	public float StopTime;
 	public float StartTime;
+	public int RoundTimes { get; private set; }
 	private Rigidbody2D rigidbody2;
 	private int now;
 	private int maxSize;
@@ -34,7 +34,12 @@ public class GoAround : MonoBehaviour
 			}
 			else
 			{
-				next = now + 1 == maxSize ? 0 : now + 1;
+				next = now + 1;
+				if (next == maxSize)
+				{
+					next = 0;
+					RoundTimes++;
+				}
 			}
 			rigidbody2.velocity = (KeyPoints[next].position - KeyPoints[now].position) / RunTime;
 			yield return new WaitForSeconds(RunTime);
@@ -48,6 +53,7 @@ public class GoAround : MonoBehaviour
 	void Start()
     {
 		now = 0;
+		RoundTimes = 0;
 		//transform.position = KeyPoints[now].position;
 		maxSize = KeyPoints.Length;
 		rigidbody2 = GetComponent<Rigidbody2D>();

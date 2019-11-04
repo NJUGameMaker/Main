@@ -43,6 +43,7 @@ public class Map1Manager : MonoBehaviour
 			tmp.SetActive(true);
 			tmp.transform.rotation = Statics.FaceTo(ed.position - st.position, -90);
 			objs[i].GetComponent<Move>().direction = ed.position - st.position;
+			objs[i].GetComponent<Enemy>().Active = true;
 			StartCoroutine(Statics.MoveWorld(tmp.transform, st.position, mid, MoveTime, Statics.FunType.X));
 			StartCoroutine(Statics.WorkAfterSeconds(() => { StartCoroutine(Statics.MoveWorld(tmp.transform, mid, ed.position, SlowTime, Statics.FunType.SqrtX)); }, MoveTime+WaitTime));
 		}
@@ -79,7 +80,7 @@ public class Map1Manager : MonoBehaviour
 		yield return new WaitForSeconds(1.5f);
 		UIManager.Instance.ShowText("“现在不掏枪就死定啦！”", 1.5f);
 		yield return new WaitForSeconds(0.5f);
-		EffectManager.Instance.CameraZoom(1f, 6f);
+		EffectManager.Instance.CameraZoom(1f, 6.5f);
 		yield return new WaitForSeconds(1f);
 		StoryShotBullet.SetActive(true);
 		StartCoroutine(Statics.WorkAfterSeconds(() => { StoryShotBullet.SetActive(false); }, 1));
