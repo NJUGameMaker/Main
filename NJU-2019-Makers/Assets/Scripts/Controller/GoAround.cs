@@ -57,7 +57,7 @@ public class GoAround : MonoBehaviour
 		//transform.position = KeyPoints[now].position;
 		maxSize = KeyPoints.Length;
 		rigidbody2 = GetComponent<Rigidbody2D>();
-		StartCoroutine(Go());
+		if (maxSize>1) StartCoroutine(Go());
     }
 
     // Update is called once per frame

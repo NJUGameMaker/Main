@@ -42,7 +42,7 @@ public class Move : MonoBehaviour
 
 	//附加的速度，用于被撞击后后退
 	private Vector3 addSpeed = new Vector3(0, 0, 0);
-	private const float declineSpeed = 0.7f;//衰减常量
+	public float declineSpeed = 0.7f;//衰减常量
 
 	//间隔更新
 	private bool canMove;
