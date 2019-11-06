@@ -3480,41 +3480,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7353510390416841020, guid: 199ea6dcd57ce464f99a05d61271f80d,
-        type: 3}
-      propertyPath: orthographic size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7353510390416841018, guid: 199ea6dcd57ce464f99a05d61271f80d,
-        type: 3}
-      propertyPath: MapNumber
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7353510390416841018, guid: 199ea6dcd57ce464f99a05d61271f80d,
-        type: 3}
-      propertyPath: StepX
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 7353510390416841018, guid: 199ea6dcd57ce464f99a05d61271f80d,
-        type: 3}
-      propertyPath: StepY
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 7353510390416841018, guid: 199ea6dcd57ce464f99a05d61271f80d,
-        type: 3}
-      propertyPath: RandomX
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 7353510390416841018, guid: 199ea6dcd57ce464f99a05d61271f80d,
-        type: 3}
-      propertyPath: RandomY
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2061168360, guid: 199ea6dcd57ce464f99a05d61271f80d, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: a3fd01f23f15f3044a61f246d970477d,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 199ea6dcd57ce464f99a05d61271f80d, type: 3}
 --- !u!114 &7919439199968119248

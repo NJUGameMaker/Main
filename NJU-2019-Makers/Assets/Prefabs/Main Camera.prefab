@@ -68,12 +68,12 @@ SpriteRenderer:
   m_SortingLayerID: -260397947
   m_SortingLayer: 1
   m_SortingOrder: -100
-  m_Sprite: {fileID: 21300000, guid: 17529241a6e4412488c2c6f83e5e430a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a3fd01f23f15f3044a61f246d970477d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 11.41, y: 8.43}
+  m_Size: {x: 22.68, y: 13.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -211,11 +211,11 @@ MonoBehaviour:
   BackGroundOutSide: {fileID: 2061168358}
   BackGroundRoad: {fileID: 7353510390480896073}
   PBackGround: {fileID: 7353510389586658846}
-  MapNumber: 4
-  StepX: 800
-  StepY: 300
-  RandomX: 50
-  RandomY: 25
+  MapNumber: 1
+  StepX: 200
+  StepY: 200
+  RandomX: 100
+  RandomY: 100
   RandomR: 30
 --- !u!114 &7353510390416841016
 MonoBehaviour:
@@ -301,7 +301,7 @@ SpriteRenderer:
   m_SortingLayerID: -260397947
   m_SortingLayer: 1
   m_SortingOrder: -90
-  m_Sprite: {fileID: 21300000, guid: 344ae94d6f03c094b8d6566ff629aa66, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1513bda160fadd947a4dc4acb40187ca, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
