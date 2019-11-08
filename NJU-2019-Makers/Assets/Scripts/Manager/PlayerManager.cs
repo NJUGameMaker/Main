@@ -142,7 +142,7 @@ public class PlayerManager : MonoBehaviour
 	private bool canSmall;
 
 	// 缓慢自愈单次血量：
-	public const float reBlood = 0.03f;
+	public const float reBlood = 0.003f;
 
 	public Animator EdgeBomb;
 	public Animator HeartBomb;
@@ -525,11 +525,12 @@ public class PlayerManager : MonoBehaviour
         }
         else
         {
-            float scale = energy / maxEnergy;
-            GOEdge.transform.localScale = new Vector3(initial_size*(1 - scale), initial_size*(1 - scale), 1);
+            float energyScale = energy / maxEnergy;
+			float bloodScale = health / maxHealth;
+            GOEdge.transform.localScale = new Vector3(initial_size*bloodScale*(1 - energyScale), initial_size*bloodScale*(1 - energyScale), 1);
             if(canBomb)
             {
-                float heartScale = (scale - bounce_thresold) / (1 - bounce_thresold);
+                float heartScale = (energyScale - bounce_thresold) / (1 - bounce_thresold);
                 GOHeart.transform.localScale = new Vector3(1 + heartScale, 1 + heartScale, 1);
             }
         }
