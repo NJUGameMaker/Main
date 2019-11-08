@@ -127,15 +127,15 @@ public class PlayerManager : MonoBehaviour
 	//初始壳大小
 	public const float initial_size = 2;
 	//逐渐缩小过程中的时间间隔
-	public const float small_interval = 0.01f;
+	public const float small_interval = 0f;
 	//具有攻击力的最小缩小程度（反弹阈值）
 	public const float bounce_thresold = 0.5f;
 	//缩小进度（最大为1），用于使用曲线渐变函数的
 	private float step_percent;
 	//缩小进度的单位增长值，用于使用曲线渐变函数的
-	public const float step_interval = 0.008f;
+	public const float step_interval = 0.08f;
 	//放缩技能冷却时间
-	public const float bounce_cd = 2;
+	public const float bounce_cd = 0.5f;
 	//反弹后的无敌时间
 	public const float invincible_time = 0.5f;
 	private bool canBomb;
@@ -207,7 +207,8 @@ public class PlayerManager : MonoBehaviour
 			float angle = Mathf.Atan2((MOUSE - pos).y, (MOUSE - pos).x) * Mathf.Rad2Deg + Random.Range(-deviation, deviation) * (1 - energy / maxEnergy);
 			GObullet.transform.rotation = Quaternion.Euler(0, 0, angle);
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-			playerBullet.move.SetLineType(pos, direct, speed,GObullet.GetComponent<Rigidbody2D>());
+			playerBullet.move.SetLineType(pos, direct, speed*2,-0.5f,GObullet.GetComponent<Rigidbody2D>());
+			playerBullet.StartCoroutine(Statics.WorkAfterSeconds(() => { playerBullet.move.acc = 0; }, 0.5f));
 			EffectManager.Instance.PlayEffect(effectType, FirePos.position, transform.rotation, 1f);
 		}
 	}
@@ -263,7 +264,7 @@ public class PlayerManager : MonoBehaviour
 	}
 
     //表示移动的速度
-    const float speed = 6;
+    const float speed = 12;
     //移动 TODO
     public void Move()
 	{
@@ -565,12 +566,16 @@ public class PlayerManager : MonoBehaviour
 		EdgeAnimator = GOEdge.GetComponent<Animator>();
 		HeartAnimator = GOHeart.GetComponent<Animator>();
 		Points = EdgeCollider.points;
+
+		EffectManager.Instance.SetCameraContinueFocus(() => { return PlayerManager.Instance.transform.position; }, true, 0.2f);
+
+
 		//BulletNormal = Resources.Load("Sprites/normal.png") as Sprite;
 		//BulletStrong = Resources.Load("Sprites/strong.png") as Sprite;
 		//BulletTan = Resources.Load("Sprites/tantan.png") as Sprite;
 		//Debug.Log(BulletNormal);
 
-    }
+	}
 
 	void StartReBullet()
 	{
