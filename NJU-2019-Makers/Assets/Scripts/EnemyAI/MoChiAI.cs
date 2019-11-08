@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MoChiAI : EnemyAI
 {
-	public Transform BombCenter;
 	public GameObject Triangle;
 	public Transform[] pos;
 	public List<GameObject> Enemys = new List<GameObject>();
@@ -20,7 +19,7 @@ public class MoChiAI : EnemyAI
 				ai.move.enabled = true;
 				ai.goAround.enabled = false;
 				ai.enemy.Active = true;
-				ai.move.AddForceSpeed((item.transform.position - BombCenter.transform.position).normalized * 30);
+				ai.move.AddForceSpeed((item.transform.position - PlayerManager.Instance.transform.position).normalized * 30);
 			}, 0.5f));
 			ai.StartCoroutine(Statics.WorkAfterSeconds(() => {
 				ai.BeActive();

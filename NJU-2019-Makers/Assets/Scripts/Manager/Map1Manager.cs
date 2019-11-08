@@ -101,6 +101,7 @@ public class Map1Manager : MonoBehaviour
 			Statics.SetEnable(objs[i], true);
 		}
 
+		EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true, 0.4f);
 		UIManager.Instance.HideDialogAndText();
 		GameManager.Instance.GameRestart();
 		Level1.SetActive(true);

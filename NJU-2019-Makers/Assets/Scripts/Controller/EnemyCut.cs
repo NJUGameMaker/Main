@@ -7,7 +7,7 @@ using UnityEngine;
 public class EnemyCut : MonoBehaviour
 {
 	//是否始终跟随
-	private bool isStatic;
+	public bool isStatic = false;
 	//移动类型
 	public Move move { get; private set; }
 	//刚体
@@ -25,22 +25,22 @@ public class EnemyCut : MonoBehaviour
 		if (cast)
 		{
 			PlayerManager.Instance.BeingCut(gameObject, cast.point, v);
-			Debug.DrawLine(Vector3.zero, cast.point, Color.red, 100);
+			//Debug.DrawLine(Vector3.zero, cast.point, Color.red, 100);
 		}
-		Destroy(gameObject);
+		if (!isStatic) Destroy(gameObject);
 	}
 
 	//攻击到玩家核心 应该写完了 还有特效 音效 TODO
 	public void AttackHeart()
 	{
 		PlayerManager.Instance.AttackHeart(gameObject);
-		Destroy(gameObject);
+		if (!isStatic) Destroy(gameObject);
 	}
 
 	//碰到墙 应该写完了 还有特效 音效 TODO
 	public void Wall()
 	{
-		Destroy(gameObject);
+		if (!isStatic) Destroy(gameObject);
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)

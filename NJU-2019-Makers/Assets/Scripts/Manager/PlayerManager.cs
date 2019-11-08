@@ -105,16 +105,16 @@ public class PlayerManager : MonoBehaviour
 	public const float NoneDamage = 10;
 	public const float StrongDamage = 10;
 	public const float BounceDamage = 5;
-	public const float NoneSpeed = 10;
-	public const float StrongSpeed = 10;
-	public const float BounceSpeed = 15;
+	public const float NoneSpeed = 15;
+	public const float StrongSpeed = 15;
+	public const float BounceSpeed = 20;
 
 
 	//子弹误差默认值（角度值）：
 	public const float deviation = 0;
 	//发射帧间隔(s) 缩放所减少的子弹间隔：
 	public const float shoot_interval = 0.7f;
-	public const float shoot_change_interval = 0.66f;
+	public const float shoot_change_interval = 0.6f;
 	//最大的子弹增伤
 	public const float damage_change = 3;
 	//能够发射子弹（子弹间隔）
@@ -122,17 +122,21 @@ public class PlayerManager : MonoBehaviour
 	//装弹冷却
 	private bool noBullet;
 	//每发子弹消耗的百分比->每秒消耗的百分比
-	private float fireCost = 20;
+	private float fireCost = 50;
 	//子弹回复速度
-	private float reBullet = 20;
+	private float reBullet = 30;
 
 	// 放缩所需参数：
 	//初始壳大小
-	public const float initial_size = 2;
+	public const float initial_size = 3f;
+	//初始心大小
+	public const float initial_heart_size = 0.6f;
 	//逐渐缩小过程中的时间间隔
 	public const float small_interval = 0.02f;
 	//具有攻击力的最小缩小程度（反弹阈值）
 	public const float bounce_thresold = 0.5f;
+	//内心的最大值
+	public const float heart_max = 0.2f;
 	//缩小进度（最大为1），用于使用曲线渐变函数的
 	private float step_percent;
 	//缩小进度的单位增长值，用于使用曲线渐变函数的
@@ -149,6 +153,29 @@ public class PlayerManager : MonoBehaviour
 
 	public Animator EdgeBomb;
 	public Animator HeartBomb;
+
+	//Combo计数
+	public const float ComboResetTime = 1;
+	private float ComboTime = 0;
+	private int ComboCnt = 0;
+
+	public void ComboAdd()
+	{
+		ComboTime = ComboResetTime;
+		ComboCnt++;
+		UIManager.Instance.ComboShow(ComboCnt);
+	}
+
+	public void ComboUpdate()
+	{
+		ComboTime -= Time.deltaTime;
+		if (ComboTime < 0)
+		{
+			ComboTime = 0;
+			ComboCnt = 0;
+		}
+	}
+
 
 	//增加切削遮罩
 	private void addCutMask(Vector2 vec)
@@ -212,8 +239,8 @@ public class PlayerManager : MonoBehaviour
 			float angle = Mathf.Atan2((MOUSE - pos).y, (MOUSE - pos).x) * Mathf.Rad2Deg + Random.Range(-deviation, deviation) * (1 - energy / maxEnergy);
 			GObullet.transform.rotation = Quaternion.Euler(0, 0, angle);
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-			playerBullet.move.SetLineType(pos, direct, speed*2,-0.5f,GObullet.GetComponent<Rigidbody2D>());
-			playerBullet.StartCoroutine(Statics.WorkAfterSeconds(() => { playerBullet.move.acc = 0; }, 0.5f));
+			playerBullet.move.SetLineType(pos, direct, speed*2,0,0,GObullet.GetComponent<Rigidbody2D>());
+			//playerBullet.StartCoroutine(Statics.WorkAfterSeconds(() => { playerBullet.move.acc = 0; }, 0.5f));
 			EffectManager.Instance.PlayEffect(effectType, FirePos.position, transform.rotation, 1f);
 		}
 	}
@@ -526,7 +553,7 @@ public class PlayerManager : MonoBehaviour
         {
             float scale = health / maxHealth;
             GOEdge.transform.localScale = new Vector3(initial_size*scale, initial_size*scale, 1);
-            GOHeart.transform.localScale = new Vector3(1, 1, 1);
+            GOHeart.transform.localScale = new Vector3(initial_heart_size, initial_heart_size, 1);
         }
         else
         {
@@ -535,8 +562,8 @@ public class PlayerManager : MonoBehaviour
             GOEdge.transform.localScale = new Vector3(initial_size*bloodScale*(1 - energyScale), initial_size*bloodScale*(1 - energyScale), 1);
             if(canBomb)
             {
-                float heartScale = (energyScale - bounce_thresold) / (1 - bounce_thresold);
-                GOHeart.transform.localScale = new Vector3(1 + heartScale, 1 + heartScale, 1);
+                float heartScale = ((energyScale - bounce_thresold) / (1 - bounce_thresold))*heart_max;
+                GOHeart.transform.localScale = new Vector3(initial_heart_size + heartScale, initial_heart_size + heartScale, 1);
             }
         }
 		//Debug.Log(GOEdge.transform.localScale.ToString() +" " +energy + " "+health);
@@ -642,5 +669,6 @@ public class PlayerManager : MonoBehaviour
 		ReHealth(reBlood);
         ReShape();
 		FaceToMouse();
+		ComboUpdate();
 	}
 }

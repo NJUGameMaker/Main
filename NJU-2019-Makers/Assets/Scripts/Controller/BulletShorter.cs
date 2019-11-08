@@ -30,6 +30,8 @@ public class BulletShorter : MonoBehaviour
 	public float Velocity;
 	//加速度
 	public float Acceleration;
+	//加速度持续时间
+	public float AccTime;
 	//伤害
 	public float Damage;
 	//发射特效
@@ -67,7 +69,6 @@ public class BulletShorter : MonoBehaviour
 	{
 		while (true)
 		{
-
 			switch (shotType)
 			{
 				case ShotType.Static:
@@ -83,13 +84,13 @@ public class BulletShorter : MonoBehaviour
 							bullet.AddComponent<Move>().SetLineType(
 								transform.position,
 								new Vector2(Mathf.Cos(rot/180 *Mathf.PI),Mathf.Sin(rot / 180 * Mathf.PI)),
-								Velocity, Acceleration, bullet.GetComponent<Rigidbody2D>()
+								Velocity, Acceleration,AccTime, bullet.GetComponent<Rigidbody2D>()
 							),
 							bulletType, HitType
 						);
-						EffectManager.Instance.PlayEffect(OutType, ShotPoint.position, transform.rotation);
+						EffectManager.Instance.PlayEffect(OutType, ShotPoint.position, transform.rotation,1f);
 						while (GameManager.Instance.pause) yield return new WaitForEndOfFrame();
-						yield return new WaitForSeconds(RotateInterval);
+						if (RotateInterval!=0) yield return new WaitForSeconds(RotateInterval);
 					}
 					break;
 				case ShotType.Follow:
@@ -102,11 +103,11 @@ public class BulletShorter : MonoBehaviour
 							bullet.AddComponent<Move>().SetLineType(
 								transform.position,
 								Target.transform.position - ShotPoint.position,
-								Velocity, Acceleration, bullet.GetComponent<Rigidbody2D>()
+								Velocity, Acceleration, AccTime, bullet.GetComponent<Rigidbody2D>()
 							),
 							bulletType, HitType
 						);
-						EffectManager.Instance.PlayEffect(OutType, ShotPoint.position, transform.rotation);
+						EffectManager.Instance.PlayEffect(OutType, ShotPoint.position, transform.rotation,1f);
 					}
 					break;
 				case ShotType.AIFollow:
@@ -117,11 +118,11 @@ public class BulletShorter : MonoBehaviour
 						bullet.AddComponent<EnemyBullet>().Init(
 							Damage, false,
 							bullet.AddComponent<Move>().SetAIFollowType(
-								Target, Velocity, bullet.GetComponent<Rigidbody2D>()
+								Target, Velocity,Acceleration, AccTime, bullet.GetComponent<Rigidbody2D>()
 							),
 							bulletType, HitType
 						);
-						EffectManager.Instance.PlayEffect(OutType, ShotPoint.position, transform.rotation);
+						EffectManager.Instance.PlayEffect(OutType, ShotPoint.position, transform.rotation,1f);
 					}
 					break;
 				default:

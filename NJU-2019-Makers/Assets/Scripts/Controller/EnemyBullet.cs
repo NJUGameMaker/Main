@@ -6,9 +6,9 @@ using UnityEngine;
 public class EnemyBullet : MonoBehaviour
 {
 	//伤害值
-	private float damage;
+	public float damage;
 	//是否始终跟随
-	private bool isStatic;
+	public bool isStatic = false;
 	//移动类型
 	public Move move { get; private set; }
 	//子弹类型
@@ -58,8 +58,8 @@ public class EnemyBullet : MonoBehaviour
 			default:
 				break;
 		}
-		EffectManager.Instance.PlayEffect(OnEffect,transform.position,transform.rotation);
-		Destroy(gameObject);
+		EffectManager.Instance.PlayEffect(OnEffect,transform.position,transform.rotation,1f);
+		if (!isStatic) Destroy(gameObject);
 	}
 
 	//攻击到玩家核心 应该写完了 还有特效 音效 TODO
@@ -68,15 +68,17 @@ public class EnemyBullet : MonoBehaviour
 		//Debug.Log("attack");
 
 		PlayerManager.Instance.AttackHeart(gameObject);
-		EffectManager.Instance.PlayEffect(OnEffect, transform.position, transform.rotation);
-		Destroy(gameObject);
+		EffectManager.Instance.PlayEffect(OnEffect, transform.position, transform.rotation,1f);
+		if (!isStatic) Destroy(gameObject);
+
 	}
 
 	//碰到墙 应该写完了 还有特效 音效 TODO
 	public void Wall()
 	{
-		EffectManager.Instance.PlayEffect(OnEffect, transform.position, transform.rotation);
-		Destroy(gameObject);
+		EffectManager.Instance.PlayEffect(OnEffect, transform.position, transform.rotation,1f);
+		if (!isStatic) Destroy(gameObject);
+
 	}
 
 	private void OnTriggerEnter2D(Collider2D collision)

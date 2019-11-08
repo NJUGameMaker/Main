@@ -8,6 +8,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
+	public enum Type
+	{
+		Damage,
+		Cut
+	}
+
 	//动画组件
 	private Animator animator;
 
@@ -33,7 +39,7 @@ public class Enemy : MonoBehaviour
 	public bool Active;
 	public bool AttackToActive;
 
-
+	public Type type;
 	//血量
 	public float maxHealth;
 	public float health { get; private set; }
@@ -47,7 +53,19 @@ public class Enemy : MonoBehaviour
 	//敌人本体撞到玩家 需要考虑 玩家是否无敌 （玩家在无敌状态需要被弹开 或者 对玩家造成伤害自己死亡） TODO
 	public void AttackPlayer()
 	{
-		PlayerManager.Instance.BeingAttack(damage);
+		if (type == Type.Cut)
+		{
+			Vector2 v = m_rb.velocity;
+			var cast = Physics2D.Raycast(transform.position, v, 100, 1 << 8);
+			if (cast)
+			{
+				PlayerManager.Instance.BeingCut(gameObject, cast.point, v);
+			}
+		}
+		else
+		{
+			PlayerManager.Instance.BeingAttack(damage);
+		}
 		Debug.Log(PlayerManager.Instance.protect);
 		if (PlayerManager.Instance.protect)
 		{
@@ -77,6 +95,7 @@ public class Enemy : MonoBehaviour
 			Active = AttackToActive;
 			return;
 		}
+		PlayerManager.Instance.ComboAdd();
 		EffectManager.Instance.CameraShake(0.2f, 0.3f);
 		//if (health < 0) return;
         health -= bullet.GetComponent<PlayerBullet>().damage;
@@ -118,7 +137,7 @@ public class Enemy : MonoBehaviour
 
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
-		Debug.Log(collision.tag);
+		//Debug.Log(collision.tag);
 
 		if (collision.gameObject.tag == "PlayerBullet" && health > 0)
 		{
@@ -129,7 +148,7 @@ public class Enemy : MonoBehaviour
 
 	private void Start()
 	{
-		animator = GetComponent<Animator>();
+		animator = GetComponentInChildren<Animator>();
 		animator.SetInteger("State", 0);
 		m_rb = GetComponent<Rigidbody2D>();
 		m_collider = GetComponent<Collider2D>();

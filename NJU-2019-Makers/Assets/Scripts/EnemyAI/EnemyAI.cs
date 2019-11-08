@@ -23,10 +23,15 @@ public abstract class EnemyAI : MonoBehaviour
 
 	public float ActiveDistance;
 	public Collider2D ActiveCollider;
+	public GameObject[] ObjectToActive;
 
-	public void StartMove()
+	public void StartActive()
 	{
 		Active = true;
+		foreach (var item in ObjectToActive)
+		{
+			item.SetActive(true);
+		}
 		BeActive();
 	}
 
@@ -56,8 +61,8 @@ public abstract class EnemyAI : MonoBehaviour
 		if (enemy.health <= 0 && Alive) { AfterDie(); Alive = false; }
 		if (!Active &&
 				(((transform.position - PlayerManager.Instance.transform.position).magnitude < ActiveDistance)
-				|| (ActiveCollider && ActiveCollider.IsTouching(PlayerManager.Instance.EdgeCollider))))
-			{ StartMove(); }
+				|| (ActiveCollider && ActiveCollider.IsTouching(PlayerManager.Instance.HeartCollider))))
+			{ StartActive(); }
 		if (goAround.RoundTimes == 1 && !RoundEnd) { RoundEnd = true; EndOfRound(); }
 	}
 }

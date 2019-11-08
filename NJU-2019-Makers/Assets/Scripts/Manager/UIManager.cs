@@ -28,6 +28,9 @@ public class UIManager : MonoBehaviour
 	public Image BottomBlack;
 	public Image BloodMask;
 	public Text Dialog;
+	public Text Combo;
+	public Text ComboBlack;
+	public Animator ComboAnimator;
 
 	//上下对话信息
 	private const float ShowHideTime = 0.6f;
@@ -120,6 +123,13 @@ public class UIManager : MonoBehaviour
 		var ed = new Color(1, 0, 0, 0.5f);
 		StartCoroutine(Statics.Flash(BloodMask, st,ed, bloodtime));
 		StartCoroutine(Statics.WorkAfterSeconds(() => { StartCoroutine(Statics.Flash(BloodMask, ed, st, bloodtime)); }, bloodtime));
+	}
+
+	public void ComboShow(int x)
+	{
+		ComboBlack.text = Combo.text = x + "Combo";
+		ComboAnimator.SetBool("Combo", true);
+		StartCoroutine(Statics.WorkAfterFrame(() => { ComboAnimator.SetBool("Combo", false); }, 2));
 	}
 
 	//设置临时UI条

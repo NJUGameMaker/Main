@@ -25,13 +25,13 @@ public class Move : MonoBehaviour
 	public float StartSpeed = 1;
 	//移动加速度
 	public float acc = 0;
+	//方向
+	public Vector2 direction = new Vector2(1, 0);
 	//中心和半径
 	public Vector2 heart = new Vector2(2, 0);
 	public float radius = 3f;
 	public float roundTime = 3;//一圈的时间
 	public float currentTime = 0;
-	//方向
-	public Vector2 direction = new Vector2(1, 0);
 	//开始点
 	public Vector2 startPoint;
 	public Vector2 endPoint;
@@ -92,10 +92,11 @@ public class Move : MonoBehaviour
 	}
 
 	//直线移动，设定开始点和移动方向(加速度)
-	public Move SetLineType(Vector2 position, Vector2 dt, float sp, float a, Rigidbody2D rb = null)
+	public Move SetLineType(Vector2 position, Vector2 dt, float sp, float a,float at = 0, Rigidbody2D rb = null)
 	{
 		SetLineType(position, dt, sp, rb);
 		acc = a;
+		if (at != 0) StartCoroutine(Statics.WorkAfterSeconds(() => { acc = 0; }, at));
 		return this;
 	}
 
@@ -130,6 +131,15 @@ public class Move : MonoBehaviour
 		StartSpeed = speed = sp;
 		return this;
 	}
+
+	public Move SetAIFollowType(GameObject player, float sp,float a,float at,Rigidbody2D rb = null)
+	{
+		SetAIFollowType(player, sp, rb);
+		acc = a;
+		if (at != 0) StartCoroutine(Statics.WorkAfterSeconds(() => { acc = 0; }, at));
+		return this;
+	}
+
 	//设置各种类型移动的参数并且设置各种初始化函数 TODO
 	public void Init()
 	{
@@ -154,7 +164,7 @@ public class Move : MonoBehaviour
 				}; break;
 			case MoveType.Line:
 				{
-					speed += acc;
+					speed += acc * Time.fixedDeltaTime;
 					v = new Vector3(direction.x, direction.y, 0); //新建移动向量
 					v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
 					v = v * speed;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
@@ -179,6 +189,7 @@ public class Move : MonoBehaviour
 			case MoveType.Cruve: { }; break;
 			case MoveType.AIFollow:
 				{
+					speed += acc * Time.fixedDeltaTime;
 					Vector3 target = new Vector3(0, 0, 0);
 					//Vector3 target = follow.transform.position;
 					//Vector2 mousePosition = Input.mousePosition; //获取屏幕坐标
