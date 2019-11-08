@@ -2831,13 +2831,29 @@ PrefabInstance:
     - target: {fileID: 1442680680167358585, guid: e19aeef56bf03ae49b7af323a2dd2f6e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -888.8
+      value: -842
       objectReference: {fileID: 0}
     - target: {fileID: 1442680680167358585, guid: e19aeef56bf03ae49b7af323a2dd2f6e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -374.6
+      value: -391
       objectReference: {fileID: 0}
+    - target: {fileID: 1442680680167358585, guid: e19aeef56bf03ae49b7af323a2dd2f6e,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1442680680167358585, guid: e19aeef56bf03ae49b7af323a2dd2f6e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2050291243032879354, guid: e19aeef56bf03ae49b7af323a2dd2f6e,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6dc623adb697aa44ab19c55f308d309f,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e19aeef56bf03ae49b7af323a2dd2f6e, type: 3}
 --- !u!1 &1848287702
