@@ -111,15 +111,18 @@ public class PlayerManager : MonoBehaviour
 
 
 	//子弹误差默认值（角度值）：
-	public const float deviation = 25;
-	//发射帧间隔(s)：
-	public const float shoot_interval = 0.2f;
+	public const float deviation = 0;
+	//发射帧间隔(s) 缩放所减少的子弹间隔：
+	public const float shoot_interval = 0.7f;
+	public const float shoot_change_interval = 0.66f;
+	//最大的子弹增伤
+	public const float damage_change = 3;
 	//能够发射子弹（子弹间隔）
 	private bool canFire;
 	//装弹冷却
 	private bool noBullet;
-	//每发子弹消耗的百分比
-	private float fireCost = 12;
+	//每发子弹消耗的百分比->每秒消耗的百分比
+	private float fireCost = 20;
 	//子弹回复速度
 	private float reBullet = 20;
 
@@ -127,15 +130,15 @@ public class PlayerManager : MonoBehaviour
 	//初始壳大小
 	public const float initial_size = 2;
 	//逐渐缩小过程中的时间间隔
-	public const float small_interval = 0.01f;
+	public const float small_interval = 0.02f;
 	//具有攻击力的最小缩小程度（反弹阈值）
 	public const float bounce_thresold = 0.5f;
 	//缩小进度（最大为1），用于使用曲线渐变函数的
 	private float step_percent;
 	//缩小进度的单位增长值，用于使用曲线渐变函数的
-	public const float step_interval = 0.008f;
+	public const float step_interval = 0.05f;
 	//放缩技能冷却时间
-	public const float bounce_cd = 2;
+	public const float bounce_cd = 0.5f;
 	//反弹后的无敌时间
 	public const float invincible_time = 0.5f;
 	private bool canBomb;
@@ -168,7 +171,6 @@ public class PlayerManager : MonoBehaviour
 	{
 		if (canFire)
 		{
-			bullet -= fireCost;
 			float damage = 0;
 			float speed = 0;
 			EffectManager.EffectType effectType = EffectManager.EffectType.End;
@@ -197,7 +199,10 @@ public class PlayerManager : MonoBehaviour
 					break;
 			}
 			canFire = false;
-			StartCoroutine(Statics.WorkAfterSeconds(() => canFire = true, shoot_interval));
+			float interval = shoot_interval - shoot_change_interval * energy / maxEnergy;
+			damage += damage * energy / maxEnergy * damage_change;
+			bullet -= fireCost * interval;
+			StartCoroutine(Statics.WorkAfterSeconds(() => canFire = true, interval));
 			var pos = Statics.V3toV2(transform.position);
 			GameObject GObullet = GameObject.Instantiate(BulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
 			GObullet.SetActive(true);
@@ -207,7 +212,8 @@ public class PlayerManager : MonoBehaviour
 			float angle = Mathf.Atan2((MOUSE - pos).y, (MOUSE - pos).x) * Mathf.Rad2Deg + Random.Range(-deviation, deviation) * (1 - energy / maxEnergy);
 			GObullet.transform.rotation = Quaternion.Euler(0, 0, angle);
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-			playerBullet.move.SetLineType(pos, direct, speed,GObullet.GetComponent<Rigidbody2D>());
+			playerBullet.move.SetLineType(pos, direct, speed*2,-0.5f,GObullet.GetComponent<Rigidbody2D>());
+			playerBullet.StartCoroutine(Statics.WorkAfterSeconds(() => { playerBullet.move.acc = 0; }, 0.5f));
 			EffectManager.Instance.PlayEffect(effectType, FirePos.position, transform.rotation, 1f);
 		}
 	}
@@ -263,7 +269,7 @@ public class PlayerManager : MonoBehaviour
 	}
 
     //表示移动的速度
-    const float speed = 6;
+    const float speed = 12;
     //移动 TODO
     public void Move()
 	{
@@ -566,12 +572,16 @@ public class PlayerManager : MonoBehaviour
 		EdgeAnimator = GOEdge.GetComponent<Animator>();
 		HeartAnimator = GOHeart.GetComponent<Animator>();
 		Points = EdgeCollider.points;
+
+		EffectManager.Instance.SetCameraContinueFocus(() => { return PlayerManager.Instance.transform.position; }, true, 0.2f);
+
+
 		//BulletNormal = Resources.Load("Sprites/normal.png") as Sprite;
 		//BulletStrong = Resources.Load("Sprites/strong.png") as Sprite;
 		//BulletTan = Resources.Load("Sprites/tantan.png") as Sprite;
 		//Debug.Log(BulletNormal);
 
-    }
+	}
 
 	void StartReBullet()
 	{
