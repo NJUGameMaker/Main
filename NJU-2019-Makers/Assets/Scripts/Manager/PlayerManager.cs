@@ -96,7 +96,8 @@ public class PlayerManager : MonoBehaviour
 
 
 	//子弹发射位置
-	public Transform FirePos;
+	public Transform FirePosEdge;
+	public Transform FirePosHeart;
 
 	//图形界面加预设物体 TODO
 	//public GameObject BulletPrefab;
@@ -241,7 +242,7 @@ public class PlayerManager : MonoBehaviour
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
 			playerBullet.move.SetLineType(pos, direct, speed*2,0,0,GObullet.GetComponent<Rigidbody2D>());
 			//playerBullet.StartCoroutine(Statics.WorkAfterSeconds(() => { playerBullet.move.acc = 0; }, 0.5f));
-			EffectManager.Instance.PlayEffect(effectType, FirePos.position, transform.rotation, 1f);
+			EffectManager.Instance.PlayEffect(effectType, canBomb ? FirePosHeart.position : FirePosEdge.position, transform.rotation, 1f);
 		}
 	}
 
