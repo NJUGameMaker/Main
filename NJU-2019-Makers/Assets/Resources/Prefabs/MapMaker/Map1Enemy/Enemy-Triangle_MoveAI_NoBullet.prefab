@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 6160768652692590834}
   - component: {fileID: 6160768652692590837}
   - component: {fileID: 6160768652692590836}
+  - component: {fileID: 2626882264071691143}
   - component: {fileID: 6160768652692590833}
   - component: {fileID: 6160768652692590847}
   m_Layer: 12
@@ -147,9 +148,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 1
-  speed: 1
-  StartSpeed: 1
+  moveType: 4
+  speed: 2
+  StartSpeed: 2
   acc: 0
   direction: {x: 1, y: 1}
   heart: {x: 2, y: 0}
@@ -159,7 +160,7 @@ MonoBehaviour:
   startPoint: {x: 0, y: 0}
   endPoint: {x: 0, y: 0}
   follow: {fileID: 0}
-  rotate: 0
+  rotate: -90
   declineSpeed: 0.7
   rb2: {fileID: 0}
 --- !u!114 &6160768652692590837
@@ -176,12 +177,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   AttackDie: 1
-  HitWallDie: 0
-  HitForce: 12
-  Active: 1
+  HitWallDie: 1
+  HitForce: 10
+  Active: 0
   AttackToActive: 0
   type: 0
-  maxHealth: 500
+  maxHealth: 1
 --- !u!114 &6160768652692590836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,11 +195,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ef11d509e440a4a95cb5f555863d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
-  KeyPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  type: 1
+  KeyPoints: []
   RunTime: 2
   StopTime: 1
   StartTime: 0
@@ -206,6 +204,25 @@ MonoBehaviour:
   A_dis_max: 5
   RunAfterStep: {fileID: 0}
   RunAfterRound: {fileID: 0}
+--- !u!114 &2626882264071691143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6160768652692590844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d91dd98d88b22f409801be4880784d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+  move: {fileID: 0}
+  goAround: {fileID: 0}
+  rigidbody2: {fileID: 0}
+  ActiveDistance: 0
+  ActiveCollider: {fileID: 0}
+  ObjectToActive: []
 --- !u!50 &6160768652692590833
 Rigidbody2D:
   serializedVersion: 4

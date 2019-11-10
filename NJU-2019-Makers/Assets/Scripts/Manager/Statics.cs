@@ -78,7 +78,7 @@ public class Statics : MonoBehaviour
 
 	public static Vector2 FaceVec(Quaternion q,int offset = 0)
 	{
-		var tmp = q.eulerAngles.z / 180 * Mathf.PI + offset;
+		var tmp = (q.eulerAngles.z + offset) / 180 * Mathf.PI;
 		return new Vector2(Mathf.Cos(tmp), Mathf.Sin(tmp));
 	}
 

@@ -76,14 +76,14 @@ public class BulletShorter : MonoBehaviour
 					{
 						//Debug.Log(Quaternion.Euler(0, 0, r + StartRotate).eulerAngles);
 						float rot = r + StartRotate;
-						transform.rotation = Quaternion.Euler(0, 0, rot);
-						GameObject bullet = Instantiate(Bullet, transform.position, transform.rotation);
+						transform.localRotation = Quaternion.Euler(0, 0, rot);
+						GameObject bullet = Instantiate(Bullet, ShotPoint.position, transform.rotation);
 						bullet.SetActive(true);
 						bullet.AddComponent<EnemyBullet>().Init(
 							Damage, false,
 							bullet.AddComponent<Move>().SetLineType(
-								transform.position,
-								new Vector2(Mathf.Cos(rot/180 *Mathf.PI),Mathf.Sin(rot / 180 * Mathf.PI)),
+								ShotPoint.position,
+								Statics.FaceVec(transform.rotation),
 								Velocity, Acceleration,AccTime, bullet.GetComponent<Rigidbody2D>()
 							),
 							bulletType, HitType
@@ -96,7 +96,7 @@ public class BulletShorter : MonoBehaviour
 				case ShotType.Follow:
 					{
 						transform.rotation.SetLookRotation(Target.transform.position - ShotPoint.position);
-						GameObject bullet = Instantiate(Bullet, transform.position, transform.rotation);
+						GameObject bullet = Instantiate(Bullet, ShotPoint.position, transform.rotation);
 						bullet.SetActive(true);
 						bullet.AddComponent<EnemyBullet>().Init(
 							Damage, false,
@@ -113,7 +113,7 @@ public class BulletShorter : MonoBehaviour
 				case ShotType.AIFollow:
 					{
 						transform.rotation.SetLookRotation(Target.transform.position - ShotPoint.position);
-						GameObject bullet = Instantiate(Bullet, transform.position, Quaternion.Euler(0, 0, 0));
+						GameObject bullet = Instantiate(Bullet, ShotPoint.position, Quaternion.Euler(0, 0, 0));
 						bullet.SetActive(true);
 						bullet.AddComponent<EnemyBullet>().Init(
 							Damage, false,

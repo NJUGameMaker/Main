@@ -58,7 +58,10 @@ public abstract class EnemyAI : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (enemy.health <= 0 && Alive) { AfterDie(); Alive = false; }
+		if (enemy.health <= 0 && Alive)
+		{
+			AfterDie(); Alive = false;
+		}
 		if (!Active &&
 				(((transform.position - PlayerManager.Instance.transform.position).magnitude < ActiveDistance)
 				|| (ActiveCollider && ActiveCollider.IsTouching(PlayerManager.Instance.HeartCollider))))
