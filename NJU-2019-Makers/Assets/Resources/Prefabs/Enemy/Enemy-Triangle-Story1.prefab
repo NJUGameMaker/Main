@@ -52,15 +52,16 @@ MonoBehaviour:
   speed: 2
   StartSpeed: 1
   acc: 0
+  direction: {x: 1, y: 0}
   heart: {x: 0, y: 0}
   radius: 20
   roundTime: 100
   currentTime: 0
-  direction: {x: 1, y: 0}
   startPoint: {x: 0, y: 0}
   endPoint: {x: 0, y: 0}
   follow: {fileID: 0}
   rotate: -90
+  declineSpeed: 0.7
   rb2: {fileID: 0}
 --- !u!114 &1655612124103779200
 MonoBehaviour:
@@ -80,6 +81,7 @@ MonoBehaviour:
   HitForce: 7
   Active: 1
   AttackToActive: 0
+  type: 0
   maxHealth: 5
 --- !u!212 &1655612124103779203
 SpriteRenderer:
@@ -149,7 +151,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &1655612124103779204
 Animator:
   serializedVersion: 3
