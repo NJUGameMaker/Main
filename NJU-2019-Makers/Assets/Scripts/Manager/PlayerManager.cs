@@ -155,6 +155,7 @@ public class PlayerManager : MonoBehaviour
 	public Animator EdgeBomb;
 	public Animator HeartBomb;
 
+
 	//Combo计数
 	public const float ComboResetTime = 1;
 	private float ComboTime = 0;
@@ -613,6 +614,7 @@ public class PlayerManager : MonoBehaviour
 
 	void StartReBullet()
 	{
+		UIManager.Instance.SetBulletState(false);
 		noBullet = true;
 	}
 
@@ -623,6 +625,7 @@ public class PlayerManager : MonoBehaviour
 		{
 			bullet = maxBullet;
 			noBullet = false;
+			UIManager.Instance.SetBulletState(true);
 		}
 	}
 

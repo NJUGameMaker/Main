@@ -52,6 +52,8 @@ public class Map1Manager : MonoBehaviour
 
 	public IEnumerator Story1_Dialog1()
 	{
+		UIManager.Instance.Flash(Color.black, Color.clear, 1f);
+		//yield return new WaitForSeconds(1f);
 		EffectManager.Instance.SetCameraContinueFocus(() => { return objs[2].transform.position; }, true);
 		EffectManager.Instance.CameraZoom(0.8f, 3f);
 		yield return new WaitForSeconds(1f);
@@ -95,7 +97,7 @@ public class Map1Manager : MonoBehaviour
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		UIManager.Instance.ShowText("【WASD上下左右，鼠标左键发射子弹】 [左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
-		UIManager.Instance.ShowText("注意左下角子弹条，子弹耗尽会进入冷却 [左键继续...]");
+		UIManager.Instance.ShowText("【注意左下角子弹条，子弹耗尽会进入冷却】 [左键开始游戏...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		for (int i = 0; i < 3; i++)
 		{
@@ -110,7 +112,7 @@ public class Map1Manager : MonoBehaviour
 
 	public IEnumerator Story1()
 	{
-		yield return new WaitForSeconds(0.5f);
+		//yield return new WaitForSeconds(0.5f);
 		StartCoroutine(Story1_Start());
 		StartCoroutine(Story1_Dialog1());
 		yield return new WaitForEndOfFrame();

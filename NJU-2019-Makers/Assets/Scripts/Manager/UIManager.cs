@@ -31,6 +31,8 @@ public class UIManager : MonoBehaviour
 	public Text Combo;
 	public Text ComboBlack;
 	public Animator ComboAnimator;
+	public Animator BulletUIAnimator;
+
 
 	//上下对话信息
 	private const float ShowHideTime = 0.6f;
@@ -116,6 +118,13 @@ public class UIManager : MonoBehaviour
 		StartCoroutine(Statics.Flash(Mask, st, ed, time, t));
 	}
 
+	public void Flash(Color st, Color ed, float time,float last, Statics.FunType t = Statics.FunType.X)
+	{
+		//Mask.color = st;
+		StartCoroutine(Statics.Flash(Mask, st, ed, time, t));
+		StartCoroutine(Statics.WorkAfterSeconds(() => { StartCoroutine(Statics.Flash(Mask, ed, st, time)); }, time+last));
+	}
+
 	const float bloodtime = 0.2f;
 	public void BloodFlash(float time = bloodtime)
 	{
@@ -130,6 +139,11 @@ public class UIManager : MonoBehaviour
 		ComboBlack.text = Combo.text = x + "Combo";
 		ComboAnimator.SetBool("Combo", true);
 		StartCoroutine(Statics.WorkAfterFrame(() => { ComboAnimator.SetBool("Combo", false); }, 2));
+	}
+	
+	public void SetBulletState(bool f)
+	{
+		BulletUIAnimator.SetBool("HaveBullet", f);
 	}
 
 	//设置临时UI条

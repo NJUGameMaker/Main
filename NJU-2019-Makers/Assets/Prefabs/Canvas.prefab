@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 8734266320033250587}
   - component: {fileID: 2050291243032879354}
   - component: {fileID: 6226030301723831728}
+  - component: {fileID: 1827163288}
   m_Layer: 5
   m_Name: Bullet
   m_TagString: Untagged
@@ -297,6 +298,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77aa0655723f17f4b8bd017d47df94e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!95 &1827163288
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4288381815066772407}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: b8cfef081afe90e438dcca20b8d9eb91, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6226030301919200727
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,6 +444,7 @@ MonoBehaviour:
   Combo: {fileID: 6598827138459041838}
   ComboBlack: {fileID: 9053118114469365666}
   ComboAnimator: {fileID: 7158475367716527520}
+  BulletUIAnimator: {fileID: 1827163288}
 --- !u!1 &6226030302280498502
 GameObject:
   m_ObjectHideFlags: 0
