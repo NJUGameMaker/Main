@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyTriangle_Default : EnemyAI
 {
+    public bool DelGoAround =true;
 	public override void AfterDie()
 	{
 		foreach (var item in ObjectToActive)
@@ -15,8 +16,11 @@ public class EnemyTriangle_Default : EnemyAI
 
 	public override void BeActive()
 	{
-		goAround.enabled = false;
-		move.enabled = true;
+        if (DelGoAround)
+        {
+            goAround.enabled = false;
+            move.enabled = true;
+        }
 		move.follow = PlayerManager.Instance.gameObject;
 		enemy.Active = true;
 		return;

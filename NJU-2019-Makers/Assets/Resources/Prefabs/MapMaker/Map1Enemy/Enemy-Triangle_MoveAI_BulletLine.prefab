@@ -233,7 +233,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3231743009253099292}
-  m_BodyType: 0
+  m_BodyType: 2
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -328,12 +328,12 @@ MonoBehaviour:
   DamageBullet: {fileID: 2491762746154822245, guid: d7b3a501e414018478f5284a94294b82,
     type: 3}
   Target: {fileID: 0}
-  Interval: 1
+  Interval: 3
   StartRotate: 90
   RotateStep: 360
   RotateInterval: 0
-  Velocity: 10
-  Acceleration: -1
+  Velocity: 8
+  Acceleration: -2
   AccTime: 1
   Damage: 0
   OutType: 7

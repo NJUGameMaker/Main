@@ -196,6 +196,7 @@ public class Move : MonoBehaviour
 					//Vector2 mouseWorldPos = Camera.main.ScreenToWorldPoint(mousePosition); //屏幕坐标转世界坐标
 					//target.x = mouseWorldPos.x;
 					//target.y = mouseWorldPos.y;
+                    //if(follow)
 					target = follow.transform.position;
 					v = new Vector3(target.x - transform.position.x, target.y - transform.position.y, 0); //新建移动向量
 					v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1

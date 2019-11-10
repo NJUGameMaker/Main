@@ -225,6 +225,7 @@ MonoBehaviour:
   ActiveCollider: {fileID: 0}
   ObjectToActive:
   - {fileID: 3594480019165558356}
+  DelGoAround: 1
 --- !u!50 &352672822749128146
 Rigidbody2D:
   serializedVersion: 4
@@ -358,12 +359,12 @@ MonoBehaviour:
   DamageBullet: {fileID: 2491762746154822245, guid: d7b3a501e414018478f5284a94294b82,
     type: 3}
   Target: {fileID: 0}
-  Interval: 1
+  Interval: 3
   StartRotate: 90
   RotateStep: 360
   RotateInterval: 0
-  Velocity: 10
-  Acceleration: -1
+  Velocity: 8
+  Acceleration: -2
   AccTime: 1
   Damage: 0
   OutType: 7

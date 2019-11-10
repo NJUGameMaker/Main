@@ -52,7 +52,7 @@ public class PlayerManager : MonoBehaviour
 	public HashSet<Vector2> KeyPoints = new HashSet<Vector2>();
 
 	//血量
-	private float maxHealth = 100;
+	private float maxHealth = 600;
 	private float health;
 
 	//能量（缩放），0->初始不放缩情况
