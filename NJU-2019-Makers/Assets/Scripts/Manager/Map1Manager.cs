@@ -53,7 +53,7 @@ public class Map1Manager : MonoBehaviour
 	public IEnumerator Story1_Dialog1()
 	{
 		EffectManager.Instance.SetCameraContinueFocus(() => { return objs[2].transform.position; }, true);
-		EffectManager.Instance.CameraZoom(0.8f, 2.5f);
+		EffectManager.Instance.CameraZoom(0.8f, 3f);
 		yield return new WaitForSeconds(1f);
 		UIManager.Instance.ShowDialog();
 		yield return new WaitForSeconds(1f);
@@ -68,11 +68,11 @@ public class Map1Manager : MonoBehaviour
 		UIManager.Instance.ShowText("冲鸭！！！", 1f);
 		yield return new WaitForSeconds(1.2f);
 		EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true, 0.008f);
-		EffectManager.Instance.CameraZoom(2f, 6f);
+		EffectManager.Instance.CameraZoom(2f, 6.5f);
 		UIManager.Instance.HideDialogAndText();
 		yield return new WaitForSeconds(2f);
 		EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true, 0.04f);
-		EffectManager.Instance.CameraZoom(2f, 1.5f);
+		EffectManager.Instance.CameraZoom(2f, 2f);
 		yield return new WaitForSeconds(1f);
 		UIManager.Instance.ShowDialog();
 		yield return new WaitForSeconds(1f);
@@ -80,7 +80,7 @@ public class Map1Manager : MonoBehaviour
 		yield return new WaitForSeconds(1.5f);
 		UIManager.Instance.ShowText("“现在不掏枪就死定啦！”", 1.5f);
 		yield return new WaitForSeconds(0.5f);
-		EffectManager.Instance.CameraZoom(1f, 6.5f);
+		EffectManager.Instance.CameraZoom(1f, 8.5f);
 		yield return new WaitForSeconds(1f);
 		StoryShotBullet.SetActive(true);
 		StartCoroutine(Statics.WorkAfterSeconds(() => { StoryShotBullet.SetActive(false); }, 1));
@@ -95,7 +95,8 @@ public class Map1Manager : MonoBehaviour
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		UIManager.Instance.ShowText("【WASD上下左右，鼠标左键发射子弹】 [左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
-
+		UIManager.Instance.ShowText("注意左下角子弹条，子弹耗尽会进入冷却 [左键继续...]");
+		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		for (int i = 0; i < 3; i++)
 		{
 			Statics.SetEnable(objs[i], true);
