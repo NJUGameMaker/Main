@@ -53,6 +53,12 @@ public class Enemy : MonoBehaviour
 	//敌人本体撞到玩家 需要考虑 玩家是否无敌 （玩家在无敌状态需要被弹开 或者 对玩家造成伤害自己死亡） TODO
 	public void AttackPlayer()
 	{
+		if (PlayerManager.Instance.protect)
+		{
+			move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5);
+			return;
+		}
+
 		if (type == Type.Cut)
 		{
 			Vector2 v = m_rb.velocity;
@@ -66,12 +72,7 @@ public class Enemy : MonoBehaviour
 		{
 			PlayerManager.Instance.BeingAttack(damage);
 		}
-		Debug.Log(PlayerManager.Instance.protect);
-		if (PlayerManager.Instance.protect)
-		{
-			move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5);
-			return;
-		}
+
 		if (AttackDie)
 		{
 			Statics.AnimatorPlay(this, animator, Statics.AnimatorType.Die);
@@ -84,6 +85,11 @@ public class Enemy : MonoBehaviour
 	//攻击到玩家核心 判断游戏结束或者读取存档等 TODO
 	public void AttackHeart()
 	{
+		if (PlayerManager.Instance.protect)
+		{
+			move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5);
+			return;
+		}
 		PlayerManager.Instance.AttackHeart(gameObject);
 	}
 

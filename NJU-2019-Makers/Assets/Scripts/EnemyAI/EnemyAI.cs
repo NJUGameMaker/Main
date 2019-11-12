@@ -28,9 +28,9 @@ public abstract class EnemyAI : MonoBehaviour
 
 	public IEnumerator StartActive()
 	{
-		yield return new WaitForSeconds(ActiveTime);
-		EffectManager.Instance.PlayEffect(EffectManager.EffectType.Active, transform.position, Quaternion.identity);
 		Active = true;
+		EffectManager.Instance.PlayEffect(EffectManager.EffectType.Active, transform.position, Quaternion.identity,1f);
+		yield return new WaitForSeconds(ActiveTime);
 		foreach (var item in ObjectToActive)
 		{
 			item.SetActive(true);

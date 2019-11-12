@@ -36,41 +36,68 @@ public class EnemyBullet : MonoBehaviour
 		gameObject.tag = t.ToString();
 	}
 
+	public void AttackProtect()
+	{
+		if (!isStatic)
+		{
+			move.moveType = Move.MoveType.Line;
+			move.direction = -move.rb2.velocity;
+			move.speed *= 2;
+			move.acc = 0;
+			transform.rotation = Statics.FaceTo(move.direction);
+			gameObject.AddComponent<PlayerBullet>().Init(PlayerManager.BulletType.Strong, damage, false, move);
+			gameObject.tag = "PlayerBullet";
+			Destroy(this);
+		}
+	}
+
 	//攻击到玩家 应该写完了 还有特效 音效 TODO
 	public void Attack()
 	{
-		switch (type)
+		if (PlayerManager.Instance.protect)
 		{
-			case Type.EnemyBullet:
-				{ PlayerManager.Instance.BeingAttack(damage); }
-				break;
-			case Type.EnemyCut:
-				{
-					Vector2 v = rigidbody2.velocity;
-					var cast = Physics2D.Raycast(transform.position, v, 100, 1 << 8);
-					if (cast)
-					{
-						PlayerManager.Instance.BeingCut(gameObject, cast.point, v);
-						Debug.DrawLine(Vector3.zero, cast.point, Color.red, 100);
-					}
-				}
-				break;
-			default:
-				break;
+			AttackProtect();
 		}
-		EffectManager.Instance.PlayEffect(OnEffect,transform.position,transform.rotation,1f);
-		if (!isStatic) Destroy(gameObject);
+		else
+		{
+			switch (type)
+			{
+				case Type.EnemyBullet:
+					{ PlayerManager.Instance.BeingAttack(damage); }
+					break;
+				case Type.EnemyCut:
+					{
+						Vector2 v = rigidbody2.velocity;
+						var cast = Physics2D.Raycast(transform.position, v, 100, 1 << 8);
+						if (cast)
+						{
+							PlayerManager.Instance.BeingCut(gameObject, cast.point, v);
+							Debug.DrawLine(Vector3.zero, cast.point, Color.red, 100);
+						}
+					}
+					break;
+				default:
+					break;
+			}
+			EffectManager.Instance.PlayEffect(OnEffect, transform.position, transform.rotation, 1f);
+			if (!isStatic) Destroy(gameObject);
+		}
 	}
 
 	//攻击到玩家核心 应该写完了 还有特效 音效 TODO
 	public void AttackHeart()
 	{
 		//Debug.Log("attack");
-
-		PlayerManager.Instance.AttackHeart(gameObject);
-		EffectManager.Instance.PlayEffect(OnEffect, transform.position, transform.rotation,1f);
-		if (!isStatic) Destroy(gameObject);
-
+		if (PlayerManager.Instance.protect)
+		{
+			AttackProtect();
+		}
+		else
+		{
+			PlayerManager.Instance.AttackHeart(gameObject);
+			EffectManager.Instance.PlayEffect(OnEffect, transform.position, transform.rotation, 1f);
+			if (!isStatic) Destroy(gameObject);
+		}
 	}
 
 	//碰到墙 应该写完了 还有特效 音效 TODO

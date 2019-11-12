@@ -47,9 +47,11 @@ public class Move : MonoBehaviour
 	//间隔更新
 	private bool canMove;
 
-	public void AddForceSpeed(Vector3 vect)
+	public void AddForceSpeed(Vector3 vect,float stoptime = 0)
 	{
-		speed = StartSpeed;
+		var tmp = StartSpeed;
+		speed = 0;
+		if (stoptime != 0) StartCoroutine(Statics.WorkAfterSeconds(() => { speed = tmp; }, stoptime)); else speed = StartSpeed;
 		addSpeed = vect;
 	}
 

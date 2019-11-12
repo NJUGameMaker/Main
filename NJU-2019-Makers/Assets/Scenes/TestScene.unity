@@ -298,6 +298,7 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  ActiveTime: 0
   ActiveDistance: 0
   ActiveCollider: {fileID: 0}
   ObjectToActive:
@@ -3387,6 +3388,21 @@ PrefabInstance:
       propertyPath: ActiveCollider
       value: 
       objectReference: {fileID: 1227889934}
+    - target: {fileID: 352672822749128147, guid: 09c62eb1980d282468fb900bb5dd3330,
+        type: 3}
+      propertyPath: ActiveTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 352672822749128150, guid: 09c62eb1980d282468fb900bb5dd3330,
+        type: 3}
+      propertyPath: HitForce
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 352672822749128150, guid: 09c62eb1980d282468fb900bb5dd3330,
+        type: 3}
+      propertyPath: maxHealth
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09c62eb1980d282468fb900bb5dd3330, type: 3}
 --- !u!1001 &4356005084918575028
@@ -3811,6 +3827,7 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  ActiveTime: 0
   ActiveDistance: 0
   ActiveCollider: {fileID: 0}
   ObjectToActive: []
