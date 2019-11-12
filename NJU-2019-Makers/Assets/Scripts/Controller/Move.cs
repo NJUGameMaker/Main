@@ -188,7 +188,13 @@ public class Move : MonoBehaviour
 					//transform.Translate(v);
 
 				}; break;
-			case MoveType.Cruve: { }; break;
+			case MoveType.Cruve: {
+                    speed += acc * Time.fixedDeltaTime;
+                    v = new Vector3(Random.Range(0, 10), Random.Range(0, 10), 0); //新建移动向量
+                    v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
+                    v = v * speed;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
+                                                  //transform.Translate(v);                       //移动
+                }; break;//随机游走
 			case MoveType.AIFollow:
 				{
 					speed += acc * Time.fixedDeltaTime;
