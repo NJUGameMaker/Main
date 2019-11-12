@@ -313,6 +313,7 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  ActiveTime: 0
   ActiveDistance: 0
   ActiveCollider: {fileID: 0}
   ObjectToActive:
