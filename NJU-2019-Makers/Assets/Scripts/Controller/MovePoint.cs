@@ -5,8 +5,8 @@ using UnityEngine;
 public class MovePoint : MonoBehaviour
 {
 	public Transform target;
-	public Animator animator;
 	public CallBack callBack;
+	private Animator animator;
 
 
 	// Start is called before the first frame update
@@ -18,7 +18,6 @@ public class MovePoint : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (GameManager.Instance.pause || GameManager.Instance.playVideo) return;
-		Debug.Log(collision.tag);
 		if (collision.tag == "PlayerHeart")
 		{
 			animator.SetBool("Active", true);

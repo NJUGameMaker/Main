@@ -43,9 +43,10 @@ public class EnemyBullet : MonoBehaviour
 			move.moveType = Move.MoveType.Line;
 			move.direction = -move.rb2.velocity;
 			move.speed *= 2;
+			move.speed += 5;
 			move.acc = 0;
 			transform.rotation = Statics.FaceTo(move.direction);
-			gameObject.AddComponent<PlayerBullet>().Init(PlayerManager.BulletType.Strong, damage, false, move);
+			gameObject.AddComponent<PlayerBullet>().Init(PlayerManager.BulletType.None, damage, false, move);
 			gameObject.tag = "PlayerBullet";
 			Destroy(this);
 		}

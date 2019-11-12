@@ -21,6 +21,7 @@ public abstract class EnemyAI : MonoBehaviour
 	private bool Alive;
 	private bool RoundEnd;
 
+	public bool PlayEffect = true;
 	public float ActiveTime;
 	public float ActiveDistance;
 	public Collider2D ActiveCollider;
@@ -29,8 +30,8 @@ public abstract class EnemyAI : MonoBehaviour
 	public IEnumerator StartActive()
 	{
 		Active = true;
-		EffectManager.Instance.PlayEffect(EffectManager.EffectType.Active, transform.position, Quaternion.identity,1f);
-		yield return new WaitForSeconds(ActiveTime);
+		if (PlayEffect) EffectManager.Instance.PlayEffect(EffectManager.EffectType.Active, transform.position, Quaternion.identity,1f);
+		if (ActiveTime!=0) yield return new WaitForSeconds(ActiveTime);
 		foreach (var item in ObjectToActive)
 		{
 			item.SetActive(true);

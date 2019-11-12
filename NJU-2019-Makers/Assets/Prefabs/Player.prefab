@@ -527,6 +527,7 @@ GameObject:
   - component: {fileID: 8878478251110559488}
   - component: {fileID: 8878478251110559503}
   - component: {fileID: 8878478251110559489}
+  - component: {fileID: 8878478250444260122}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -583,6 +584,7 @@ MonoBehaviour:
   FirePosHeart: {fileID: 7790691089323353654}
   EdgeBomb: {fileID: 8518559632738455174}
   HeartBomb: {fileID: 1468111333818496233}
+  MainAnimator: {fileID: 8878478250444260122}
 --- !u!50 &8878478251110559489
 Rigidbody2D:
   serializedVersion: 4
@@ -604,6 +606,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &8878478250444260122
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8878478251110559502}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f57039e12e100f348a39f4706c8dbb8f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8878478251175322914
 GameObject:
   m_ObjectHideFlags: 0

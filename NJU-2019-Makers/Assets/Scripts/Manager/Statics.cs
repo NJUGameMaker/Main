@@ -113,6 +113,17 @@ public class Statics : MonoBehaviour
 		}
 	}
 
+	public static IEnumerator Flash(SpriteRenderer img, Color st, Color ed, float time, FunType t = FunType.X)
+	{
+		float delta = Mathf.Min(1, Time.fixedDeltaTime / time), p = 0;
+		while (p < 1)
+		{
+			p += delta;
+			img.color = new Color(FixFun(t, st.r, ed.r, p), FixFun(t, st.g, ed.g, p), FixFun(t, st.b, ed.b, p), FixFun(t, st.a, ed.a, p));
+			yield return new WaitForFixedUpdate();
+		}
+	}
+
 	public static IEnumerator Move(Transform transform, Vector3 st, Vector3 ed, float time, FunType t = FunType.X)
 	{
 		float delta = Mathf.Min(1, Time.fixedDeltaTime / time), p = 0;

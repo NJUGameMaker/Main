@@ -13,7 +13,8 @@ public class Map1Manager : MonoBehaviour
 	public GameObject Story1Enemy1;
 	public GameObject StoryShotBullet;
 	public GameObject Level1;
-	public GameObject[] Story2Enemys;
+	public GameObject Story2Enemys;
+	public Transform Story2Effect;
 
 	private List<GameObject> objs = new List<GameObject>();
 
@@ -23,14 +24,15 @@ public class Map1Manager : MonoBehaviour
 	public void Init()
 	{
 		MouseDown = true;
-		Player.transform.position = PlayerStart.position;
-		GameManager.Instance.GameVideo();
+		CameraManager.Instance.ReloadMap(1);
 		//EffectManager.Instance.CameraFocus(1, PlayerStart.position, Statics.FunType.SqrtX);
 		//UIManager.Instance.HideDialogAndText();
 	}
 
 	public IEnumerator Story1_Start()
 	{
+		Player.transform.position = PlayerStart.position;
+		GameManager.Instance.GameVideo();
 		const float MoveTime = 12f;
 		const float WaitTime = 2f;
 		const float SlowTime = 6f;
@@ -96,6 +98,8 @@ public class Map1Manager : MonoBehaviour
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		UIManager.Instance.ShowText("要记得不论什么时候，心被击中就完蛋啦！ [左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
+		UIManager.Instance.ShowText("先逃出王城吧！ [左键继续...]");
+		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		UIManager.Instance.ShowText("【WASD上下左右，鼠标左键发射子弹】 [左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		UIManager.Instance.ShowText("【注意左下角子弹条，子弹耗尽会进入冷却】 [左键开始游戏...]");
@@ -119,10 +123,55 @@ public class Map1Manager : MonoBehaviour
 		yield return new WaitForEndOfFrame();
 	}
 
+	void Story2EnemyShow()
+	{
+		for (int i = 0; i < Story2Enemys.transform.childCount; i++)
+		{
+			StartCoroutine(Statics.Flash(Story2Enemys.transform.GetChild(i).GetComponentInChildren<SpriteRenderer>(), Color.clear, Color.white,1));
+		}
+	}
+
+	void Story2EnemyActive()
+	{
+		for (int i = 0; i < Story2Enemys.transform.childCount; i++)
+		{
+			StartCoroutine(Story2Enemys.transform.GetChild(i).GetComponent<EnemyAI>().StartActive());
+		}
+	}
+
 	public IEnumerator Story2()
 	{
+		GameManager.Instance.GameVideo();
 		//yield return new WaitForSeconds(0.5f);
-
+		yield return new WaitForSeconds(0.5f);
+		GameManager.Instance.GameVideo();
+		yield return new WaitForSeconds(0.5f);
+		UIManager.Instance.ShowDialog();
+		yield return new WaitForSeconds(1f);
+		UIManager.Instance.ShowText("哈哈哈！！逃出来啦！！", 1.5f);
+		yield return new WaitForSeconds(1.5f);
+		UIManager.Instance.ShowText("Emmmm。。。", 1.5f);
+		yield return new WaitForSeconds(0.8f);
+		Story2EnemyShow();
+		EffectManager.Instance.PlayEffect(EffectManager.EffectType.Active, Story2Effect.position, Quaternion.identity);
+		yield return new WaitForSeconds(0.7f);
+		UIManager.Instance.ShowText("糟了！！中计了！！！完了完了完了。。", 1.5f);
+		yield return new WaitForSeconds(1.5f);
+		UIManager.Instance.ShowText("“别慌！你可是圆形啊！弹开它们的子弹反击吧！”[左键继续...]");
+		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
+		UIManager.Instance.ShowText("【长按鼠标右键蓄力】[左键继续...]");
+		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
+		UIManager.Instance.ShowText("【松开时可以反弹附近的敌人和子弹】[左键继续...]");
+		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
+		UIManager.Instance.ShowText("【蓄力时会获得更高的移动速度，子弹射速和伤害】[左键继续...]");
+		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
+		UIManager.Instance.ShowText("【当蓄力达到临界值时可以穿越某些特定障碍】[左键继续...]");
+		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
+		UIManager.Instance.ShowText("【但是！注意！蓄力会让脆弱的内心暴露在外！】[左键开始游戏...]");
+		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
+		Story2EnemyActive();
+		UIManager.Instance.HideDialogAndText();
+		GameManager.Instance.GameRestart();
 		yield return new WaitForEndOfFrame();
 	}
 
@@ -136,7 +185,7 @@ public class Map1Manager : MonoBehaviour
 	void Start()
     {
 		Init();
-		StartCoroutine(Story1());
+		//StartCoroutine(Story1());
     }
 
     // Update is called once per frame
