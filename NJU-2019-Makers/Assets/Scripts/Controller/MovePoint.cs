@@ -5,8 +5,8 @@ using UnityEngine;
 public class MovePoint : MonoBehaviour
 {
 	public Transform target;
-	public Animator animator;
 	public CallBack callBack;
+	private Animator animator;
 
 
 	// Start is called before the first frame update

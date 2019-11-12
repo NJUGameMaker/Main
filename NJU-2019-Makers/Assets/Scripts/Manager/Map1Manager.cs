@@ -13,7 +13,7 @@ public class Map1Manager : MonoBehaviour
 	public GameObject Story1Enemy1;
 	public GameObject StoryShotBullet;
 	public GameObject Level1;
-	public GameObject[] Story2Enemys;
+	public GameObject Story2Enemys;
 
 	private List<GameObject> objs = new List<GameObject>();
 
@@ -24,13 +24,13 @@ public class Map1Manager : MonoBehaviour
 	{
 		MouseDown = true;
 		Player.transform.position = PlayerStart.position;
-		GameManager.Instance.GameVideo();
 		//EffectManager.Instance.CameraFocus(1, PlayerStart.position, Statics.FunType.SqrtX);
 		//UIManager.Instance.HideDialogAndText();
 	}
 
 	public IEnumerator Story1_Start()
 	{
+		GameManager.Instance.GameVideo();
 		const float MoveTime = 12f;
 		const float WaitTime = 2f;
 		const float SlowTime = 6f;
@@ -96,6 +96,8 @@ public class Map1Manager : MonoBehaviour
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		UIManager.Instance.ShowText("要记得不论什么时候，心被击中就完蛋啦！ [左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
+		UIManager.Instance.ShowText("先逃出王城吧！ [左键继续...]");
+		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		UIManager.Instance.ShowText("【WASD上下左右，鼠标左键发射子弹】 [左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		UIManager.Instance.ShowText("【注意左下角子弹条，子弹耗尽会进入冷却】 [左键开始游戏...]");
@@ -122,7 +124,10 @@ public class Map1Manager : MonoBehaviour
 	public IEnumerator Story2()
 	{
 		//yield return new WaitForSeconds(0.5f);
-
+		UIManager.Instance.ShowDialog();
+		yield return new WaitForSeconds(1f);
+		UIManager.Instance.ShowText("哈哈哈！！逃出来啦！！", 1.5f);
+		yield return new WaitForSeconds(1.5f);
 		yield return new WaitForEndOfFrame();
 	}
 
