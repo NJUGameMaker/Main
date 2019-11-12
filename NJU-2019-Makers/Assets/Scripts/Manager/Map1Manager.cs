@@ -10,9 +10,10 @@ public class Map1Manager : MonoBehaviour
 	//剧情关键点
 	public Transform[] StoryEnemy1St;
 	public Transform[] StoryEnemy1Ed;
-	public GameObject StoryEnemy1;
+	public GameObject Story1Enemy1;
 	public GameObject StoryShotBullet;
 	public GameObject Level1;
+	public GameObject[] Story2Enemys;
 
 	private List<GameObject> objs = new List<GameObject>();
 
@@ -38,7 +39,7 @@ public class Map1Manager : MonoBehaviour
 			Transform st = StoryEnemy1St[i], ed = StoryEnemy1Ed[i];
 			var mid = st.position * 0.2f + ed.position * 0.8f;
 
-			var tmp = Instantiate(StoryEnemy1, st);
+			var tmp = Instantiate(Story1Enemy1, st);
 			objs.Add(tmp);
 			tmp.SetActive(true);
 			tmp.transform.rotation = Statics.FaceTo(ed.position - st.position, -90);
@@ -115,6 +116,13 @@ public class Map1Manager : MonoBehaviour
 		//yield return new WaitForSeconds(0.5f);
 		StartCoroutine(Story1_Start());
 		StartCoroutine(Story1_Dialog1());
+		yield return new WaitForEndOfFrame();
+	}
+
+	public IEnumerator Story2()
+	{
+		//yield return new WaitForSeconds(0.5f);
+
 		yield return new WaitForEndOfFrame();
 	}
 

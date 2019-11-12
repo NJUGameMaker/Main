@@ -85,7 +85,7 @@ public class PlayerManager : MonoBehaviour
 	private GameObject GOHeart => HeartCollider.gameObject;
 	private GameObject GOEdge => EdgeCollider.gameObject;
 	//自身刚体
-	private Rigidbody2D m_rb;
+	public Rigidbody2D m_rb { get; private set; }
 	//动画
 	private Animator EdgeAnimator;
 	private Animator HeartAnimator;
@@ -154,6 +154,7 @@ public class PlayerManager : MonoBehaviour
 
 	public Animator EdgeBomb;
 	public Animator HeartBomb;
+	public Animator MainAnimator;
 
 
 	//Combo计数
@@ -627,6 +628,16 @@ public class PlayerManager : MonoBehaviour
 			noBullet = false;
 			UIManager.Instance.SetBulletState(true);
 		}
+	}
+
+	public void GoSmall()
+	{
+		MainAnimator.SetBool("Small",true);
+	}
+
+	public void GoBig()
+	{
+		MainAnimator.SetBool("Small", false);
 	}
 
 	// Update is called once per frame
