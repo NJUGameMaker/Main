@@ -54,9 +54,9 @@ public class CameraManager : MonoBehaviour
 
 	public void AddFlower(GameObject obj,Vector2 size,List<GameObject> list)
 	{
-		for (int x = 0; x < size.x; x += StepX )
+		for (int x = 0; x + StepY < size.x; x += StepX )
 		{
-			for (int y = 0; y < size.y; y += StepY)
+			for (int y = 0; y + StepY < size.y; y += StepY)
 			{
 				int Rx = Random.Range(-RandomX, RandomX);
 				int Ry = Random.Range(-RandomY, RandomY);
@@ -71,6 +71,8 @@ public class CameraManager : MonoBehaviour
 	//加载花纹
 	private void LoadFlower()
 	{
+		outside.Clear();
+		road.Clear();
 		for (int i = 1; true; i++)
 		{
 			var tmpo = Resources.Load(Path + "M" + MapNumber.ToString() + "O" + i.ToString()) as GameObject;
@@ -106,9 +108,25 @@ public class CameraManager : MonoBehaviour
 		//EffectManager.Instance.SetCameraContinueFocus(() => { return PlayerManager.Instance.transform.position; }, true);
 	}
 
+	void ReLoadMap(int n)
+	{
+		Statics.ClearChild(PBackGround);
+		foreach (var item in m_backGrounds)
+		{
+			Destroy(item);
+		}
+		MapNumber = n;
+		BackGroundOutSide = Resources.Load(Path + "Back/Out" + MapNumber) as GameObject;
+		BackGroundRoad = Resources.Load(Path + "Back/Road" + MapNumber) as GameObject;
+		Instantiate(BackGroundOutSide, PBackGround.transform);
+		Instantiate(BackGroundRoad, PBackGround.transform);
+		Init();
+		Statics.ClearChild(PBackGround);
+	}
+
 	void Start()
     {
-		Init();
+		ReLoadMap(MapNumber);
 		//test
 		//StartCoroutine(Statics.Move(m_camera.transform, m_camera.transform.position, new Vector3(1000, 0, -10), 100));
 	}
@@ -140,6 +158,10 @@ public class CameraManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		if (Input.GetKeyDown(KeyCode.Z)) ReLoadMap(1);
+		if (Input.GetKeyDown(KeyCode.X)) ReLoadMap(3);
+		if (Input.GetKeyDown(KeyCode.C)) ReLoadMap(4);
 		FixBackGround();
+
 	}
 }

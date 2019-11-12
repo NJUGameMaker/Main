@@ -21,12 +21,15 @@ public abstract class EnemyAI : MonoBehaviour
 	private bool Alive;
 	private bool RoundEnd;
 
+	public float ActiveTime;
 	public float ActiveDistance;
 	public Collider2D ActiveCollider;
 	public GameObject[] ObjectToActive;
 
-	public void StartActive()
+	public IEnumerator StartActive()
 	{
+		yield return new WaitForSeconds(ActiveTime);
+		EffectManager.Instance.PlayEffect(EffectManager.EffectType.Active, transform.position, Quaternion.identity);
 		Active = true;
 		foreach (var item in ObjectToActive)
 		{
@@ -65,7 +68,7 @@ public abstract class EnemyAI : MonoBehaviour
 		if (!Active &&
 				(((transform.position - PlayerManager.Instance.transform.position).magnitude < ActiveDistance)
 				|| (ActiveCollider && ActiveCollider.IsTouching(PlayerManager.Instance.HeartCollider))))
-			{ StartActive(); }
+			{ StartCoroutine(StartActive()); }
 		if (goAround.RoundTimes == 1 && !RoundEnd) { RoundEnd = true; EndOfRound(); }
 	}
 }

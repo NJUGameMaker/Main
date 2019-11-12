@@ -114,8 +114,8 @@ public class PlayerManager : MonoBehaviour
 	//子弹误差默认值（角度值）：
 	public const float deviation = 0;
 	//发射帧间隔(s) 缩放所减少的子弹间隔：
-	public const float shoot_interval = 0.7f;
-	public const float shoot_change_interval = 0.6f;
+	public const float shoot_interval = 0.4f;
+	public const float shoot_change_interval = 0.3f;
 	//最大的子弹增伤
 	public const float damage_change = 3;
 	//能够发射子弹（子弹间隔）

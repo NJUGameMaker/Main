@@ -242,4 +242,12 @@ public class Statics : MonoBehaviour
 		obj.GetComponent<Enemy>().enabled = t;
 		obj.GetComponent<Move>().enabled = t;
 	}
+
+	public static void ClearChild(GameObject obj)
+	{
+		for (int i = 0; i < obj.transform.childCount; i++)
+		{
+			Destroy(obj.transform.GetChild(i).gameObject);
+		}
+	}
 }

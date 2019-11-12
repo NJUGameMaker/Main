@@ -38,7 +38,7 @@ public class EffectManager : MonoBehaviour
 		EnemyNormalOut,
 		EnemyCutOn,
 		EnemyCutOut,
-
+		Active,
 
 		End
 	}

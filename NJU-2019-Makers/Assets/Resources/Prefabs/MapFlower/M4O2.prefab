@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3617665967455547653}
   - component: {fileID: 3617665967455547652}
+  - component: {fileID: 3150753065861360956}
   m_Layer: 0
   m_Name: M4O2
   m_TagString: Untagged
@@ -68,7 +69,7 @@ SpriteRenderer:
   m_SortingLayerID: -260397947
   m_SortingLayer: 1
   m_SortingOrder: -86
-  m_Sprite: {fileID: 21300000, guid: 5621c3bd803698849941fdf7774f784f, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b029766e0aa43ae469557b380280435a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -79,3 +80,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 1
   m_SpriteSortPoint: 0
+--- !u!95 &3150753065861360956
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3617665967455547655}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d31f9eab40466c84098230fe89061e91, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
