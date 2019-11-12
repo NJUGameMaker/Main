@@ -18,7 +18,6 @@ public class MovePoint : MonoBehaviour
 	private void OnTriggerEnter2D(Collider2D collision)
 	{
 		if (GameManager.Instance.pause || GameManager.Instance.playVideo) return;
-		Debug.Log(collision.tag);
 		if (collision.tag == "PlayerHeart")
 		{
 			animator.SetBool("Active", true);

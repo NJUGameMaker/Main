@@ -35,6 +35,7 @@ public class MoChiAI : EnemyAI
 
 	public override void BeActive()
 	{
+		enemy.Active = true;
 		return;
 	}
 	public override void Init()

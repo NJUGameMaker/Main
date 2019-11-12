@@ -108,7 +108,7 @@ public class CameraManager : MonoBehaviour
 		//EffectManager.Instance.SetCameraContinueFocus(() => { return PlayerManager.Instance.transform.position; }, true);
 	}
 
-	void ReLoadMap(int n)
+	public void ReloadMap(int n)
 	{
 		Statics.ClearChild(PBackGround);
 		foreach (var item in m_backGrounds)
@@ -126,7 +126,7 @@ public class CameraManager : MonoBehaviour
 
 	void Start()
     {
-		ReLoadMap(MapNumber);
+		ReloadMap(MapNumber);
 		//test
 		//StartCoroutine(Statics.Move(m_camera.transform, m_camera.transform.position, new Vector3(1000, 0, -10), 100));
 	}
@@ -158,9 +158,6 @@ public class CameraManager : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Z)) ReLoadMap(1);
-		if (Input.GetKeyDown(KeyCode.X)) ReLoadMap(3);
-		if (Input.GetKeyDown(KeyCode.C)) ReLoadMap(4);
 		FixBackGround();
 
 	}

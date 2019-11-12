@@ -738,7 +738,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129396086}
   m_LocalRotation: {x: 0, y: 0, z: 0.81915206, w: 0.57357645}
-  m_LocalPosition: {x: 9.43, y: -0.16, z: 2.636386}
+  m_LocalPosition: {x: 14.920006, y: 2.459995, z: 2.636386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1828613045}
@@ -814,9 +814,10 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
-  ActiveCollider: {fileID: 0}
+  ActiveCollider: {fileID: 508965883}
   ObjectToActive: []
   DelGoAround: 1
 --- !u!114 &129396091
@@ -856,7 +857,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 10
-  Active: 1
+  Active: 0
   AttackToActive: 0
   type: 0
   maxHealth: 1
@@ -872,11 +873,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
-  StartSpeed: 2
+  moveType: 1
+  speed: 0
+  StartSpeed: 0
   acc: 0
-  direction: {x: 1, y: 1}
+  direction: {x: 0, y: 0}
   heart: {x: 2, y: 0}
   radius: 3
   roundTime: 3
@@ -917,7 +918,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 151617064}
   m_LocalRotation: {x: 0, y: 0, z: 0.81915206, w: 0.57357645}
-  m_LocalPosition: {x: 8, y: -5.98, z: 2.636386}
+  m_LocalPosition: {x: 13.4900055, y: -3.360005, z: 2.636386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 531439430}
@@ -993,9 +994,10 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
-  ActiveCollider: {fileID: 0}
+  ActiveCollider: {fileID: 508965883}
   ObjectToActive: []
   DelGoAround: 1
 --- !u!114 &151617069
@@ -1035,7 +1037,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 10
-  Active: 1
+  Active: 0
   AttackToActive: 0
   type: 0
   maxHealth: 1
@@ -1051,11 +1053,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
-  StartSpeed: 2
+  moveType: 1
+  speed: 0
+  StartSpeed: 0
   acc: 0
-  direction: {x: 1, y: 1}
+  direction: {x: 0, y: 0}
   heart: {x: 2, y: 0}
   radius: 3
   roundTime: 3
@@ -1887,10 +1889,12 @@ MonoBehaviour:
   - {fileID: 127096598}
   - {fileID: 1757381012}
   - {fileID: 203506857}
-  Story1Enemy1: {fileID: 0}
+  Story1Enemy1: {fileID: 1655612124103779206, guid: 7c23d5b3677a40a4c8da373c89a0cc8d,
+    type: 3}
   StoryShotBullet: {fileID: 545668933}
   Level1: {fileID: 1749023954}
   Story2Enemys: {fileID: 576512733}
+  Story2Effect: {fileID: 970309773}
 --- !u!1 &361981577
 GameObject:
   m_ObjectHideFlags: 0
@@ -1915,7 +1919,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 361981577}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 80.42, y: 170.61, z: 0}
+  m_LocalPosition: {x: 80.56, y: 170.89, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2007746897}
@@ -2420,12 +2424,12 @@ PrefabInstance:
     - target: {fileID: 8878478251110559488, guid: 661162c083ba52e4eb6f663838c5e20e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -9.29
+      value: 77.2
       objectReference: {fileID: 0}
     - target: {fileID: 8878478251110559488, guid: 661162c083ba52e4eb6f663838c5e20e,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.64
+      value: 136.1
       objectReference: {fileID: 0}
     - target: {fileID: 8878478251110559488, guid: 661162c083ba52e4eb6f663838c5e20e,
         type: 3}
@@ -2471,6 +2475,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8878478251110559489, guid: 661162c083ba52e4eb6f663838c5e20e,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 661162c083ba52e4eb6f663838c5e20e, type: 3}
@@ -2590,7 +2599,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 508965881}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 103.06, y: 182.6, z: 0}
+  m_LocalPosition: {x: 95.5, y: 179.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5229346389725883997}
@@ -2792,7 +2801,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541771447}
   m_LocalRotation: {x: 0, y: 0, z: 0.81915206, w: 0.57357645}
-  m_LocalPosition: {x: 8.86, y: -3.9, z: 2.636386}
+  m_LocalPosition: {x: 14.350005, y: -1.280005, z: 2.636386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 878115370}
@@ -2868,9 +2877,10 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
-  ActiveCollider: {fileID: 0}
+  ActiveCollider: {fileID: 508965883}
   ObjectToActive: []
   DelGoAround: 1
 --- !u!114 &541771452
@@ -2910,7 +2920,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 10
-  Active: 1
+  Active: 0
   AttackToActive: 0
   type: 0
   maxHealth: 1
@@ -2926,11 +2936,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
-  StartSpeed: 2
+  moveType: 1
+  speed: 0
+  StartSpeed: 0
   acc: 0
-  direction: {x: 1, y: 1}
+  direction: {x: 0, y: 0}
   heart: {x: 2, y: 0}
   radius: 3
   roundTime: 3
@@ -3125,7 +3135,7 @@ Transform:
   - {fileID: 439040870}
   - {fileID: 1950497131}
   m_Father: {fileID: 2007746897}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &577439173
 GameObject:
@@ -3689,7 +3699,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 654730677}
   m_LocalRotation: {x: 0, y: 0, z: 0.81915206, w: 0.57357645}
-  m_LocalPosition: {x: 8.98, y: -2.68, z: 2.636386}
+  m_LocalPosition: {x: 14.470005, y: -0.06000495, z: 2.636386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1393046600}
@@ -3765,9 +3775,10 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
-  ActiveCollider: {fileID: 0}
+  ActiveCollider: {fileID: 508965883}
   ObjectToActive: []
   DelGoAround: 1
 --- !u!114 &654730682
@@ -3807,7 +3818,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 10
-  Active: 1
+  Active: 0
   AttackToActive: 0
   type: 0
   maxHealth: 1
@@ -3823,11 +3834,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
-  StartSpeed: 2
+  moveType: 1
+  speed: 0
+  StartSpeed: 0
   acc: 0
-  direction: {x: 1, y: 1}
+  direction: {x: 0, y: 0}
   heart: {x: 2, y: 0}
   radius: 3
   roundTime: 3
@@ -4775,6 +4786,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3231743009253099292, guid: 1a3843c3e905b3a4ab048a9838a91680,
         type: 3}
+    - target: {fileID: 6447316692447159798, guid: 900d5fb674a835745bdb3ebaf75d5767,
+        type: 3}
+      propertyPath: ActiveCollider
+      value: 
+      objectReference: {fileID: 1072577076}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 900d5fb674a835745bdb3ebaf75d5767, type: 3}
 --- !u!4 &834355457 stripped
@@ -4813,7 +4829,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 867412697}
   m_LocalRotation: {x: 0, y: 0, z: 0.81915206, w: 0.57357645}
-  m_LocalPosition: {x: 7.68, y: 2.76, z: 2.636386}
+  m_LocalPosition: {x: 13.170006, y: 5.3799953, z: 2.636386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1713145926}
@@ -4889,9 +4905,10 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
-  ActiveCollider: {fileID: 0}
+  ActiveCollider: {fileID: 508965883}
   ObjectToActive: []
   DelGoAround: 1
 --- !u!114 &867412702
@@ -4931,7 +4948,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 10
-  Active: 1
+  Active: 0
   AttackToActive: 0
   type: 0
   maxHealth: 1
@@ -4947,11 +4964,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
-  StartSpeed: 2
+  moveType: 1
+  speed: 0
+  StartSpeed: 0
   acc: 0
-  direction: {x: 1, y: 1}
+  direction: {x: 0, y: 0}
   heart: {x: 2, y: 0}
   radius: 3
   roundTime: 3
@@ -5361,6 +5378,36 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 940714604}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &970309772
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 970309773}
+  m_Layer: 0
+  m_Name: Effect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &970309773
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970309772}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 80.99, y: 171.44, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2007746897}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1001712693
 GameObject:
   m_ObjectHideFlags: 0
@@ -5391,7 +5438,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1001712693}
   m_LocalRotation: {x: 0, y: 0, z: 0.81915206, w: 0.57357645}
-  m_LocalPosition: {x: 9.31, y: -1.42, z: 2.636386}
+  m_LocalPosition: {x: 14.8, y: 1.2, z: 2.636386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 89945165}
@@ -5467,9 +5514,10 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
-  ActiveCollider: {fileID: 0}
+  ActiveCollider: {fileID: 508965883}
   ObjectToActive: []
   DelGoAround: 1
 --- !u!114 &1001712698
@@ -5509,7 +5557,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 10
-  Active: 1
+  Active: 0
   AttackToActive: 0
   type: 0
   maxHealth: 1
@@ -5525,11 +5573,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
-  StartSpeed: 2
+  moveType: 1
+  speed: 0
+  StartSpeed: 0
   acc: 0
-  direction: {x: 1, y: 1}
+  direction: {x: 0, y: 0}
   heart: {x: 2, y: 0}
   radius: 3
   roundTime: 3
@@ -5854,7 +5902,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1081113254}
   m_LocalRotation: {x: 0, y: 0, z: 0.81915206, w: 0.57357645}
-  m_LocalPosition: {x: 8.57, y: -5, z: 2.636386}
+  m_LocalPosition: {x: 14.060005, y: -2.380005, z: 2.636386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 100811094}
@@ -5930,9 +5978,10 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
-  ActiveCollider: {fileID: 0}
+  ActiveCollider: {fileID: 508965883}
   ObjectToActive: []
   DelGoAround: 1
 --- !u!114 &1081113259
@@ -5972,7 +6021,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 10
-  Active: 1
+  Active: 0
   AttackToActive: 0
   type: 0
   maxHealth: 1
@@ -5988,11 +6037,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
-  StartSpeed: 2
+  moveType: 1
+  speed: 0
+  StartSpeed: 0
   acc: 0
-  direction: {x: 1, y: 1}
+  direction: {x: 0, y: 0}
   heart: {x: 2, y: 0}
   radius: 3
   roundTime: 3
@@ -6153,12 +6202,12 @@ PrefabInstance:
     - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 80.4
+      value: 77.49
       objectReference: {fileID: 0}
     - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 149
+      value: 133.74
       objectReference: {fileID: 0}
     - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
         type: 3}
@@ -8490,6 +8539,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3231743009253099292, guid: 1a3843c3e905b3a4ab048a9838a91680,
         type: 3}
+    - target: {fileID: 6447316692447159798, guid: 900d5fb674a835745bdb3ebaf75d5767,
+        type: 3}
+      propertyPath: ActiveCollider
+      value: 
+      objectReference: {fileID: 1072577076}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 900d5fb674a835745bdb3ebaf75d5767, type: 3}
 --- !u!4 &1940214367 stripped
@@ -8865,7 +8919,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1991647770}
   m_LocalRotation: {x: 0, y: 0, z: 0.81915206, w: 0.57357645}
-  m_LocalPosition: {x: 8.69, y: 1.88, z: 2.636386}
+  m_LocalPosition: {x: 14.180005, y: 4.499995, z: 2.636386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 182743825}
@@ -8941,9 +8995,10 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
-  ActiveCollider: {fileID: 0}
+  ActiveCollider: {fileID: 508965883}
   ObjectToActive: []
   DelGoAround: 1
 --- !u!114 &1991647775
@@ -8983,7 +9038,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 10
-  Active: 1
+  Active: 0
   AttackToActive: 0
   type: 0
   maxHealth: 1
@@ -8999,11 +9054,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
-  StartSpeed: 2
+  moveType: 1
+  speed: 0
+  StartSpeed: 0
   acc: 0
-  direction: {x: 1, y: 1}
+  direction: {x: 0, y: 0}
   heart: {x: 2, y: 0}
   radius: 3
   roundTime: 3
@@ -9044,7 +9099,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1994311314}
   m_LocalRotation: {x: 0, y: 0, z: 0.81915206, w: 0.57357645}
-  m_LocalPosition: {x: 9.51, y: 0.98, z: 2.636386}
+  m_LocalPosition: {x: 15.000006, y: 3.5999951, z: 2.636386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 643260787}
@@ -9120,9 +9175,10 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
-  ActiveCollider: {fileID: 0}
+  ActiveCollider: {fileID: 508965883}
   ObjectToActive: []
   DelGoAround: 1
 --- !u!114 &1994311319
@@ -9162,7 +9218,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 10
-  Active: 1
+  Active: 0
   AttackToActive: 0
   type: 0
   maxHealth: 1
@@ -9178,11 +9234,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
-  StartSpeed: 2
+  moveType: 1
+  speed: 0
+  StartSpeed: 0
   acc: 0
-  direction: {x: 1, y: 1}
+  direction: {x: 0, y: 0}
   heart: {x: 2, y: 0}
   radius: 3
   roundTime: 3
@@ -9223,6 +9279,7 @@ Transform:
   - {fileID: 319594941}
   - {fileID: 2002057602991952444}
   - {fileID: 361981578}
+  - {fileID: 970309773}
   - {fileID: 576512734}
   m_Father: {fileID: 321183796}
   m_RootOrder: 3
@@ -9435,7 +9492,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2074934588}
   m_LocalRotation: {x: 0, y: 0, z: 0.81915206, w: 0.57357645}
-  m_LocalPosition: {x: 6.62, y: 3.48, z: 2.636386}
+  m_LocalPosition: {x: 12.110005, y: 6.099995, z: 2.636386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 911415651}
@@ -9511,9 +9568,10 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
-  ActiveCollider: {fileID: 0}
+  ActiveCollider: {fileID: 508965883}
   ObjectToActive: []
   DelGoAround: 1
 --- !u!114 &2074934593
@@ -9553,7 +9611,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 10
-  Active: 1
+  Active: 0
   AttackToActive: 0
   type: 0
   maxHealth: 1
@@ -9569,11 +9627,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
-  StartSpeed: 2
+  moveType: 1
+  speed: 0
+  StartSpeed: 0
   acc: 0
-  direction: {x: 1, y: 1}
+  direction: {x: 0, y: 0}
   heart: {x: 2, y: 0}
   radius: 3
   roundTime: 3
@@ -10303,7 +10361,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 10
-  Active: 1
+  Active: 0
   AttackToActive: 0
   type: 0
   maxHealth: 1
@@ -10319,11 +10377,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 2
-  StartSpeed: 2
+  moveType: 1
+  speed: 0
+  StartSpeed: 0
   acc: 0
-  direction: {x: 1, y: 1}
+  direction: {x: 0, y: 0}
   heart: {x: 2, y: 0}
   radius: 3
   roundTime: 3
@@ -10342,7 +10400,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5229346389725883986}
   m_LocalRotation: {x: 0, y: 0, z: 0.81915206, w: 0.57357645}
-  m_LocalPosition: {x: 5.59, y: 4.2, z: 2.636386}
+  m_LocalPosition: {x: 11.080006, y: 6.819995, z: 2.636386}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5229346389709610486}
@@ -10365,9 +10423,10 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
-  ActiveCollider: {fileID: 0}
+  ActiveCollider: {fileID: 508965883}
   ObjectToActive: []
   DelGoAround: 1
 --- !u!50 &5229346389725883999
