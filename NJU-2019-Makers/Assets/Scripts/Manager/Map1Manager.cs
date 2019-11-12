@@ -185,11 +185,14 @@ public class Map1Manager : MonoBehaviour
 	void Start()
     {
 		Init();
-		//StartCoroutine(Story1());
-    }
+		EffectManager.Instance.CameraZoom(1f, 8.5f);
+		EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position + new Vector3(0,5,0); }, true, 0.4f);
 
-    // Update is called once per frame
-    void Update()
+		//StartCoroutine(Story1());
+	}
+
+	// Update is called once per frame
+	void Update()
     {
 		MouseUpdate();
     }
