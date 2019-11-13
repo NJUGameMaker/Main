@@ -47,8 +47,9 @@ public class Move : MonoBehaviour
 	//间隔更新
 	private bool canMove;
 
-	public void AddForceSpeed(Vector3 vect,float stoptime = 0)
+	public void AddForceSpeed(Vector3 vect,float stoptime = 0,float decline = 0.7f)
 	{
+		declineSpeed = decline;
 		var tmp = StartSpeed;
 		speed = 0;
 		if (stoptime != 0) StartCoroutine(Statics.WorkAfterSeconds(() => { speed = tmp; }, stoptime)); else speed = StartSpeed;

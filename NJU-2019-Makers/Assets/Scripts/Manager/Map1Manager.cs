@@ -141,6 +141,7 @@ public class Map1Manager : MonoBehaviour
 
 	public IEnumerator Story2()
 	{
+		EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true, 0.4f);
 		GameManager.Instance.GameVideo();
 		//yield return new WaitForSeconds(0.5f);
 		yield return new WaitForSeconds(0.5f);

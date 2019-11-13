@@ -16,14 +16,12 @@ public class MoChiAI : EnemyAI
 			item.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Dynamic;
 
 			ai.StartCoroutine(Statics.WorkAfterSeconds(() => {
-				ai.move.enabled = true;
-				ai.goAround.enabled = false;
-				ai.enemy.Active = true;
-				ai.move.AddForceSpeed((item.transform.position - PlayerManager.Instance.transform.position).normalized * 30);
+				ai.StartCoroutine(ai.StartActive());
+				//ai.move.enabled = true;
+				//ai.goAround.enabled = false;
+				//ai.enemy.Active = true;
+				ai.move.AddForceSpeed((item.transform.position - PlayerManager.Instance.transform.position).normalized * 50);
 			}, 0.5f));
-			ai.StartCoroutine(Statics.WorkAfterSeconds(() => {
-				ai.BeActive();
-			}, 2f));
 		}
 		return;
 	}
@@ -41,9 +39,11 @@ public class MoChiAI : EnemyAI
 	public override void Init()
 	{
 		Triangle.GetComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+		Triangle.SetActive(true);
 		foreach (var item in pos)
 		{
 			Enemys.Add(Instantiate(Triangle, item.position, item.rotation));
 		}
+		Triangle.SetActive(false);
 	}
 }

@@ -120,7 +120,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3231743009253099283
 Transform:
   m_ObjectHideFlags: 0
@@ -221,6 +221,8 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
+  ActiveTime: 0
   ActiveDistance: 0
   ActiveCollider: {fileID: 0}
   ObjectToActive:
@@ -340,6 +342,7 @@ MonoBehaviour:
   HitType: 6
   bulletType: 0
   ShotPoint: {fileID: 7958086679009393214}
+  OffsetTime: 0
 --- !u!1 &6588380382228234836
 GameObject:
   m_ObjectHideFlags: 0

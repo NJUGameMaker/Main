@@ -7,10 +7,7 @@ public class EnemyTriangle_Default : EnemyAI
     public bool DelGoAround =true;
 	public override void AfterDie()
 	{
-		foreach (var item in ObjectToActive)
-		{
-			item.SetActive(false);
-		}
+		ActiveList(false);
 		return;
 	}
 
@@ -24,6 +21,14 @@ public class EnemyTriangle_Default : EnemyAI
 		move.follow = PlayerManager.Instance.gameObject;
 		enemy.Active = true;
 		return;
+	}
+
+	public void ActiveList(bool b)
+	{
+		foreach (var item in ObjectToActive)
+		{
+			item.SetActive(b);
+		}
 	}
 
 	public override void EndOfRound()

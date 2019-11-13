@@ -46,6 +46,8 @@ public class BulletShorter : MonoBehaviour
 	private Move move;
 	//刚体
 	private Rigidbody2D rigidbody2;
+	//偏移时间
+	public float OffsetTime;
 
     // Start is called before the first frame update
     void Start()
@@ -67,6 +69,8 @@ public class BulletShorter : MonoBehaviour
 
 	IEnumerator Shot()
 	{
+		yield return new WaitForSeconds(OffsetTime);
+		yield return new WaitForFixedUpdate();
 		while (true)
 		{
 			switch (shotType)

@@ -80,18 +80,19 @@ MonoBehaviour:
   DamageBullet: {fileID: 2491762746154822245, guid: d7b3a501e414018478f5284a94294b82,
     type: 3}
   Target: {fileID: 0}
-  Interval: 1.5
+  Interval: 3
   StartRotate: 90
   RotateStep: 360
   RotateInterval: 0
-  Velocity: 20
-  Acceleration: -10
-  AccTime: 1.5
+  Velocity: 15
+  Acceleration: 0
+  AccTime: 0
   Damage: 10
   OutType: 7
   HitType: 6
   bulletType: 0
   ShotPoint: {fileID: 1208415884132646108}
+  OffsetTime: 0
 --- !u!1 &2721297052333518850
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,15 +221,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2721297052349875111}
-  m_LocalRotation: {x: -0, y: -0, z: 0.9120104, w: -0.41016716}
-  m_LocalPosition: {x: 37.3, y: 39.8, z: 2.636386}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 2.636386}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 2721297052333518851}
   - {fileID: 1208415885344018477}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -131.569}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2721297052349875113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,7 +271,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   AttackDie: 1
-  HitWallDie: 1
+  HitWallDie: 0
   HitForce: 10
   Active: 1
   AttackToActive: 0
