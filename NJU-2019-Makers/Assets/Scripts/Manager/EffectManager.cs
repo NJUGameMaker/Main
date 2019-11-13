@@ -39,6 +39,7 @@ public class EffectManager : MonoBehaviour
 		EnemyCutOn,
 		EnemyCutOut,
 		Active,
+		ActiveBig,
 
 		End
 	}

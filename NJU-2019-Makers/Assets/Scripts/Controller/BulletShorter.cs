@@ -63,6 +63,7 @@ public class BulletShorter : MonoBehaviour
 			default:
 				break;
 		}
+		if (!Target) Target = PlayerManager.Instance.gameObject;
 		rigidbody2 = GetComponent<Rigidbody2D>();
 		StartCoroutine(Shot());
 	}

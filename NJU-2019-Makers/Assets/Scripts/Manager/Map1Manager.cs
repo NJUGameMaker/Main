@@ -26,7 +26,7 @@ public class Map1Manager : MonoBehaviour
 		MouseDown = true;
 		CameraManager.Instance.ReloadMap(1);
 		//EffectManager.Instance.CameraFocus(1, PlayerStart.position, Statics.FunType.SqrtX);
-		//UIManager.Instance.HideDialogAndText();
+		UIManager.Instance.HideDialogAndText();
 	}
 
 	public IEnumerator Story1_Start()
@@ -55,7 +55,7 @@ public class Map1Manager : MonoBehaviour
 
 	public IEnumerator Story1_Dialog1()
 	{
-		UIManager.Instance.Flash(Color.black, Color.clear, 1f);
+		UIManager.Instance.Flash(Color.black, Color.clear, 1.5f);
 		//yield return new WaitForSeconds(1f);
 		EffectManager.Instance.SetCameraContinueFocus(() => { return objs[2].transform.position; }, true);
 		EffectManager.Instance.CameraZoom(0.8f, 3f);
@@ -186,10 +186,9 @@ public class Map1Manager : MonoBehaviour
 	void Start()
     {
 		Init();
-		EffectManager.Instance.CameraZoom(1f, 8.5f);
-		EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position + new Vector3(0,5,0); }, true, 0.4f);
-
-		//StartCoroutine(Story1());
+		//EffectManager.Instance.CameraZoom(1f, 8.5f);
+		//EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true, 0.4f);
+		StartCoroutine(Story1());
 	}
 
 	// Update is called once per frame

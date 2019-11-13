@@ -20,7 +20,7 @@ public class MoChiAI : EnemyAI
 				//ai.move.enabled = true;
 				//ai.goAround.enabled = false;
 				//ai.enemy.Active = true;
-				ai.move.AddForceSpeed((item.transform.position - PlayerManager.Instance.transform.position).normalized * 50);
+				ai.move.AddForceSpeed((item.transform.position - PlayerManager.Instance.transform.position).normalized * 30,0,0.9f);
 			}, 0.5f));
 		}
 		return;

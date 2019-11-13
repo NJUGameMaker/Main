@@ -25,6 +25,7 @@ public class Enemy : MonoBehaviour
 	public bool HitWallDie;
 	//被子弹击中后 击退参数
 	public float HitForce = 5;
+	public float ForceDecline = 0.8f;
 
 	//被攻击闪烁时间
 	const float atktime = 0.5f;
@@ -55,7 +56,7 @@ public class Enemy : MonoBehaviour
 	{
 		if (PlayerManager.Instance.protect)
 		{
-			move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5);
+			move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5,0,ForceDecline);
 			return;
 		}
 
@@ -87,7 +88,7 @@ public class Enemy : MonoBehaviour
 	{
 		if (PlayerManager.Instance.protect)
 		{
-			move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5);
+			move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5, 0, ForceDecline);
 			return;
 		}
 		PlayerManager.Instance.AttackHeart(gameObject);
@@ -107,7 +108,7 @@ public class Enemy : MonoBehaviour
         health -= bullet.GetComponent<PlayerBullet>().damage;
 		Vector3 shootin = bullet.GetComponent<Rigidbody2D>().velocity;
 		shootin.z = 0;
-		GetComponent<Move>().AddForceSpeed(shootin.normalized * HitForce);
+		GetComponent<Move>().AddForceSpeed(shootin.normalized * HitForce, 0, ForceDecline);
 		if (health <= 0)
         {
 			m_collider.enabled = false;

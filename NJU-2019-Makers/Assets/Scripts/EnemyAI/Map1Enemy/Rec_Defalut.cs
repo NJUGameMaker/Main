@@ -2,12 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyTriangle_Default : EnemyAI
+public class Rec_Defalut : EnemyAI
 {
 	public bool DelGoAround = true;
+	public GameObject[] DieActive;
+
 	public override void AfterDie()
 	{
 		ActiveList(false);
+		EffectManager.Instance.PlayEffect(EffectManager.EffectType.ActiveBig, transform.position, Quaternion.identity);
+		foreach (var item in DieActive)
+		{
+			Debug.Log(item);
+			var tmp = Instantiate(item, transform.position, transform.rotation);
+			tmp.SetActive(true);
+			Destroy(tmp, 3);
+		}
 		return;
 	}
 

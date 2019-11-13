@@ -137,11 +137,11 @@ public class CameraManager : MonoBehaviour
 		if (!m_camera) Init();
 		Vector2Int nowpos = new Vector2Int(Mathf.FloorToInt(m_camera.transform.position.x / BGsize[0]), Mathf.FloorToInt(m_camera.transform.position.y / BGsize[1]));
 		var delta = nowpos - m_cameraPos;
-		if (delta.x != 0) {
+		if (Mathf.Abs(delta.x) == 1) {
 			for (int i = 0; i < 3; i++) Statics.SwapPos(m_backGrounds[0, i].transform,m_backGrounds[2, i].transform);
 			for (int i = 0; i < 3; i++) Statics.SwapPos(m_backGrounds[1, i].transform,m_backGrounds[1+delta.x, i].transform);
 		}
-		if (delta.y != 0) {
+		if (Mathf.Abs(delta.y) == 1) {
 			for (int i = 0; i < 3; i++) Statics.SwapPos(m_backGrounds[i, 0].transform,m_backGrounds[i, 2].transform);
 			for (int i = 0; i < 3; i++) Statics.SwapPos(m_backGrounds[i, 1].transform,m_backGrounds[i, 1+delta.y].transform);
 		}
