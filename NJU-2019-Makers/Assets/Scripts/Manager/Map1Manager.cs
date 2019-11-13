@@ -117,8 +117,9 @@ public class Map1Manager : MonoBehaviour
 
 	public IEnumerator Story1()
 	{
-		//yield return new WaitForSeconds(0.5f);
+		yield return new WaitForEndOfFrame();
 		StartCoroutine(Story1_Start());
+		yield return new WaitForEndOfFrame();
 		StartCoroutine(Story1_Dialog1());
 		yield return new WaitForEndOfFrame();
 	}

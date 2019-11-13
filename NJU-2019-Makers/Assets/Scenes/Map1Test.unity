@@ -4510,6 +4510,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy-Triangle_MoveAI_BulletLine (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3231743009253099292, guid: 1a3843c3e905b3a4ab048a9838a91680,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3231743009253099283, guid: 1a3843c3e905b3a4ab048a9838a91680,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -6133,6 +6138,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy-Triangle_MoveAI_BulletLine (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231743009253099292, guid: 1a3843c3e905b3a4ab048a9838a91680,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3231743009253099283, guid: 1a3843c3e905b3a4ab048a9838a91680,
         type: 3}
@@ -9617,6 +9627,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy-Triangle_MoveAI_BulletLine (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3231743009253099292, guid: 1a3843c3e905b3a4ab048a9838a91680,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3231743009253099283, guid: 1a3843c3e905b3a4ab048a9838a91680,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -12289,6 +12304,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy-Triangle_MoveAI_BulletLine (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 3231743009253099292, guid: 1a3843c3e905b3a4ab048a9838a91680,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3231743009253099283, guid: 1a3843c3e905b3a4ab048a9838a91680,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14949,6 +14969,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy-Triangle_MoveAI_BulletLine (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231743009253099292, guid: 1a3843c3e905b3a4ab048a9838a91680,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3231743009253099283, guid: 1a3843c3e905b3a4ab048a9838a91680,
         type: 3}
