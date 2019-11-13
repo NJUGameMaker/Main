@@ -162,6 +162,8 @@ public class PlayerManager : MonoBehaviour
 	private float ComboTime = 0;
 	private int ComboCnt = 0;
 
+	public Vector2 CameraOffset;
+
 	public void ComboAdd()
 	{
 		ComboTime = ComboResetTime;
@@ -602,6 +604,7 @@ public class PlayerManager : MonoBehaviour
 		EdgeAnimator = GOEdge.GetComponent<Animator>();
 		HeartAnimator = GOHeart.GetComponent<Animator>();
 		Points = EdgeCollider.points;
+		CameraOffset = Vector2.zero;
 
 		EffectManager.Instance.SetCameraContinueFocus(() => { return PlayerManager.Instance.transform.position; }, true, 0.2f);
 
