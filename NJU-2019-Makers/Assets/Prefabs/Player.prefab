@@ -585,6 +585,7 @@ MonoBehaviour:
   EdgeBomb: {fileID: 8518559632738455174}
   HeartBomb: {fileID: 1468111333818496233}
   MainAnimator: {fileID: 8878478250444260122}
+  CameraOffset: {x: 0, y: 0}
 --- !u!50 &8878478251110559489
 Rigidbody2D:
   serializedVersion: 4
@@ -605,7 +606,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!95 &8878478250444260122
 Animator:
   serializedVersion: 3

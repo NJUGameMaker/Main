@@ -23,6 +23,7 @@ public class Map1Manager : MonoBehaviour
 	//初始化
 	public void Init()
 	{
+		UIManager.Instance.Mask.color = Color.black;
 		MouseDown = true;
 		CameraManager.Instance.ReloadMap(1);
 		//EffectManager.Instance.CameraFocus(1, PlayerStart.position, Statics.FunType.SqrtX);
