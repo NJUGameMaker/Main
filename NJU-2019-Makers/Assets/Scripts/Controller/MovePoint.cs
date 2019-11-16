@@ -21,6 +21,7 @@ public class MovePoint : MonoBehaviour
 		if (collision.tag == "PlayerHeart")
 		{
 			animator.SetBool("Active", true);
+			AudioManager.Instance.PlaySound("MovePoint");
 			UIManager.Instance.Flash(Color.clear, Color.black, 1, 0.5f);
 			PlayerManager.Instance.m_rb.velocity = Vector2.zero;
 			GameManager.Instance.GamePause();

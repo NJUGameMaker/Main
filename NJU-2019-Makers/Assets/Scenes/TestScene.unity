@@ -298,6 +298,7 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
   ActiveCollider: {fileID: 0}
@@ -344,6 +345,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 5
+  ForceDecline: 0.8
   Active: 0
   AttackToActive: 0
   type: 0
@@ -1654,6 +1656,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 0
   HitForce: 5
+  ForceDecline: 0.8
   Active: 0
   AttackToActive: 0
   type: 0
@@ -2052,6 +2055,7 @@ MonoBehaviour:
   HitType: 8
   bulletType: 0
   ShotPoint: {fileID: 251598625}
+  OffsetTime: 0
 --- !u!4 &1150969877
 Transform:
   m_ObjectHideFlags: 0
@@ -2068,6 +2072,86 @@ Transform:
   m_Father: {fileID: 1993601866}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1155912375
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 9073080590865555131, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_Name
+      value: Main
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073080590865555129, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073080590865555129, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073080590865555129, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073080590865555129, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073080590865555129, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073080590865555129, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073080590865555129, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073080590865555129, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073080590865555129, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073080590865555129, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073080590865555129, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9073080591100737984, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: laserBullet
+      value: 
+      objectReference: {fileID: 8947829810577445844, guid: 89b2a63a02046d84c9d701485119aec6,
+        type: 3}
+    - target: {fileID: 9073080591100737984, guid: c844d2e0f62d580418e172db33690806,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c844d2e0f62d580418e172db33690806, type: 3}
 --- !u!1 &1169478837
 GameObject:
   m_ObjectHideFlags: 0
@@ -2214,6 +2298,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 0
   HitForce: 5
+  ForceDecline: 0.8
   Active: 0
   AttackToActive: 0
   type: 0
@@ -3650,6 +3735,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 12
+  ForceDecline: 0.8
   Active: 0
   AttackToActive: 0
   type: 0
@@ -3718,6 +3804,7 @@ MonoBehaviour:
   move: {fileID: 0}
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
+  PlayEffect: 1
   ActiveTime: 0
   ActiveDistance: 0
   ActiveCollider: {fileID: 0}

@@ -52,8 +52,8 @@ public class PlayerManager : MonoBehaviour
 	public HashSet<Vector2> KeyPoints = new HashSet<Vector2>();
 
 	//血量
-	private float maxHealth = 600;
-	private float health;
+	public float maxHealth = 100;
+	public float health;
 
 	//能量（缩放），0->初始不放缩情况
 	private float maxEnergy;
@@ -76,9 +76,9 @@ public class PlayerManager : MonoBehaviour
 	private bool RIGHT => Input.GetKey(KeyCode.D);
 	private bool UP => Input.GetKey(KeyCode.W);
 	private bool DOWN => Input.GetKey(KeyCode.S);
-	private bool FIRE => Input.GetMouseButton(0);
-	private bool SMALL => Input.GetMouseButton(1);
-	private bool BOMB => Input.GetMouseButtonUp(1);
+	private bool FIRE => Input.GetMouseButton(0) && !FireLock;
+	private bool SMALL => Input.GetMouseButton(1) && !BombLock;
+	private bool BOMB => Input.GetMouseButtonUp(1) && !BombLock;
 	//鼠标位置
 	private Vector2 MOUSE => Camera.main.ScreenToWorldPoint(Input.mousePosition);
 	//获取子物体
@@ -164,6 +164,15 @@ public class PlayerManager : MonoBehaviour
 
 	public Vector2 CameraOffset;
 
+	[HideInInspector]
+	public bool BombLock;
+	[HideInInspector]
+	public bool FireLock;
+	[HideInInspector]
+	public bool MoveLock;
+
+	public Map1Manager Map1;
+
 	public void ComboAdd()
 	{
 		ComboTime = ComboResetTime;
@@ -201,6 +210,7 @@ public class PlayerManager : MonoBehaviour
 	//那还要留一个UI的接口
 	public void Fire()
 	{
+		if (FireLock) return;
 		if (canFire)
 		{
 			float damage = 0;
@@ -236,7 +246,7 @@ public class PlayerManager : MonoBehaviour
 			bullet -= fireCost * interval;
 			StartCoroutine(Statics.WorkAfterSeconds(() => canFire = true, interval));
 			var pos = Statics.V3toV2(transform.position);
-			GameObject GObullet = GameObject.Instantiate(BulletPrefab, Statics.V2toV3(pos), Quaternion.identity) as GameObject;
+			GameObject GObullet = GameObject.Instantiate(BulletPrefab, Statics.V2toV3(canBomb ? FirePosHeart.position : FirePosEdge.position), Quaternion.identity) as GameObject;
 			GObullet.SetActive(true);
 			//bullet.GetComponent<SpriteRenderer>().sprite = sprite;
 			PlayerBullet playerBullet = GObullet.AddComponent<PlayerBullet>();
@@ -247,6 +257,7 @@ public class PlayerManager : MonoBehaviour
 			playerBullet.move.SetLineType(pos, direct, speed*2,0,0,GObullet.GetComponent<Rigidbody2D>());
 			//playerBullet.StartCoroutine(Statics.WorkAfterSeconds(() => { playerBullet.move.acc = 0; }, 0.5f));
 			EffectManager.Instance.PlayEffect(effectType, canBomb ? FirePosHeart.position : FirePosEdge.position, transform.rotation, 1f);
+			AudioManager.Instance.PlaySound("Shoot2");
 		}
 	}
 
@@ -337,10 +348,21 @@ public class PlayerManager : MonoBehaviour
 	//内核被攻击 死亡 或者 读取存档点等 TODO 先只考虑死亡
 	public void AttackHeart(GameObject other)
 	{
-		health = 0;
-		Statics.AnimatorPlay(this, EdgeAnimator, Statics.AnimatorType.Die);
-		Statics.AnimatorPlay(this, HeartAnimator, Statics.AnimatorType.Die);
-		Destroy(gameObject,5f);
+		if (protect) return;
+		m_rb.velocity = Vector3.zero;
+		GameManager.Instance.GameVideo();
+		UIManager.Instance.Flash(Color.black, Color.red, 0.5f);
+		//StartCoroutine(Statics.WorkAfterSeconds(() => { UIManager.Instance.Flash(Color.black, Color.red, 0.5f); }, 0.5f));
+		StartCoroutine(Statics.WorkAfterSeconds(() => { UIManager.Instance.Flash(Color.red, Color.clear, 1f); }, 2f));
+		StartCoroutine(Statics.WorkAfterSeconds(() => { GameManager.Instance.GameRestart(); }, 2f));
+		
+
+		Map1.ReStart(Map1.save);
+		
+		//health = 0;
+		//Statics.AnimatorPlay(this, EdgeAnimator, Statics.AnimatorType.Die);
+		//Statics.AnimatorPlay(this, HeartAnimator, Statics.AnimatorType.Die);
+		//Destroy(gameObject,5f);
 	}
 
 	//受到攻击 减少生命 减少外壳大小 音效 特效 TODO
@@ -353,104 +375,12 @@ public class PlayerManager : MonoBehaviour
 		Statics.AnimatorPlay(this, HeartAnimator, Statics.AnimatorType.Attack);
 		EffectManager.Instance.CameraShake(0.5f, 0.5f);
 		UIManager.Instance.BloodFlash();
+		Debug.Log(health);
 	}
 
 	//受到切削 改变外壳形状 新增角的攻击点 维护Mask （需要判断是否切到核心） 音效 特效 TODO
 	public void BeingCut(GameObject other)
-	{/*
-		Debug.Log("cut");
-		
-		//Debug.DrawLine(Vector3.zero, new Vector3(1, 1),Color.red,100);
-
-        //求交点
-        Vector2 center = Statics.V3toV2(EdgeCollider.transform.position);
-        Vector2 point1;
-        point1.x = (2*Mathf.Pow(dir.x,2)*center.x + (Mathf.Pow(dir.y,2)-Mathf.Pow(dir.x,2))*point.x + 2*dir.x*dir.y*(center.y-point.y)) / (Mathf.Pow(dir.x,2) + Mathf.Pow(dir.y,2));
-        point1.y = 2 * (dir.y / dir.x) * ((Mathf.Pow(dir.x,2)*(center.x-point.x) + dir.x*dir.y*(center.y-point.y)) / (Mathf.Pow(dir.x,2) + Mathf.Pow(dir.y,2))) + point.y;
-        //判断是否切到核心
-        float distance = Mathf.Abs((dir.y*center.x - dir.x*center.y + dir.x*point.y-dir.y*point.x) / (Mathf.Pow(dir.y*dir.y+dir.x*dir.x,0.5f)));
-		if(distance <= HeartCollider.radius)
-		{
-			AttackHeart(other);
-		}
-        //添加遮罩
-        Vector2 vec = new Vector2(dir.y, dir.x);
-        vec.Normalize();
-        vec = vec * distance;
-        float y = (dir.y / dir.x) * (center.x - point.x) + point.y;
-        if (y > center.y)
-        {
-            if (vec.y > 0)
-            {
-                vec.x = -vec.x;
-            }
-            else
-            {
-                vec.y = -vec.y;
-            }
-        }
-        else
-        {
-            if (vec.y > 0)
-            {
-                vec.y = -vec.y;
-            }
-            else
-            {
-                vec.x = -vec.x;
-            }
-        }
-        //Debug.DrawLine(transform.position, (Vector2)transform.position + vec, Color.blue, 100);
-        addCutMask(EdgeCollider.transform.InverseTransformVector(vec));
-        //Debug.Log(vec.magnitude);
-        //Debug.Log(EdgeCollider.transform.InverseTransformVector(vec).magnitude);
-        //找插入位置
-        int x1 = -1,x2 = -1;
-        point = EdgeCollider.transform.InverseTransformPoint(point);// 相对距离
-        point1 = EdgeCollider.transform.InverseTransformPoint(point1);
-		for(int i = 0; i < Points.Length; i++){
-			if(Statics.IsPointCut(point,Points[i],Points[(i+1)%Points.Length])){
-				x1 = i;
-			}
-			if(Statics.IsPointCut(point1,Points[i],Points[(i+1)%Points.Length])){
-				x2 = i;
-			}
-		}
-        //插入与删除，维护边界点集
-		if(x1 > x2){
-			int temp = x1;
-			x1 = x2;
-			x2 = temp;
-			Vector2 temp_v = point;
-			point = point1;
-			point1 = temp_v;
-		}
-		if(x2 - x1 < Points.Length/2){
-			Vector2[] temp_array = new Vector2[Points.Length-(x2-x1)+2];
-			for(int i = 0; i <= x1; i++){
-				temp_array[i] = Points[i];
-			}
-			temp_array[x1+1] = point;
-			temp_array[x1+2] = point1;
-			for(int i = 0; i < Points.Length-x2-1; i++){
-				temp_array[x1+3+i] = Points[x2+1+i];
-			}
-			Points = temp_array;
-		}else{
-			Vector2[] temp_array = new Vector2[x2-x1+2];
-			temp_array[0] = point;
-			for(int i = 0; i < x2-x1; i++){
-				temp_array[1+i] = Points[x1+1+i];
-			}
-			temp_array[x2-x1+1] = point1;
-			Points = temp_array;
-		}
-        EdgeCollider.points = Points;
-        //Vector2[] test = new Vector2[2] { point,point1};
-        //EdgeCollider.points = test;
-		//添加切削点，维护切削点集
-		KeyPoints.Add(point);
-		KeyPoints.Add(point1);*/
+	{
 	}
 
 	public void BeingCut(GameObject other, Vector2 point, Vector2 dir)
@@ -474,6 +404,7 @@ public class PlayerManager : MonoBehaviour
 		if(distance <= HeartCollider.radius)
 		{
 			AttackHeart(other);
+			return;
 		}
 		//维护边界点集和碰撞器
 		Vector2[] tmp = new Vector2[Points.Length+2];
@@ -657,6 +588,7 @@ public class PlayerManager : MonoBehaviour
 		{
 			return;
 		}
+		FaceToMouse();
 
 		if (FIRE && bullet > 0 && !noBullet)
 		{
@@ -683,10 +615,9 @@ public class PlayerManager : MonoBehaviour
 			Bomb();
 		}
         
-        Move();
+        if (!MoveLock) Move();
 		ReHealth(reBlood);
         ReShape();
-		FaceToMouse();
 		ComboUpdate();
 	}
 }

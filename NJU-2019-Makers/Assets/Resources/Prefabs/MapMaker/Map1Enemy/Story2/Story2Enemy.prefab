@@ -80,7 +80,7 @@ MonoBehaviour:
   DamageBullet: {fileID: 2491762746154822245, guid: d7b3a501e414018478f5284a94294b82,
     type: 3}
   Target: {fileID: 0}
-  Interval: 20
+  Interval: 4
   StartRotate: 90
   RotateStep: 360
   RotateInterval: 0
@@ -92,6 +92,7 @@ MonoBehaviour:
   HitType: 6
   bulletType: 0
   ShotPoint: {fileID: 6367625524896365277}
+  OffsetTime: 0
 --- !u!1 &7879191815434941955
 GameObject:
   m_ObjectHideFlags: 0
@@ -272,6 +273,7 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 1
   HitForce: 10
+  ForceDecline: 0.8
   Active: 1
   AttackToActive: 0
   type: 0

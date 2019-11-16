@@ -261,4 +261,9 @@ public class Statics : MonoBehaviour
 			Destroy(obj.transform.GetChild(i).gameObject);
 		}
 	}
+
+	public static bool InScreen(Vector2 pos)
+	{
+		if ((pos - (Vector2)Camera.main.transform.position).magnitude < 15) return true; else return false;
+	}
 }
