@@ -170,8 +170,12 @@ public class PlayerManager : MonoBehaviour
 	public bool FireLock;
 	[HideInInspector]
 	public bool MoveLock;
-
+	[HideInInspector]
+	public int DieTime;
+	[HideInInspector]
+	public int Score;
 	public Map1Manager Map1;
+
 
 	public void ComboAdd()
 	{
@@ -185,6 +189,11 @@ public class PlayerManager : MonoBehaviour
 		ComboTime -= Time.deltaTime;
 		if (ComboTime < 0)
 		{
+			if (ComboCnt != 0)
+			{
+				UIManager.Instance.ScoreBig();
+				Score += (ComboCnt * ComboCnt * ComboCnt * 77) >> DieTime;
+			}
 			ComboTime = 0;
 			ComboCnt = 0;
 		}
@@ -375,7 +384,6 @@ public class PlayerManager : MonoBehaviour
 		Statics.AnimatorPlay(this, HeartAnimator, Statics.AnimatorType.Attack);
 		EffectManager.Instance.CameraShake(0.5f, 0.5f);
 		UIManager.Instance.BloodFlash();
-		Debug.Log(health);
 	}
 
 	//受到切削 改变外壳形状 新增角的攻击点 维护Mask （需要判断是否切到核心） 音效 特效 TODO
@@ -536,6 +544,7 @@ public class PlayerManager : MonoBehaviour
 		HeartAnimator = GOHeart.GetComponent<Animator>();
 		Points = EdgeCollider.points;
 		CameraOffset = Vector2.zero;
+		DieTime = 0;
 
 		EffectManager.Instance.SetCameraContinueFocus(() => { return PlayerManager.Instance.transform.position; }, true, 0.2f);
 

@@ -34,19 +34,19 @@ public class Map1Manager : MonoBehaviour
 
 	public SavePoint save;
 
-	public void ReLoad(SavePoint save)
+	public void ReLoad(SavePoint s)
 	{
 		Destroy(CurrentLevel);
-		CurrentLevel = Instantiate(Levels[(int)save], transform);
+		CurrentLevel = Instantiate(Levels[(int)s], transform);
 		CurrentLevel.SetActive(true);
 	}
 
-	public void ReStart(SavePoint save)
+	public void ReStart(SavePoint s)
 	{
 
-		PlayerManager.Instance.transform.position = SavePos[(int)save].position;
+		PlayerManager.Instance.transform.position = SavePos[(int)s].position;
 		PlayerManager.Instance.health = PlayerManager.Instance.maxHealth;
-		ReLoad(save);
+		ReLoad(s);
 
 	}
 
@@ -55,7 +55,7 @@ public class Map1Manager : MonoBehaviour
 	{
 		UIManager.Instance.Mask.color = Color.black;
 		MouseDown = true;
-		CameraManager.Instance.ReloadMap(1);
+		//CameraManager.Instance.ReloadMap(2);
 		//EffectManager.Instance.CameraFocus(1, PlayerStart.position, Statics.FunType.SqrtX);
 		UIManager.Instance.HideDialogAndText();
 	}
