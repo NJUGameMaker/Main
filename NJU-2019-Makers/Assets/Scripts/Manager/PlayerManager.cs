@@ -77,8 +77,8 @@ public class PlayerManager : MonoBehaviour
 	private bool UP => Input.GetKey(KeyCode.W);
 	private bool DOWN => Input.GetKey(KeyCode.S);
 	private bool FIRE => Input.GetMouseButton(0) && !FireLock;
-	private bool SMALL => Input.GetMouseButton(1) && !BombLock;
-	private bool BOMB => Input.GetMouseButtonUp(1) && !BombLock;
+	private bool SMALL => Input.GetKey(KeyCode.Space) && !BombLock;
+	private bool BOMB => Input.GetKeyUp(KeyCode.Space) && !BombLock;
 	//鼠标位置
 	private Vector2 MOUSE => Camera.main.ScreenToWorldPoint(Input.mousePosition);
 	//获取子物体
