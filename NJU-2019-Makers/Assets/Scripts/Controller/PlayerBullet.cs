@@ -58,9 +58,11 @@ public class PlayerBullet : MonoBehaviour
 			{
 				case PlayerManager.BulletType.None:
 					EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOn, transform.position, transform.rotation, 1f);
+					AudioManager.Instance.PlaySound("HitWall");
 					break;
 				case PlayerManager.BulletType.Strong:
 					EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerStrongOn, transform.position, transform.rotation, 1f);
+					AudioManager.Instance.PlaySound("HitWall");
 					break;
 				case PlayerManager.BulletType.Bounce:
 					EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerTanOn, transform.position, transform.rotation, 1f);

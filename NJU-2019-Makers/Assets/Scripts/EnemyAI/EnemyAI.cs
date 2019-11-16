@@ -30,7 +30,7 @@ public abstract class EnemyAI : MonoBehaviour
 	public IEnumerator StartActive()
 	{
 		Active = true;
-		if (PlayEffect) EffectManager.Instance.PlayEffect(EffectManager.EffectType.Active, transform.position, Quaternion.identity,1f);
+		if (PlayEffect) { EffectManager.Instance.PlayEffect(EffectManager.EffectType.Active, transform.position, Quaternion.identity, 1f);  AudioManager.Instance.PlaySound("EnemyActive"); }
 		if (ActiveTime!=0) yield return new WaitForSeconds(ActiveTime);
 		foreach (var item in ObjectToActive)
 		{

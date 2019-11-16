@@ -49,8 +49,8 @@ public class BulletShorter : MonoBehaviour
 	//偏移时间
 	public float OffsetTime;
 
-    // Start is called before the first frame update
-    void Start()
+
+    void OnEnable()
     {
 		switch (bulletType)
 		{
@@ -93,6 +93,7 @@ public class BulletShorter : MonoBehaviour
 							),
 							bulletType, HitType
 						);
+						if (Statics.InScreen(transform.position)) AudioManager.Instance.PlaySound("EnemyShoot");
 						EffectManager.Instance.PlayEffect(OutType, ShotPoint.position, transform.rotation,1f);
 						while (GameManager.Instance.pause) yield return new WaitForEndOfFrame();
 						if (RotateInterval!=0) yield return new WaitForSeconds(RotateInterval);
@@ -112,6 +113,7 @@ public class BulletShorter : MonoBehaviour
 							),
 							bulletType, HitType
 						);
+						if (Statics.InScreen(transform.position)) AudioManager.Instance.PlaySound("EnemyShoot");
 						EffectManager.Instance.PlayEffect(OutType, ShotPoint.position, transform.rotation,1f);
 					}
 					break;
@@ -127,6 +129,7 @@ public class BulletShorter : MonoBehaviour
 							),
 							bulletType, HitType
 						);
+						if (Statics.InScreen(transform.position)) AudioManager.Instance.PlaySound("EnemyShoot");
 						EffectManager.Instance.PlayEffect(OutType, ShotPoint.position, transform.rotation,1f);
 					}
 					break;

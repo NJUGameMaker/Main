@@ -10,7 +10,7 @@ public class AudioManager : MonoBehaviour
 	//设置音频路径
 	private const string path = "Audios/";
 	//设置音频名
-	private readonly string[] AudioNames = { "test","test2" };
+	private readonly string[] AudioNames = { "Shoot1","Shoot2","HitEnemy","EnemyDie","HitWall","EnemyActive","MovePoint","EnemyShoot" };
 	//音频映射
 	private Dictionary<string, AudioClip> AudioDic = new Dictionary<string, AudioClip>();
 	//BGM播放

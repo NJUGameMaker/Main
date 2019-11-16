@@ -104,6 +104,7 @@ public class Enemy : MonoBehaviour
 		}
 		PlayerManager.Instance.ComboAdd();
 		EffectManager.Instance.CameraShake(0.2f, 0.3f);
+		AudioManager.Instance.PlaySound("HitEnemy");
 		//if (health < 0) return;
         health -= bullet.GetComponent<PlayerBullet>().damage;
 		Vector3 shootin = bullet.GetComponent<Rigidbody2D>().velocity;
@@ -111,6 +112,7 @@ public class Enemy : MonoBehaviour
 		GetComponent<Move>().AddForceSpeed(shootin.normalized * HitForce, 0, ForceDecline);
 		if (health <= 0)
         {
+			AudioManager.Instance.PlaySound("EnemyDie");
 			m_collider.enabled = false;
 			Statics.AnimatorPlay(this,animator, Statics.AnimatorType.Die);
 			Destroy(gameObject, dietime);
@@ -118,7 +120,6 @@ public class Enemy : MonoBehaviour
 		else
         {
 			Statics.AnimatorPlay(this,animator, Statics.AnimatorType.Attack);
-
 		}
 	}
 
