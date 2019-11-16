@@ -30,8 +30,11 @@ public class UIManager : MonoBehaviour
 	public Text Dialog;
 	public Text Combo;
 	public Text ComboBlack;
+	public Text Score;
+	public Text ScoreBlack;
 	public Animator ComboAnimator;
 	public Animator BulletUIAnimator;
+	public Animator ScoreAnimator;
 
 
 	//上下对话信息
@@ -39,6 +42,9 @@ public class UIManager : MonoBehaviour
 	private const float BlackProportion = 0.15f;
 	private Vector2 BlackShow;
 	private Vector2 BlackHide;
+
+	private int scoreNum;
+	private float scoreChangeRate = 0.05f;
 
 	//画布大小
 	private Vector2 m_Canvasize;
@@ -109,7 +115,10 @@ public class UIManager : MonoBehaviour
 	//更新UI条 TODO
 	public void updateUI()
 	{
-
+		scoreNum += Mathf.CeilToInt((PlayerManager.Instance.Score - scoreNum) * scoreChangeRate);
+		string tmp = scoreNum.ToString();
+		while (tmp.Length <= 8) tmp = "0" + tmp;
+		Score.text = ScoreBlack.text = tmp;
 	}
 
 	public void Flash(Color st,Color ed,float time,Statics.FunType t = Statics.FunType.X)
@@ -140,7 +149,13 @@ public class UIManager : MonoBehaviour
 		ComboAnimator.SetBool("Combo", true);
 		StartCoroutine(Statics.WorkAfterFrame(() => { ComboAnimator.SetBool("Combo", false); }, 2));
 	}
-	
+
+	public void ScoreBig()
+	{
+		ScoreAnimator.SetBool("Score", true);
+		StartCoroutine(Statics.WorkAfterFrame(() => { ScoreAnimator.SetBool("Score", false); }, 2));
+	}
+
 	public void SetBulletState(bool f)
 	{
 		BulletUIAnimator.SetBool("HaveBullet", f);
@@ -149,9 +164,13 @@ public class UIManager : MonoBehaviour
 	//设置临时UI条
 	//..........
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		updateUI();
+	}
+
+	private void Update()
+	{
 		//test
 		//if (Input.GetKey(KeyCode.A))
 		//	ShowDialog();
