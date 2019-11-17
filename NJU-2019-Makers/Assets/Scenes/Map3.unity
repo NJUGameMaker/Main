@@ -1169,6 +1169,110 @@ MonoBehaviour:
   EnemyKinds: 0
   DistanceWithPlayer: 6
   Radius: 6
+--- !u!1001 &943667011
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 7353510390416841022, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: m_Name
+      value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 11.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 6.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841021, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841020, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: orthographic size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841018, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: MapNumber
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841018, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: StepX
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841018, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: StepY
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841018, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: RandomX
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841018, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: RandomY
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353510390416841018, guid: 199ea6dcd57ce464f99a05d61271f80d,
+        type: 3}
+      propertyPath: RandomR
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 199ea6dcd57ce464f99a05d61271f80d, type: 3}
 --- !u!1 &1015876041
 GameObject:
   m_ObjectHideFlags: 0
@@ -1293,7 +1397,7 @@ MonoBehaviour:
   - {fileID: 1647940563}
   - {fileID: 2122836255}
   ActiveCollider: {fileID: 0}
-  MType: 3
+  MType: 4
 --- !u!1 &1073999673 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8878478251110559502, guid: 661162c083ba52e4eb6f663838c5e20e,
@@ -2812,7 +2916,7 @@ MonoBehaviour:
   - {fileID: 2047142381}
   - {fileID: 504737125}
   ActiveCollider: {fileID: 0}
-  MType: 3
+  MType: 4
 --- !u!1 &1755721899
 GameObject:
   m_ObjectHideFlags: 0
