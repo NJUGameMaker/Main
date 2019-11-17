@@ -57,11 +57,6 @@ public class Enemy : MonoBehaviour
 	//敌人本体撞到玩家 需要考虑 玩家是否无敌 （玩家在无敌状态需要被弹开 或者 对玩家造成伤害自己死亡） TODO
 	public void AttackPlayer()
 	{
-		if (PlayerManager.Instance.protect)
-		{
-			move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5,0,ForceDecline);
-			return;
-		}
 
 		if (type == Type.Cut)
 		{
@@ -74,6 +69,11 @@ public class Enemy : MonoBehaviour
 		}
 		else
 		{
+			if (PlayerManager.Instance.protect)
+			{
+				move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5, 0, ForceDecline);
+				return;
+			}
 			PlayerManager.Instance.BeingAttack(damage);
 		}
 

@@ -438,7 +438,7 @@ public class PlayerManager : MonoBehaviour
 
 	public void BeingCut(GameObject other, Vector2 point, Vector2 dir)
 	{
-		if (protect) return;
+		//if (protect) return;
 		Hurt();
 		//求交点
 		Vector2[] intersectPs = new Vector2[2];
