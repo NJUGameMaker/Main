@@ -47,6 +47,9 @@ public class Enemy : MonoBehaviour
 	//移动类型
 	public Move move { get; private set; }
 
+	private SpriteRenderer renderer;
+
+	public bool isGoast = false;
 
 	//初始化 应该写完了 TODO
 	public void Init(float h, Move m) { maxHealth = health = h; move = m; }
@@ -93,6 +96,7 @@ public class Enemy : MonoBehaviour
 		}
 		PlayerManager.Instance.AttackHeart(gameObject);
 	}
+
 
 	//被玩家子弹攻击 受到伤害血量计算 特效 音效等 TODO
 	public void BeingAttack(GameObject bullet)
@@ -147,21 +151,49 @@ public class Enemy : MonoBehaviour
 	{
 		//Debug.Log(collision.tag);
 
-		if (collision.gameObject.tag == "PlayerBullet" && health > 0)
+		if ((collision.gameObject.tag == "PlayerBullet" && !isGoast) && health > 0)
 		{
 			BeingAttack(collision.gameObject);
 		}
+		if ((collision.gameObject.tag == "PlayerCut") && health > 0)
+		{
+			BeingAttack(collision.transform.parent.parent.gameObject);
+		}
+	}
 
+	public IEnumerator GoastFlash()
+	{
+		Color st = new Color(1, 1, 1, 0.5f);
+		Color ed = new Color(1, 1, 1, 0.1f);
+		while (true)
+		{
+			StartCoroutine(Statics.Flash(renderer, st, ed, 1.5f));
+			yield return new WaitForSeconds(1.5f);
+			StartCoroutine(Statics.Flash(renderer, ed, st, 1.5f));
+			yield return new WaitForSeconds(1.5f);
+		}
+	}
+
+	public void BecomeGoast()
+	{
+		Debug.Log("goast");
+		if (!isGoast)
+		{
+			isGoast = true;
+			StartCoroutine(GoastFlash());
+		}
 	}
 
 	private void Start()
 	{
 		animator = GetComponentInChildren<Animator>();
+		renderer = GetComponentInChildren<SpriteRenderer>();
 		animator.SetInteger("State", 0);
 		m_rb = GetComponent<Rigidbody2D>();
 		m_collider = GetComponent<Collider2D>();
 		move = GetComponent<Move>();
 		health = maxHealth;
+		if (isGoast) { isGoast = false; BecomeGoast(); }
 		//Active = false;
 	}
 
