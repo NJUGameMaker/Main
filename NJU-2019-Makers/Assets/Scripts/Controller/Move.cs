@@ -90,7 +90,7 @@ public class Move : MonoBehaviour
 		direction = dt;
 		StartSpeed = speed = sp;
 		rb2 = rb;
-		transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dt.y, dt.x) * 180f / Mathf.PI);
+		transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dt.y, dt.x) * 180f / Mathf.PI + rotate);
 		return this;
 	}
 

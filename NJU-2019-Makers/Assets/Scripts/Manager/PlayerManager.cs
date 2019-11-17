@@ -34,6 +34,14 @@ public class PlayerManager : MonoBehaviour
 		Laser
 	};
 
+	//left right 为 以圆心到切削点为正方向 切削点->左边一个碰撞器上的点 和 切削点->右边一个碰撞器上的点 的角度
+	public struct CutPointInfo
+	{
+		public Vector2 vector;
+		public float left;
+		public float right;
+	}
+
 	//外层碰撞器(改了类型)
 	public PolygonCollider2D EdgeCollider;
 	//内层碰撞器
@@ -49,7 +57,7 @@ public class PlayerManager : MonoBehaviour
 	//边界点 (改成了动态数组和类型)
 	public Vector2[] Points = null;
 	//切削产生的点的编号(改成了记录点的vector,是相对位置！)
-	public HashSet<Vector2> KeyPoints = new HashSet<Vector2>();
+	public HashSet<CutPointInfo> KeyPoints = new HashSet<CutPointInfo>();
 
 	//血量
 	public float maxHealth = 100;
@@ -93,7 +101,7 @@ public class PlayerManager : MonoBehaviour
 	public GameObject BulletNormal;
 	public GameObject BulletStrong;
 	public GameObject BulletTan;
-
+	public GameObject BulletCut;
 
 	//子弹发射位置
 	public Transform FirePosEdge;
@@ -313,6 +321,7 @@ public class PlayerManager : MonoBehaviour
 			StartCoroutine(Statics.WorkAfterSeconds(() => canSmall = true,bounce_cd));
 			protect = true;
 			StartCoroutine(Statics.WorkAfterSeconds(() => protect = false,protect_time));
+			ShootCut();
 		}
 		else{
 			energy = 0;
@@ -320,8 +329,38 @@ public class PlayerManager : MonoBehaviour
 		}
 	}
 
-    //表示移动的速度
-    const float speed = 12;
+	//切削子弹参数
+	public float CutVelocity;
+	public float CutAcc;
+	public float CutAccTime;
+	public float CutLastTime;
+
+	public void ShootCut()
+	{
+		Debug.Log("cut run");
+		foreach (var item in KeyPoints)
+		{
+			Vector2 tmpvec = transform.TransformPoint(item.vector) - transform.position;
+			Debug.Log(tmpvec);
+			GameObject GObullet = GameObject.Instantiate(BulletCut, transform.position, Quaternion.identity) as GameObject;
+			GObullet.SetActive(true);
+			GObullet.GetComponent<PlayerCut>().SetAngle(item.left, item.right);
+			PlayerBullet playerBullet = GObullet.AddComponent<PlayerBullet>();
+			playerBullet.Init(bulletType, 100000, false, GObullet.AddComponent<Move>());
+			float angle = Mathf.Rad2Deg * Mathf.Atan2(tmpvec.y, tmpvec.x);
+			GObullet.transform.rotation = Quaternion.Euler(0, 0, angle);
+			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+			playerBullet.move.rotate = 180;
+			playerBullet.move.SetLineType(transform.position, direct, CutVelocity ,CutAcc , CutAccTime, GObullet.GetComponent<Rigidbody2D>());
+			Destroy(GObullet, CutLastTime);
+			//playerBullet.StartCoroutine(Statics.WorkAfterSeconds(() => { playerBullet.move.acc = 0; }, 0.5f));
+
+		}
+
+	}
+
+	//表示移动的速度
+	const float speed = 12;
     //移动 TODO
     public void Move()
 	{
@@ -358,6 +397,7 @@ public class PlayerManager : MonoBehaviour
 	public void AttackHeart(GameObject other)
 	{
 		if (protect) return;
+		Hurt();
 		m_rb.velocity = Vector3.zero;
 		GameManager.Instance.GameVideo();
 		UIManager.Instance.Flash(Color.black, Color.red, 0.5f);
@@ -374,16 +414,21 @@ public class PlayerManager : MonoBehaviour
 		//Destroy(gameObject,5f);
 	}
 
+	public void Hurt()
+	{
+		Statics.AnimatorPlay(this, EdgeAnimator, Statics.AnimatorType.Attack);
+		Statics.AnimatorPlay(this, HeartAnimator, Statics.AnimatorType.Attack);
+		EffectManager.Instance.CameraShake(0.5f, 0.5f);
+		UIManager.Instance.BloodFlash();
+	}
+
 	//受到攻击 减少生命 减少外壳大小 音效 特效 TODO
 	public void BeingAttack(float damage)
 	{
 		if (protect) return;
         health -= damage;
 		maxEnergy = health;
-		Statics.AnimatorPlay(this, EdgeAnimator, Statics.AnimatorType.Attack);
-		Statics.AnimatorPlay(this, HeartAnimator, Statics.AnimatorType.Attack);
-		EffectManager.Instance.CameraShake(0.5f, 0.5f);
-		UIManager.Instance.BloodFlash();
+		Hurt();
 	}
 
 	//受到切削 改变外壳形状 新增角的攻击点 维护Mask （需要判断是否切到核心） 音效 特效 TODO
@@ -393,7 +438,8 @@ public class PlayerManager : MonoBehaviour
 
 	public void BeingCut(GameObject other, Vector2 point, Vector2 dir)
 	{
-		if (protect) return;
+		//if (protect) return;
+		Hurt();
 		//求交点
 		Vector2[] intersectPs = new Vector2[2];
 		int[] pos = new int[2];
@@ -446,7 +492,13 @@ public class PlayerManager : MonoBehaviour
 		EdgeCollider.points = Points;
 		//添加切削点，维护切削点集
 		for(int i = 0; i < intersectPs.Length; i++){
-			KeyPoints.Add(EdgeCollider.transform.InverseTransformPoint(intersectPs[i]));
+			CutPointInfo tmpinfo = new CutPointInfo();
+			//TODO : cutpointinfo 的角度 删除被切削的切削点
+			tmpinfo.left = -30; tmpinfo.right = 30;
+			//TODO : cutpointinfo 的角度 删除被切削的切削点
+			tmpinfo.vector = EdgeCollider.transform.InverseTransformPoint(intersectPs[i]);
+
+			KeyPoints.Add(tmpinfo);
 		}
 		//添加遮罩
         Vector2 vec = new Vector2(dir.y, dir.x);

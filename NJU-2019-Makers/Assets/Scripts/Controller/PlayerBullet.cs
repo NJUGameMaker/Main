@@ -29,6 +29,7 @@ public class PlayerBullet : MonoBehaviour
 	//敌人扣血和特效写在enemy 不用考虑 TODO
 	public void Attack(GameObject enemy)
 	{
+		if (tag == "PlayerCut" || enemy.GetComponent<Enemy>().isGoast) return;
 		switch (bulletType)
 		{
 			case PlayerManager.BulletType.None:
@@ -52,7 +53,7 @@ public class PlayerBullet : MonoBehaviour
 	public void Wall()
 	{
 		//Debug.Log(isStatic);
-		if (!isStatic)
+		if (tag != "PlayerCut")
 		{
 			switch (bulletType)
 			{

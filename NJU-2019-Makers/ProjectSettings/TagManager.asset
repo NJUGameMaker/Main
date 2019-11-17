@@ -11,6 +11,7 @@ TagManager:
   - PlayerBullet
   - EnemyCut
   - Wall
+  - PlayerCut
   layers:
   - Default
   - TransparentFX

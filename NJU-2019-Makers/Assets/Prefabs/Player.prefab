@@ -571,6 +571,8 @@ MonoBehaviour:
   HeartSprite: {fileID: 8878478249602557899}
   CutMask: {fileID: 8878478250640639694}
   Points: []
+  maxHealth: 100
+  health: 0
   energy: 0
   maxBullet: 100
   bullet: 0
@@ -580,12 +582,24 @@ MonoBehaviour:
     type: 3}
   BulletTan: {fileID: 2871763751108818020, guid: 8c75593b8ddab714abd1ca3604d3bea1,
     type: 3}
+  BulletCut: {fileID: 7103243911363736061, guid: e8b91d430a17990438f93a1ee40c00d2,
+    type: 3}
   FirePosEdge: {fileID: 2719228367443448842}
   FirePosHeart: {fileID: 7790691089323353654}
   EdgeBomb: {fileID: 8518559632738455174}
   HeartBomb: {fileID: 1468111333818496233}
   MainAnimator: {fileID: 8878478250444260122}
   CameraOffset: {x: 0, y: 0}
+  BombLock: 0
+  FireLock: 0
+  MoveLock: 0
+  DieTime: 0
+  Score: 0
+  Map1: {fileID: 0}
+  CutVelocity: 5
+  CutAcc: -9
+  CutAccTime: 0.5
+  CutLastTime: 1
 --- !u!50 &8878478251110559489
 Rigidbody2D:
   serializedVersion: 4
