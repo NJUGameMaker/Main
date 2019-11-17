@@ -77,7 +77,10 @@ public class EnemyBullet : MonoBehaviour
 					if (cast)
 					{
 						PlayerManager.Instance.BeingCut(gameObject, cast.point, v);
-						Debug.DrawLine(Vector3.zero, cast.point, Color.red, 100);
+					}
+					else
+					{
+						PlayerManager.Instance.BeingAttack(damage);
 					}
 				}
 				break;

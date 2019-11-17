@@ -50,7 +50,7 @@ public class BulletShorter : MonoBehaviour
 	public float OffsetTime;
 
 
-    void OnEnable()
+    void Start()
     {
 		switch (bulletType)
 		{

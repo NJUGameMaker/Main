@@ -23,6 +23,8 @@ public class GoAround : MonoBehaviour
 	public CallBack RunAfterStep;
 	public CallBack RunAfterRound;
 	public Vector2 CurV;
+	public bool Rotate = true;
+	public float RotateDeg = 0;
 	private Rigidbody2D rigidbody2;
 	private int now;
 	private int maxSize;
@@ -37,6 +39,7 @@ public class GoAround : MonoBehaviour
 			if (type == Type.AllRandom)
 			{
 				CurV = rigidbody2.velocity = Statics.FaceVec(Quaternion.Euler(0,0,Random.Range(0,360))) * Random.Range(A_dis_min,A_dis_max) / RunTime;
+				if (Rotate) transform.rotation = Quaternion.Euler(0, 0, RotateDeg + Mathf.Rad2Deg * Mathf.Atan2(CurV.y,CurV.x));
 				RoundTimes++;
 				yield return new WaitForSeconds(RunTime);
 				if (RunAfterStep) RunAfterStep.Fun();
@@ -61,6 +64,7 @@ public class GoAround : MonoBehaviour
 					}
 				}
 				CurV = rigidbody2.velocity = (KeyPoints[next].position - KeyPoints[now].position) / RunTime;
+				if (Rotate) transform.rotation = Quaternion.Euler(0, 0, RotateDeg + Mathf.Rad2Deg * Mathf.Atan2(CurV.y, CurV.x));
 				yield return new WaitForSeconds(RunTime);
 				if (RunAfterStep) RunAfterStep.Fun();
 				CurV = rigidbody2.velocity = Vector2.zero;

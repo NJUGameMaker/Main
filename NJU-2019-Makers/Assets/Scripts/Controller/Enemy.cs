@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour
 	//移动类型
 	public Move move { get; private set; }
 
-	private SpriteRenderer renderer;
+	private SpriteRenderer spriteRenderer;
 
 	public bool isGoast = false;
 
@@ -62,9 +62,20 @@ public class Enemy : MonoBehaviour
 		{
 			Vector2 v = m_rb.velocity;
 			var cast = Physics2D.Raycast(transform.position, v, 100, 1 << 8);
+			Debug.DrawLine(transform.position, (Vector2)transform.position+v,Color.red,10);
+
 			if (cast)
 			{
 				PlayerManager.Instance.BeingCut(gameObject, cast.point, v);
+			}
+			else
+			{
+				if (PlayerManager.Instance.protect)
+				{
+					move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5, 0, ForceDecline);
+					return;
+				}
+				PlayerManager.Instance.BeingAttack(damage);
 			}
 		}
 		else
@@ -167,16 +178,15 @@ public class Enemy : MonoBehaviour
 		Color ed = new Color(1, 1, 1, 0.1f);
 		while (true)
 		{
-			StartCoroutine(Statics.Flash(renderer, st, ed, 1.5f));
+			StartCoroutine(Statics.Flash(spriteRenderer, st, ed, 1.5f));
 			yield return new WaitForSeconds(1.5f);
-			StartCoroutine(Statics.Flash(renderer, ed, st, 1.5f));
+			StartCoroutine(Statics.Flash(spriteRenderer, ed, st, 1.5f));
 			yield return new WaitForSeconds(1.5f);
 		}
 	}
 
 	public void BecomeGoast()
 	{
-		Debug.Log("goast");
 		if (!isGoast)
 		{
 			isGoast = true;
@@ -187,7 +197,7 @@ public class Enemy : MonoBehaviour
 	private void Start()
 	{
 		animator = GetComponentInChildren<Animator>();
-		renderer = GetComponentInChildren<SpriteRenderer>();
+		spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 		animator.SetInteger("State", 0);
 		m_rb = GetComponent<Rigidbody2D>();
 		m_collider = GetComponent<Collider2D>();
