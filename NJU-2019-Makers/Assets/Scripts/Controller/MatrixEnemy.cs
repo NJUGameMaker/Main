@@ -12,6 +12,7 @@ public class MatrixEnemy : MonoBehaviour
     public GameObject Container;
     public GameObject EnemyPrefab;
     public Transform[] KeyPoints;
+    public Collider2D ActiveCollider;
     //没有设置敌人的状态，给到的敌人都是
     public enum MatrixType
     {
@@ -39,6 +40,19 @@ public class MatrixEnemy : MonoBehaviour
     void Update()
     {
         float dis = (transform.position - PlayerManager.Instance.transform.position).magnitude;
+        if(ActiveCollider && ActiveCollider.IsTouching(PlayerManager.Instance.HeartCollider))
+        {
+            if(Container.transform.childCount > 0)
+            {
+                for (int i = Container.transform.childCount - 1; i >= 0; i--)
+                {
+                    GameObject child = Container.transform.GetChild(i).gameObject;
+                    child.GetComponent<GoAround>().enabled = false;
+                    child.GetComponent<Move>().moveType = Move.MoveType.AIFollow;
+                    child.GetComponent<Move>().speed = 4;
+                }
+            }
+        }
         if(Container.transform.childCount < 1)//已经没有敌人
         {
             //Debug.Log("No childer" + dis);
@@ -91,9 +105,7 @@ public class MatrixEnemy : MonoBehaviour
             trans[1] = transform;
             obj.GetComponent<GoAround>().KeyPoints = trans;
             obj.transform.parent = Container.transform;
-            ai.StartCoroutine(Statics.WorkAfterSeconds(() => {
-                ai.BeActive();
-            }, 1f));
+            ai.StartCoroutine(ai.StartActive());
         }
     }
     private void RectangleMatrix()
@@ -121,9 +133,7 @@ public class MatrixEnemy : MonoBehaviour
                 default:break;
             }
             obj.transform.parent = Container.transform;
-            ai.StartCoroutine(Statics.WorkAfterSeconds(() => {
-                ai.BeActive();
-            }, 1f));
+            ai.StartCoroutine(ai.StartActive());
             
         }
     }
@@ -143,9 +153,7 @@ public class MatrixEnemy : MonoBehaviour
             }
             obj.GetComponent<GoAround>().KeyPoints = trans;
             obj.transform.parent = Container.transform;
-            ai.StartCoroutine(Statics.WorkAfterSeconds(() => {
-                ai.BeActive();
-            }, 1f));
+            ai.StartCoroutine(ai.StartActive());
         }
     }
 }

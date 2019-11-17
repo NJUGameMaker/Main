@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 8795727429844014215}
   - component: {fileID: 8795727429844014208}
   - component: {fileID: 8795727429844014209}
-  - component: {fileID: 8795727429844014213}
+  - component: {fileID: 7336677705323535788}
   - component: {fileID: 8795727429844014212}
   - component: {fileID: 8795727429844014218}
   m_Layer: 12
@@ -130,7 +130,7 @@ Transform:
   m_GameObject: {fileID: 8795727429844014217}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 2.636386}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 8795727429827749677}
   m_Father: {fileID: 0}
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8795727429844014217}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
@@ -192,7 +192,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8795727429844014217}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0ef11d509e440a4a95cb5f555863d89, type: 3}
   m_Name: 
@@ -206,7 +206,8 @@ MonoBehaviour:
   A_dis_max: 5
   RunAfterStep: {fileID: 0}
   RunAfterRound: {fileID: 0}
---- !u!114 &8795727429844014213
+  CurV: {x: 0, y: 0}
+--- !u!114 &7336677705323535788
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -215,7 +216,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8795727429844014217}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 609d441a2a7f77e46a175be0748face9, type: 3}
+  m_Script: {fileID: 11500000, guid: 965771dbd3e67d14cbf941443fa732bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
@@ -223,11 +224,10 @@ MonoBehaviour:
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
   PlayEffect: 1
-  ActiveTime: 0
+  ActiveTime: 1
   ActiveDistance: 0
   ActiveCollider: {fileID: 0}
   ObjectToActive: []
-  DelGoAround: 0
 --- !u!50 &8795727429844014212
 Rigidbody2D:
   serializedVersion: 4

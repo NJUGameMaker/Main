@@ -46,7 +46,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4886777131498328910
 Transform:
   m_ObjectHideFlags: 0
@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 8563466533044125898}
   - component: {fileID: 8563466533044125901}
   - component: {fileID: 8563466533044125900}
-  - component: {fileID: 8563466533044125896}
+  - component: {fileID: 761770370385202539}
   - component: {fileID: 8563466533044125897}
   - component: {fileID: 8563466533044125895}
   m_Layer: 12
@@ -124,7 +124,7 @@ Transform:
   m_GameObject: {fileID: 8563466533044125892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 2.636386}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_Children:
   - {fileID: 8563466533060440928}
   - {fileID: 4886777131498328910}
@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 4
+  moveType: 5
   speed: 2
   StartSpeed: 2
   acc: 0
@@ -179,6 +179,7 @@ MonoBehaviour:
   AttackToActive: 0
   type: 0
   maxHealth: 1
+  isGoast: 0
 --- !u!114 &8563466533044125900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +187,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8563466533044125892}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0ef11d509e440a4a95cb5f555863d89, type: 3}
   m_Name: 
@@ -200,7 +201,8 @@ MonoBehaviour:
   A_dis_max: 5
   RunAfterStep: {fileID: 0}
   RunAfterRound: {fileID: 0}
---- !u!114 &8563466533044125896
+  CurV: {x: 0, y: 0}
+--- !u!114 &761770370385202539
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -209,7 +211,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8563466533044125892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 609d441a2a7f77e46a175be0748face9, type: 3}
+  m_Script: {fileID: 11500000, guid: 965771dbd3e67d14cbf941443fa732bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   enemy: {fileID: 0}
@@ -217,12 +219,11 @@ MonoBehaviour:
   goAround: {fileID: 0}
   rigidbody2: {fileID: 0}
   PlayEffect: 1
-  ActiveTime: 0
+  ActiveTime: 1
   ActiveDistance: 0
   ActiveCollider: {fileID: 0}
   ObjectToActive:
   - {fileID: 4886777131498328911}
-  DelGoAround: 0
 --- !u!50 &8563466533044125897
 Rigidbody2D:
   serializedVersion: 4

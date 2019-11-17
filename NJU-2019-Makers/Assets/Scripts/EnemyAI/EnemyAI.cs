@@ -31,9 +31,11 @@ public abstract class EnemyAI : MonoBehaviour
 	{
 		Active = true;
 		if (PlayEffect) { EffectManager.Instance.PlayEffect(EffectManager.EffectType.Active, transform.position, Quaternion.identity, 1f);  AudioManager.Instance.PlaySound("EnemyActive"); }
-		if (ActiveTime!=0) yield return new WaitForSeconds(ActiveTime);
+        Debug.Log(111);
+        if (ActiveTime!=0) yield return new WaitForSeconds(ActiveTime);
+        Debug.Log(222);
 		foreach (var item in ObjectToActive)
-		{
+        {
 			item.SetActive(true);
 		}
 		BeActive();
@@ -42,7 +44,6 @@ public abstract class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		Init();
 		Alive = true;
 		RoundEnd = false;
 		Active = false;
@@ -57,6 +58,7 @@ public abstract class EnemyAI : MonoBehaviour
 		//goAround.enabled = true;
 
 		rigidbody2 = GetComponent<Rigidbody2D>();
+        Init();
     }
 
 	// Update is called once per frame
