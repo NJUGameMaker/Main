@@ -48,13 +48,13 @@ public abstract class EnemyAI : MonoBehaviour
 		Active = false;
 
 		enemy = GetComponent<Enemy>();
-		enemy.enabled = true;
+		//enemy.enabled = true;
 
 		move = GetComponent<Move>();
-		move.enabled = false;
+		//move.enabled = false;
 
 		goAround = GetComponent<GoAround>();
-		goAround.enabled = true;
+		//goAround.enabled = true;
 
 		rigidbody2 = GetComponent<Rigidbody2D>();
     }

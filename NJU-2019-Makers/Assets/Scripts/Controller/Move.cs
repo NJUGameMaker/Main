@@ -47,6 +47,7 @@ public class Move : MonoBehaviour
 	//间隔更新
 	private bool canMove;
 
+
 	public void AddForceSpeed(Vector3 vect,float stoptime = 0,float decline = 0.7f)
 	{
 		declineSpeed = decline;
@@ -159,7 +160,7 @@ public class Move : MonoBehaviour
 		switch (moveType)
 		{
 			case MoveType.InOrder:
-				{ };
+				{ v = GetComponent<GoAround>().CurV; };
 				break;
 			case MoveType.Stop:
 				{

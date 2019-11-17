@@ -178,12 +178,13 @@ MonoBehaviour:
   damage: 10
   AttackDie: 1
   HitWallDie: 1
-  HitForce: 15
+  HitForce: 8
   ForceDecline: 0.8
   Active: 1
   AttackToActive: 0
   type: 0
   maxHealth: 1
+  isGoast: 0
 --- !u!114 &8795727429844014209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,7 +240,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 0.2
+  m_Mass: 2
   m_LinearDrag: 0
   m_AngularDrag: 0
   m_GravityScale: 0
