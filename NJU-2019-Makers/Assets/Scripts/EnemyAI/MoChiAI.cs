@@ -7,6 +7,7 @@ public class MoChiAI : EnemyAI
 	public GameObject Triangle;
 	public Transform[] pos;
 	public List<GameObject> Enemys = new List<GameObject>();
+	public Transform Tri_Parent = null;
 
 	public override void AfterDie()
 	{
@@ -23,6 +24,7 @@ public class MoChiAI : EnemyAI
 				ai.move.AddForceSpeed((item.transform.position - PlayerManager.Instance.transform.position).normalized * 30,0,0.9f);
 			}, 0.5f));
 		}
+		if (Tri_Parent) Destroy(transform.parent.gameObject, 2);
 		return;
 	}
 
@@ -42,7 +44,8 @@ public class MoChiAI : EnemyAI
 		Triangle.SetActive(true);
 		foreach (var item in pos)
 		{
-			Enemys.Add(Instantiate(Triangle, item.position, item.rotation,transform.parent));
+			if (!Tri_Parent) Enemys.Add(Instantiate(Triangle, item.position, item.rotation,transform.parent));
+			else Enemys.Add(Instantiate(Triangle, item.position, item.rotation, Tri_Parent));
 		}
 		Triangle.SetActive(false);
 	}

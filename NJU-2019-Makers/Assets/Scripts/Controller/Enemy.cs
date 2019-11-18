@@ -51,6 +51,8 @@ public class Enemy : MonoBehaviour
 
 	public bool isGoast = false;
 
+	private HashSet<GameObject> BeAttackBullet = new HashSet<GameObject>();
+
 	//初始化 应该写完了 TODO
 	public void Init(float h, Move m) { maxHealth = health = h; move = m; }
 
@@ -112,6 +114,8 @@ public class Enemy : MonoBehaviour
 	//被玩家子弹攻击 受到伤害血量计算 特效 音效等 TODO
 	public void BeingAttack(GameObject bullet)
 	{
+		if (BeAttackBullet.Contains(bullet)) return;
+		BeAttackBullet.Add(bullet);
 		if (!Active)
 		{
 			Active = AttackToActive;
