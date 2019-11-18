@@ -29,6 +29,7 @@ public class PlayerBullet : MonoBehaviour
 	//敌人扣血和特效写在enemy 不用考虑 TODO
 	public void Attack(GameObject enemy)
 	{
+		if (tag == "PlayerCut" || enemy.GetComponent<Enemy>().isGoast) return;
 		switch (bulletType)
 		{
 			case PlayerManager.BulletType.None:
@@ -52,15 +53,17 @@ public class PlayerBullet : MonoBehaviour
 	public void Wall()
 	{
 		//Debug.Log(isStatic);
-		if (!isStatic)
+		if (tag != "PlayerCut")
 		{
 			switch (bulletType)
 			{
 				case PlayerManager.BulletType.None:
 					EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerNormalOn, transform.position, transform.rotation, 1f);
+					AudioManager.Instance.PlaySound("HitWall");
 					break;
 				case PlayerManager.BulletType.Strong:
 					EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerStrongOn, transform.position, transform.rotation, 1f);
+					AudioManager.Instance.PlaySound("HitWall");
 					break;
 				case PlayerManager.BulletType.Bounce:
 					EffectManager.Instance.PlayEffect(EffectManager.EffectType.PlayerTanOn, transform.position, transform.rotation, 1f);

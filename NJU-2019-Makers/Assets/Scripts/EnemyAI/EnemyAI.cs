@@ -30,10 +30,12 @@ public abstract class EnemyAI : MonoBehaviour
 	public IEnumerator StartActive()
 	{
 		Active = true;
-		if (PlayEffect) EffectManager.Instance.PlayEffect(EffectManager.EffectType.Active, transform.position, Quaternion.identity,1f);
-		if (ActiveTime!=0) yield return new WaitForSeconds(ActiveTime);
+		if (PlayEffect) { EffectManager.Instance.PlayEffect(EffectManager.EffectType.Active, transform.position, Quaternion.identity, 1f);  AudioManager.Instance.PlaySound("EnemyActive"); }
+        Debug.Log(111);
+        if (ActiveTime!=0) yield return new WaitForSeconds(ActiveTime);
+        Debug.Log(222);
 		foreach (var item in ObjectToActive)
-		{
+        {
 			item.SetActive(true);
 		}
 		BeActive();
@@ -42,21 +44,21 @@ public abstract class EnemyAI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		Init();
 		Alive = true;
 		RoundEnd = false;
 		Active = false;
 
 		enemy = GetComponent<Enemy>();
-		enemy.enabled = true;
+		//enemy.enabled = true;
 
 		move = GetComponent<Move>();
-		move.enabled = false;
+		//move.enabled = false;
 
 		goAround = GetComponent<GoAround>();
-		goAround.enabled = true;
+		//goAround.enabled = true;
 
 		rigidbody2 = GetComponent<Rigidbody2D>();
+        Init();
     }
 
 	// Update is called once per frame

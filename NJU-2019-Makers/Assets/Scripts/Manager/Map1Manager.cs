@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Map1Manager : MonoBehaviour
 {
+	public enum SavePoint
+	{
+		Map1Level1,
+		Map1Level2,
+		Map1Level3,
+		Map2Level1,
+	}
+
 	//玩家出生点
 	public Transform PlayerStart;
 	public GameObject Player;
@@ -12,26 +20,51 @@ public class Map1Manager : MonoBehaviour
 	public Transform[] StoryEnemy1Ed;
 	public GameObject Story1Enemy1;
 	public GameObject StoryShotBullet;
-	public GameObject Level1;
+
 	public GameObject Story2Enemys;
 	public Transform Story2Effect;
 
+	public GameObject[] Levels;
+	public Transform[] SavePos;
+
+	private GameObject CurrentLevel;
 	private List<GameObject> objs = new List<GameObject>();
 
 	private bool MouseDown;
+
+	public SavePoint save;
+
+	public void ReLoad(SavePoint s)
+	{
+		Destroy(CurrentLevel);
+		CurrentLevel = Instantiate(Levels[(int)s], transform);
+		CurrentLevel.SetActive(true);
+	}
+
+	public void ReStart(SavePoint s)
+	{
+
+		PlayerManager.Instance.transform.position = SavePos[(int)s].position;
+		PlayerManager.Instance.health = PlayerManager.Instance.maxHealth;
+		ReLoad(s);
+
+	}
 
 	//初始化
 	public void Init()
 	{
 		UIManager.Instance.Mask.color = Color.black;
 		MouseDown = true;
-		CameraManager.Instance.ReloadMap(1);
+		//CameraManager.Instance.ReloadMap(2);
 		//EffectManager.Instance.CameraFocus(1, PlayerStart.position, Statics.FunType.SqrtX);
 		UIManager.Instance.HideDialogAndText();
 	}
 
 	public IEnumerator Story1_Start()
 	{
+		PlayerManager.Instance.BombLock = true;
+		PlayerManager.Instance.FireLock = true;
+		PlayerManager.Instance.MoveLock = false;
 		Player.transform.position = PlayerStart.position;
 		GameManager.Instance.GameVideo();
 		const float MoveTime = 12f;
@@ -105,6 +138,7 @@ public class Map1Manager : MonoBehaviour
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		UIManager.Instance.ShowText("【注意左下角子弹条，子弹耗尽会进入冷却】 [左键开始游戏...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
+
 		for (int i = 0; i < 3; i++)
 		{
 			Statics.SetEnable(objs[i], true);
@@ -113,7 +147,13 @@ public class Map1Manager : MonoBehaviour
 		EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true, 0.4f);
 		UIManager.Instance.HideDialogAndText();
 		GameManager.Instance.GameRestart();
-		Level1.SetActive(true);
+
+		ReLoad(SavePoint.Map1Level1);
+		save = SavePoint.Map1Level1;
+
+		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
+		PlayerManager.Instance.FireLock = false;
+
 	}
 
 	public IEnumerator Story1()
@@ -143,6 +183,9 @@ public class Map1Manager : MonoBehaviour
 
 	public IEnumerator Story2()
 	{
+		PlayerManager.Instance.BombLock = false;
+		PlayerManager.Instance.FireLock = true;
+		PlayerManager.Instance.MoveLock = true;
 		EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true, 0.4f);
 		GameManager.Instance.GameVideo();
 		//yield return new WaitForSeconds(0.5f);
@@ -175,6 +218,13 @@ public class Map1Manager : MonoBehaviour
 		Story2EnemyActive();
 		UIManager.Instance.HideDialogAndText();
 		GameManager.Instance.GameRestart();
+		while (Story2Enemys.transform.childCount != 0) yield return new WaitForEndOfFrame();
+		PlayerManager.Instance.FireLock = false;
+		PlayerManager.Instance.MoveLock = false;
+
+		save = SavePoint.Map1Level2;
+		ReLoad(SavePoint.Map1Level2);
+
 		yield return new WaitForEndOfFrame();
 	}
 

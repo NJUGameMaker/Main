@@ -42,7 +42,7 @@ public class MoChiAI : EnemyAI
 		Triangle.SetActive(true);
 		foreach (var item in pos)
 		{
-			Enemys.Add(Instantiate(Triangle, item.position, item.rotation));
+			Enemys.Add(Instantiate(Triangle, item.position, item.rotation,transform.parent));
 		}
 		Triangle.SetActive(false);
 	}

@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 5570793005013996199}
   - component: {fileID: 5570793005013996192}
   - component: {fileID: 5570793005013996193}
+  - component: {fileID: 513455034585002025}
   - component: {fileID: 5570793005013996196}
   - component: {fileID: 5570793005013996202}
   m_Layer: 12
@@ -132,6 +133,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5570793004997730573}
+  - {fileID: 3848771968481369783}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -178,9 +180,12 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 0
   HitForce: 12
+  ForceDecline: 0.8
   Active: 1
   AttackToActive: 0
+  type: 0
   maxHealth: 500
+  isGoast: 0
 --- !u!114 &5570793005013996193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +210,31 @@ MonoBehaviour:
   A_dis_max: 5
   RunAfterStep: {fileID: 0}
   RunAfterRound: {fileID: 0}
+  CurV: {x: 0, y: 0}
+  Rotate: 1
+  RotateDeg: -90
+--- !u!114 &513455034585002025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5570793005013996201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609d441a2a7f77e46a175be0748face9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+  move: {fileID: 0}
+  goAround: {fileID: 0}
+  rigidbody2: {fileID: 0}
+  PlayEffect: 1
+  ActiveTime: 0
+  ActiveDistance: 0
+  ActiveCollider: {fileID: 0}
+  ObjectToActive: []
+  DelGoAround: 1
 --- !u!50 &5570793005013996196
 Rigidbody2D:
   serializedVersion: 4
@@ -258,3 +288,96 @@ PolygonCollider2D:
       - {x: -0.5453023, y: -0.47544593}
       - {x: -0.5407441, y: -0.47356772}
       - {x: 0.5398604, y: -0.47812176}
+--- !u!1 &7807961127191375324
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4378014434082520663}
+  m_Layer: 0
+  m_Name: ShotPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4378014434082520663
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7807961127191375324}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3848771968481369783}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8066396201386877868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3848771968481369783}
+  - component: {fileID: 5838491638173175929}
+  m_Layer: 0
+  m_Name: BulletShoter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3848771968481369783
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066396201386877868}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 3, z: 1}
+  m_Children:
+  - {fileID: 4378014434082520663}
+  m_Father: {fileID: 5570793005013996198}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5838491638173175929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8066396201386877868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e8e5102290c8748a6046fd8f05717a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shotType: 0
+  CutBullet: {fileID: 4626859448097340834, guid: 16fa2eaa2201c9b4b8cb0ed4a331ef91,
+    type: 3}
+  DamageBullet: {fileID: 2491762746154822245, guid: d7b3a501e414018478f5284a94294b82,
+    type: 3}
+  Target: {fileID: 0}
+  Interval: 2
+  StartRotate: 90
+  RotateStep: 360
+  RotateInterval: 1
+  Velocity: 10
+  Acceleration: -1
+  AccTime: 1
+  Damage: 0
+  OutType: 9
+  HitType: 8
+  bulletType: 1
+  ShotPoint: {fileID: 4378014434082520663}
+  OffsetTime: 0

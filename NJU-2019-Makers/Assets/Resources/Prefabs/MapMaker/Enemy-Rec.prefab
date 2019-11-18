@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3747921357767891865}
   - component: {fileID: 3747921357767891864}
   - component: {fileID: 3747921357767891867}
+  - component: {fileID: 5757535008338225697}
   - component: {fileID: 3747921357767891863}
   - component: {fileID: 3747921357767891862}
   m_Layer: 12
@@ -30,9 +31,10 @@ Transform:
   m_GameObject: {fileID: 3747921357767891866}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 3.85, y: 2.14, z: 0.1806641}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_Children:
   - {fileID: 3747921358616570533}
+  - {fileID: 2625337861575045056}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -79,9 +81,12 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 0
   HitForce: 12
+  ForceDecline: 0.8
   Active: 1
   AttackToActive: 0
-  maxHealth: 500
+  type: 0
+  maxHealth: 50
+  isGoast: 0
 --- !u!114 &3747921357767891867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -94,11 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0ef11d509e440a4a95cb5f555863d89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 2
-  KeyPoints:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  type: 1
+  KeyPoints: []
   RunTime: 2
   StopTime: 1
   StartTime: 0
@@ -106,6 +108,32 @@ MonoBehaviour:
   A_dis_max: 5
   RunAfterStep: {fileID: 0}
   RunAfterRound: {fileID: 0}
+  CurV: {x: 0, y: 0}
+  Rotate: 0
+  RotateDeg: 0
+--- !u!114 &5757535008338225697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3747921357767891866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 609d441a2a7f77e46a175be0748face9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemy: {fileID: 0}
+  move: {fileID: 0}
+  goAround: {fileID: 0}
+  rigidbody2: {fileID: 0}
+  PlayEffect: 1
+  ActiveTime: 0
+  ActiveDistance: 0
+  ActiveCollider: {fileID: 0}
+  ObjectToActive:
+  - {fileID: 5630557301689369919}
+  DelGoAround: 1
 --- !u!61 &3747921357767891863
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -252,3 +280,96 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &5630557301689369919
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2625337861575045056}
+  - component: {fileID: 5689134401530883524}
+  m_Layer: 0
+  m_Name: BulletShoter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2625337861575045056
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5630557301689369919}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1.5, z: 1}
+  m_Children:
+  - {fileID: 1957806777083073928}
+  m_Father: {fileID: 3747921357767891861}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5689134401530883524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5630557301689369919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1e8e5102290c8748a6046fd8f05717a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shotType: 0
+  CutBullet: {fileID: 4626859448097340834, guid: 16fa2eaa2201c9b4b8cb0ed4a331ef91,
+    type: 3}
+  DamageBullet: {fileID: 2491762746154822245, guid: d7b3a501e414018478f5284a94294b82,
+    type: 3}
+  Target: {fileID: 0}
+  Interval: 2
+  StartRotate: 0
+  RotateStep: 20
+  RotateInterval: 0.6
+  Velocity: 10
+  Acceleration: -1
+  AccTime: 1
+  Damage: 0
+  OutType: 9
+  HitType: 8
+  bulletType: 1
+  ShotPoint: {fileID: 1957806777083073928}
+  OffsetTime: 0
+--- !u!1 &6239480413738540317
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1957806777083073928}
+  m_Layer: 0
+  m_Name: ShotPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1957806777083073928
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6239480413738540317}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2625337861575045056}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

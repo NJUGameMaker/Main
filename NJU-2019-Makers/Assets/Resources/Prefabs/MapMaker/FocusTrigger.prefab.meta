@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:NJU-2019-Makers/Assets/Resources/Prefabs/MapMaker/FocusTrigger.prefab.meta
 guid: 58e88cc4c907a1b43aa5f460e2e291b3
 PrefabImporter:
+=======
+guid: 03008c59dd6f67c40b98b46e12aad3a2
+folderAsset: yes
+DefaultImporter:
+>>>>>>> 17b8060576748113fa3c5c360c6163ebd452b743:NJU-2019-Makers/Assets/Sprites/other/icon.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

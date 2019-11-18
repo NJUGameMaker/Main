@@ -47,6 +47,7 @@ public class Move : MonoBehaviour
 	//间隔更新
 	private bool canMove;
 
+
 	public void AddForceSpeed(Vector3 vect,float stoptime = 0,float decline = 0.7f)
 	{
 		declineSpeed = decline;
@@ -90,7 +91,7 @@ public class Move : MonoBehaviour
 		direction = dt;
 		StartSpeed = speed = sp;
 		rb2 = rb;
-		transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dt.y, dt.x) * 180f / Mathf.PI);
+		transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(dt.y, dt.x) * 180f / Mathf.PI + rotate);
 		return this;
 	}
 
@@ -159,7 +160,7 @@ public class Move : MonoBehaviour
 		switch (moveType)
 		{
 			case MoveType.InOrder:
-				{ };
+				{ v = GetComponent<GoAround>().CurV; };
 				break;
 			case MoveType.Stop:
 				{

@@ -55,34 +55,40 @@ public class EnemyBullet : MonoBehaviour
 	//攻击到玩家 应该写完了 还有特效 音效 TODO
 	public void Attack()
 	{
-		if (PlayerManager.Instance.protect)
+
+		switch (type)
 		{
-			AttackProtect();
-		}
-		else
-		{
-			switch (type)
-			{
-				case Type.EnemyBullet:
-					{ PlayerManager.Instance.BeingAttack(damage); }
-					break;
-				case Type.EnemyCut:
+			case Type.EnemyBullet:
+				{
+					if (PlayerManager.Instance.protect)
 					{
-						Vector2 v = rigidbody2.velocity;
-						var cast = Physics2D.Raycast(transform.position, v, 100, 1 << 8);
-						if (cast)
-						{
-							PlayerManager.Instance.BeingCut(gameObject, cast.point, v);
-							Debug.DrawLine(Vector3.zero, cast.point, Color.red, 100);
-						}
+						AttackProtect();
 					}
-					break;
-				default:
-					break;
-			}
-			EffectManager.Instance.PlayEffect(OnEffect, transform.position, transform.rotation, 1f);
-			if (!isStatic) Destroy(gameObject);
+					else
+					{
+						PlayerManager.Instance.BeingAttack(damage);
+					}
+				}
+				break;
+			case Type.EnemyCut:
+				{
+					Vector2 v = rigidbody2.velocity;
+					var cast = Physics2D.Raycast(transform.position, v, 100, 1 << 8);
+					if (cast)
+					{
+						PlayerManager.Instance.BeingCut(gameObject, cast.point, v);
+					}
+					else
+					{
+						PlayerManager.Instance.BeingAttack(damage);
+					}
+				}
+				break;
+			default:
+				break;
 		}
+		EffectManager.Instance.PlayEffect(OnEffect, transform.position, transform.rotation, 1f);
+		if (!isStatic) Destroy(gameObject);
 	}
 
 	//攻击到玩家核心 应该写完了 还有特效 音效 TODO
@@ -116,13 +122,17 @@ public class EnemyBullet : MonoBehaviour
 		{
 			AttackHeart();
 		}
-		if (collision.gameObject.tag == "PlayerEdge")
+		else if (collision.gameObject.tag == "PlayerEdge")
 		{
 			Attack();
 		}
 		else if (collision.gameObject.tag == "Wall")
 		{
 			Wall();
+		}
+		else if (collision.gameObject.tag == "PlayerCut")
+		{
+			AttackProtect();
 		}
 	}
 
