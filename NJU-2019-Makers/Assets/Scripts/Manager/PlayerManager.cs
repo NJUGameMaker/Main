@@ -346,13 +346,13 @@ public class PlayerManager : MonoBehaviour
 			GObullet.SetActive(true);
 			GObullet.GetComponent<PlayerCut>().SetAngle(item.left, item.right);
 			PlayerBullet playerBullet = GObullet.AddComponent<PlayerBullet>();
-			playerBullet.Init(bulletType, 100000, false, GObullet.AddComponent<Move>());
+			playerBullet.Init(BulletType.Strong, 50, false, GObullet.AddComponent<Move>());
 			float angle = Mathf.Rad2Deg * Mathf.Atan2(tmpvec.y, tmpvec.x);
 			GObullet.transform.rotation = Quaternion.Euler(0, 0, angle);
 			Vector2 direct = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
 			playerBullet.move.rotate = 180;
 			playerBullet.move.SetLineType(transform.position, direct, CutVelocity ,CutAcc , CutAccTime, GObullet.GetComponent<Rigidbody2D>());
-			Destroy(GObullet, CutLastTime);
+			if (CutLastTime>0.001f) Destroy(GObullet, CutLastTime);
 			//playerBullet.StartCoroutine(Statics.WorkAfterSeconds(() => { playerBullet.move.acc = 0; }, 0.5f));
 
 		}
