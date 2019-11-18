@@ -332,10 +332,12 @@ MonoBehaviour:
   AttackDie: 1
   HitWallDie: 0
   HitForce: 0
+  ForceDecline: 0.8
   Active: 1
   AttackToActive: 0
   type: 0
   maxHealth: 1
+  isGoast: 0
 --- !u!114 &6447316692447159795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -348,11 +350,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8d85dd3eba93624e962b2c564f1ec40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveType: 0
-  speed: 1
-  StartSpeed: 1
+  moveType: 5
+  speed: 0
+  StartSpeed: 0
   acc: 0
-  direction: {x: 1, y: 0}
+  direction: {x: 0, y: 0}
   heart: {x: 2, y: 0}
   radius: 3
   roundTime: 3
@@ -385,6 +387,9 @@ MonoBehaviour:
   A_dis_max: 0
   RunAfterStep: {fileID: 0}
   RunAfterRound: {fileID: 0}
+  CurV: {x: 0, y: 0}
+  Rotate: 1
+  RotateDeg: 0
 --- !u!114 &6447316692447159798
 MonoBehaviour:
   m_ObjectHideFlags: 0
