@@ -9,7 +9,9 @@ public class Map1Manager : MonoBehaviour
 		Map1Level1,
 		Map1Level2,
 		Map1Level3,
+		Map1Story2,
 		Map2Level1,
+		Map4Boss,
 	}
 
 	//玩家出生点
@@ -31,11 +33,13 @@ public class Map1Manager : MonoBehaviour
 	private List<GameObject> objs = new List<GameObject>();
 
 	private bool MouseDown;
+	private GameObject Story2Temp;
 
 	public SavePoint save;
 
 	public void ReLoad(SavePoint s)
 	{
+		UIManager.Instance.UseBossHealth(0, false);
 		Destroy(CurrentLevel);
 		CurrentLevel = Instantiate(Levels[(int)s], transform);
 		CurrentLevel.SetActive(true);
@@ -43,9 +47,12 @@ public class Map1Manager : MonoBehaviour
 
 	public void ReStart(SavePoint s)
 	{
-
+		if (s == SavePoint.Map1Level1) PlayerManager.Instance.BombLock = true;
+		PlayerManager.Instance.FireLock = false;
+		PlayerManager.Instance.MoveLock = false;
 		PlayerManager.Instance.transform.position = SavePos[(int)s].position;
 		PlayerManager.Instance.health = PlayerManager.Instance.maxHealth;
+		Destroy(Story2Temp);
 		ReLoad(s);
 
 	}
@@ -54,6 +61,7 @@ public class Map1Manager : MonoBehaviour
 	public void Init()
 	{
 		UIManager.Instance.Mask.color = Color.black;
+		UIManager.Instance.UseBossHealth(0, false);
 		MouseDown = true;
 		//CameraManager.Instance.ReloadMap(2);
 		//EffectManager.Instance.CameraFocus(1, PlayerStart.position, Statics.FunType.SqrtX);
@@ -167,22 +175,25 @@ public class Map1Manager : MonoBehaviour
 
 	void Story2EnemyShow()
 	{
-		for (int i = 0; i < Story2Enemys.transform.childCount; i++)
+		for (int i = 0; i < Story2Temp.transform.childCount; i++)
 		{
-			StartCoroutine(Statics.Flash(Story2Enemys.transform.GetChild(i).GetComponentInChildren<SpriteRenderer>(), Color.clear, Color.white,1));
+			StartCoroutine(Statics.Flash(Story2Temp.transform.GetChild(i).GetComponentInChildren<SpriteRenderer>(), Color.clear, Color.white,1));
 		}
 	}
 
 	void Story2EnemyActive()
 	{
-		for (int i = 0; i < Story2Enemys.transform.childCount; i++)
+		for (int i = 0; i < Story2Temp.transform.childCount; i++)
 		{
-			StartCoroutine(Story2Enemys.transform.GetChild(i).GetComponent<EnemyAI>().StartActive());
+			StartCoroutine(Story2Temp.transform.GetChild(i).GetComponent<EnemyAI>().StartActive());
 		}
 	}
 
 	public IEnumerator Story2()
 	{
+		save = SavePoint.Map1Story2;
+		Story2Temp = Instantiate(Story2Enemys, Story2Enemys.transform.parent);
+		Story2Temp.SetActive(true);
 		PlayerManager.Instance.BombLock = false;
 		PlayerManager.Instance.FireLock = true;
 		PlayerManager.Instance.MoveLock = true;
@@ -218,13 +229,14 @@ public class Map1Manager : MonoBehaviour
 		Story2EnemyActive();
 		UIManager.Instance.HideDialogAndText();
 		GameManager.Instance.GameRestart();
-		while (Story2Enemys.transform.childCount != 0) yield return new WaitForEndOfFrame();
-		PlayerManager.Instance.FireLock = false;
-		PlayerManager.Instance.MoveLock = false;
-
-		save = SavePoint.Map1Level2;
-		ReLoad(SavePoint.Map1Level2);
-
+		while (Story2Temp && Story2Temp.transform.childCount != 0) yield return new WaitForEndOfFrame();
+		if (Story2Temp)
+		{
+			PlayerManager.Instance.FireLock = false;
+			PlayerManager.Instance.MoveLock = false;
+			save = SavePoint.Map1Level2;
+			ReLoad(SavePoint.Map1Level2);
+		}
 		yield return new WaitForEndOfFrame();
 	}
 

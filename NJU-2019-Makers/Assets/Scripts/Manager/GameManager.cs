@@ -43,7 +43,7 @@ public class GameManager : MonoBehaviour
 	public void GameVideo() => playVideo = true;
 
 	//开始播放剧情
-	public void GameRestart() => pause = playVideo = false;
+	public void GameRestart() {  pause = playVideo = false; PlayerManager.Instance.Bomb(); }
 
 	public void StartGame(string name)
 	{

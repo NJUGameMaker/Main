@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:NJU-2019-Makers/Assets/Resources/Prefabs/MapMaker/EnemyTrigger.prefab.meta
 guid: 5604953cc3f74bf47886baf3acbaeaa6
 PrefabImporter:
+=======
+guid: 88e9da909c4dcbe42ae870699c67ea8b
+folderAsset: yes
+DefaultImporter:
+>>>>>>> 2e08d38239462fa04f61300883a834e70d017abf:NJU-2019-Makers/Assets/Scripts/EnemyAI/Boss.meta
   externalObjects: {}
   userData: 
   assetBundleName: 

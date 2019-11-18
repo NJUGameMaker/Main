@@ -199,6 +199,7 @@ public class Move : MonoBehaviour
                 }; break;//随机游走
 			case MoveType.AIFollow:
 				{
+					if (!follow) follow = PlayerManager.Instance.gameObject;
 					speed += acc * Time.fixedDeltaTime;
 					Vector3 target = new Vector3(0, 0, 0);
 					//Vector3 target = follow.transform.position;
@@ -210,9 +211,9 @@ public class Move : MonoBehaviour
 					target = follow.transform.position;
 					v = new Vector3(target.x - transform.position.x, target.y - transform.position.y, 0); //新建移动向量
 					v = v.normalized;                              //如果是斜线方向，需要对其进行标准化，统一长度为1
-					v = v * speed;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
 												  //transform.Translate(v);                       //移动
 					transform.rotation = Quaternion.Euler(0, 0, Mathf.Atan2(v.y, v.x) * 180f / Mathf.PI + rotate);
+					v = v * speed;                //乘以速度调整移动速度，乘以deltaTime防止卡顿现象
 				}; break;
 			default: Debug.LogAssertion("Wrong move type"); break;
 		}

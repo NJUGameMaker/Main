@@ -48,6 +48,8 @@ public class BulletShorter : MonoBehaviour
 	private Rigidbody2D rigidbody2;
 	//偏移时间
 	public float OffsetTime;
+	//自动消失时间
+	public float DestroyTime = 0;
 
 
     void Start()
@@ -83,6 +85,7 @@ public class BulletShorter : MonoBehaviour
 						float rot = r + StartRotate;
 						transform.localRotation = Quaternion.Euler(0, 0, rot);
 						GameObject bullet = Instantiate(Bullet, ShotPoint.position, transform.rotation);
+						if (DestroyTime > 0.001f) Destroy(bullet, DestroyTime);
 						bullet.SetActive(true);
 						bullet.AddComponent<EnemyBullet>().Init(
 							Damage, false,
@@ -103,6 +106,7 @@ public class BulletShorter : MonoBehaviour
 					{
 						transform.rotation.SetLookRotation(Target.transform.position - ShotPoint.position);
 						GameObject bullet = Instantiate(Bullet, ShotPoint.position, transform.rotation);
+						if (DestroyTime > 0.001f) Destroy(bullet, DestroyTime);
 						bullet.SetActive(true);
 						bullet.AddComponent<EnemyBullet>().Init(
 							Damage, false,
@@ -121,6 +125,7 @@ public class BulletShorter : MonoBehaviour
 					{
 						transform.rotation.SetLookRotation(Target.transform.position - ShotPoint.position);
 						GameObject bullet = Instantiate(Bullet, ShotPoint.position, Quaternion.Euler(0, 0, 0));
+						if (DestroyTime > 0.001f) Destroy(bullet, DestroyTime);
 						bullet.SetActive(true);
 						bullet.AddComponent<EnemyBullet>().Init(
 							Damage, false,

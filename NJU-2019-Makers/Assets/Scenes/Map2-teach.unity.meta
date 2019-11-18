@@ -1,5 +1,10 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:NJU-2019-Makers/Assets/Scenes/Map2-teach.unity.meta
 guid: 783365f93ef3f2c4fa8cfede9af47bf0
+=======
+guid: 5fce6ae1ffa817b4381302224657e449
+folderAsset: yes
+>>>>>>> 2e08d38239462fa04f61300883a834e70d017abf:NJU-2019-Makers/Assets/Resources/Prefabs/MapMaker/Boss.meta
 DefaultImporter:
   externalObjects: {}
   userData: 

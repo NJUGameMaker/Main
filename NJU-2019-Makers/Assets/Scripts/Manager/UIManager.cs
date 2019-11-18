@@ -35,7 +35,11 @@ public class UIManager : MonoBehaviour
 	public Animator ComboAnimator;
 	public Animator BulletUIAnimator;
 	public Animator ScoreAnimator;
+	public Image BossHealth;
 
+
+	private float health;
+	private float maxhealth;
 
 	//上下对话信息
 	private const float ShowHideTime = 0.6f;
@@ -119,6 +123,11 @@ public class UIManager : MonoBehaviour
 		string tmp = scoreNum.ToString();
 		while (tmp.Length <= 8) tmp = "0" + tmp;
 		Score.text = ScoreBlack.text = tmp;
+		if (maxhealth > 0)
+		{
+			float tar = health / maxhealth;
+			BossHealth.fillAmount += (tar - BossHealth.fillAmount) * 0.05f;
+		}
 	}
 
 	public void Flash(Color st,Color ed,float time,Statics.FunType t = Statics.FunType.X)
@@ -161,6 +170,16 @@ public class UIManager : MonoBehaviour
 		BulletUIAnimator.SetBool("HaveBullet", f);
 	}
 
+	public void UseBossHealth(float health , bool use)
+	{
+		maxhealth = health;
+		BossHealth.gameObject.SetActive(use);
+	}
+
+	public void SetCurHealth(float h)
+	{
+		health = h;
+	}
 	//设置临时UI条
 	//..........
 

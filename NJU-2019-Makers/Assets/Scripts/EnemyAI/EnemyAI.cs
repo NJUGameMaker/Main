@@ -31,9 +31,7 @@ public abstract class EnemyAI : MonoBehaviour
 	{
 		Active = true;
 		if (PlayEffect) { EffectManager.Instance.PlayEffect(EffectManager.EffectType.Active, transform.position, Quaternion.identity, 1f);  AudioManager.Instance.PlaySound("EnemyActive"); }
-        Debug.Log(111);
         if (ActiveTime!=0) yield return new WaitForSeconds(ActiveTime);
-        Debug.Log(222);
 		foreach (var item in ObjectToActive)
         {
 			item.SetActive(true);
