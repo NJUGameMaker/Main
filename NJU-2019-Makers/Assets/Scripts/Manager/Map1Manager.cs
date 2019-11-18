@@ -10,6 +10,7 @@ public class Map1Manager : MonoBehaviour
 		Map1Level2,
 		Map1Level3,
 		Map2Level1,
+		Map4Boss,
 	}
 
 	//玩家出生点
