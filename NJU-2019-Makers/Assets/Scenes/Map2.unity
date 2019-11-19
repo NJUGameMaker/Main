@@ -4181,18 +4181,7 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8878478251110559503, guid: 661162c083ba52e4eb6f663838c5e20e,
-        type: 3}
-      propertyPath: maxHealth
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8878478251110559503, guid: 661162c083ba52e4eb6f663838c5e20e,
-        type: 3}
-      propertyPath: Map1
-      value: 
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 8878478251175322918, guid: 661162c083ba52e4eb6f663838c5e20e, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 661162c083ba52e4eb6f663838c5e20e, type: 3}
 --- !u!1 &713444778
 GameObject:

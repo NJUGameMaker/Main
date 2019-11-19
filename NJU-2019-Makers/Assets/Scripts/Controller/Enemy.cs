@@ -50,6 +50,7 @@ public class Enemy : MonoBehaviour
 	private SpriteRenderer spriteRenderer;
 
 	public bool isGoast = false;
+	public bool GoastAfterDie = false;
 
 	private HashSet<GameObject> BeAttackBullet = new HashSet<GameObject>();
 
@@ -77,6 +78,7 @@ public class Enemy : MonoBehaviour
 					move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5, 0, ForceDecline);
 					return;
 				}
+				move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 2, 0, ForceDecline);
 				PlayerManager.Instance.BeingAttack(damage);
 			}
 		}
@@ -87,15 +89,13 @@ public class Enemy : MonoBehaviour
 				move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 5, 0, ForceDecline);
 				return;
 			}
+			move.AddForceSpeed((transform.position - PlayerManager.Instance.transform.position).normalized * HitForce * 2, 0, ForceDecline);
 			PlayerManager.Instance.BeingAttack(damage);
 		}
 
 		if (AttackDie)
 		{
-			Statics.AnimatorPlay(this, animator, Statics.AnimatorType.Die);
-			health = -1;
-			m_collider.enabled = false;
-			Destroy(gameObject, dietime);
+			GoDie();
 		}
 	}
 
@@ -110,6 +110,24 @@ public class Enemy : MonoBehaviour
 		PlayerManager.Instance.AttackHeart(gameObject);
 	}
 
+
+	public void GoDie()
+	{
+		if (GoastAfterDie && !isGoast)
+		{
+			health = maxHealth;
+			BecomeGoast();
+			AudioManager.Instance.PlaySound("BecomeGoast");
+		}
+		else
+		{
+			health = -1;
+			m_collider.enabled = false;
+			AudioManager.Instance.PlaySound("EnemyDie");
+			Statics.AnimatorPlay(this, animator, Statics.AnimatorType.Die);
+			Destroy(gameObject, dietime);
+		}
+	}
 
 	//被玩家子弹攻击 受到伤害血量计算 特效 音效等 TODO
 	public void BeingAttack(GameObject bullet)
@@ -131,10 +149,7 @@ public class Enemy : MonoBehaviour
 		GetComponent<Move>().AddForceSpeed(shootin.normalized * HitForce, 0, ForceDecline);
 		if (health <= 0)
         {
-			AudioManager.Instance.PlaySound("EnemyDie");
-			m_collider.enabled = false;
-			Statics.AnimatorPlay(this,animator, Statics.AnimatorType.Die);
-			Destroy(gameObject, dietime);
+			GoDie();
 		}
 		else
         {
