@@ -10,7 +10,14 @@ public class AudioManager : MonoBehaviour
 	//设置音频路径
 	private const string path = "Audios/";
 	//设置音频名
-	private readonly string[] AudioNames = { "Shoot1","Shoot2","HitEnemy","EnemyDie","HitWall","EnemyActive","MovePoint","EnemyShoot" };
+	private readonly string[] AudioNames = {
+		"StartBGM","Map1BGM",
+		"Shoot1","Shoot2","HitEnemy",
+		"EnemyDie","HitWall","EnemyActive",
+		"MovePoint","EnemyShoot","BecomeGoast",
+		"Bomb","Hurt","HaveNoBullet",
+		"BeingSmall","Shoot3","ShootCut","Cut","Collect"
+	};
 	//音频映射
 	private Dictionary<string, AudioClip> AudioDic = new Dictionary<string, AudioClip>();
 	//BGM播放
@@ -20,7 +27,8 @@ public class AudioManager : MonoBehaviour
 	private Dictionary<Statics.bFunv, AudioSource> SoundPlayerUntil = new Dictionary<Statics.bFunv, AudioSource>();
 	//音效 BGM 音量
 	private float _BGMVolume, _SoundVolume;
-	public float BGMVolume { get => _BGMVolume; set => _BGMVolume = BGMPlayer.volume = Statics.InRange(value, 0, 1); }
+	private float fixBGMVolume = 1;
+	public float BGMVolume { get => _BGMVolume; set => _BGMVolume = BGMPlayer.volume = Statics.InRange(Statics.InRange(value, 0, 1) * fixBGMVolume, 0, 1); }
 	public float SoundVolume { get => _SoundVolume; set => _SoundVolume = Statics.InRange(value, 0, 1); }
 	//临时删除表
 	private List<Statics.bFunv> tmpdel = new List<Statics.bFunv>();
@@ -57,11 +65,11 @@ public class AudioManager : MonoBehaviour
 	}
 
 	//持续播放 第二个参数是持续播放的条件 同一个持续播放不要重复调用
-	public void PlayUntil(string name, Statics.bFunv fun)
+	public void PlayUntil(string name, Statics.bFunv fun,bool loop = false)
 	{
-		if (AudioDic.ContainsKey(name))
+		if (AudioDic.ContainsKey(name) && !SoundPlayerUntil.ContainsKey(fun))
 		{
-			var tmp = NewAudioSource(SoundVolume,true);
+			var tmp = NewAudioSource(SoundVolume, loop);
 			SoundPlayerUntil[fun] = tmp;
 			tmp.clip = AudioDic[name];
 			tmp.Play();
@@ -69,15 +77,30 @@ public class AudioManager : MonoBehaviour
 	}
 
 	//播放背景音乐
-	public void PlayBGM(string name)
+	public void PlayBGM(string name,float fix = 1)
 	{
 		if (AudioDic.ContainsKey(name))
 		{
+			fixBGMVolume = fix;
 			BGMPlayer.clip = AudioDic[name];
-			BGMPlayer.volume = _BGMVolume;
+			BGMPlayer.volume = _BGMVolume * fixBGMVolume;
 			BGMPlayer.loop = true;
 			BGMPlayer.Play();
 		}
+	}
+
+	public void StopBGM()
+	{
+		StartCoroutine(m_StopBGM());
+	}
+
+	private IEnumerator m_StopBGM()
+	{
+		for (float t = 0; t < 2; t += Time.deltaTime) {
+			BGMPlayer.volume *= 0.98f;
+			yield return new WaitForEndOfFrame();
+		}
+		BGMPlayer.Stop();
 	}
 
 	private void Start()
@@ -90,7 +113,9 @@ public class AudioManager : MonoBehaviour
 		//创建BGMPLAYER
 		BGMPlayer = NewAudioSource();
 		//设置默认音量
-		BGMVolume = SoundVolume = 1;
+		BGMVolume = 0.7f;
+		SoundVolume = 0.3f;
+		PlayBGM("StartBGM");
 	}
 
 

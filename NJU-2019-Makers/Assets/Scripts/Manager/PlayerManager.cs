@@ -85,6 +85,7 @@ public class PlayerManager : MonoBehaviour
 	private bool UP => Input.GetKey(KeyCode.W);
 	private bool DOWN => Input.GetKey(KeyCode.S);
 	private bool FIRE => Input.GetMouseButton(0) && !FireLock;
+	private bool STARTFIRE => Input.GetMouseButtonDown(0) && !FireLock;
 	private bool SMALL => (Input.GetMouseButton(1) || Input.GetKey(KeyCode.Space)) && !BombLock;
 	private bool BOMB => (Input.GetMouseButtonUp(1) || Input.GetKeyUp(KeyCode.Space)) && !BombLock;
 	//鼠标位置
@@ -282,6 +283,7 @@ public class PlayerManager : MonoBehaviour
 	public void BeingSmall()
 	{
 		if(canSmall && step_percent <= 1){
+			AudioManager.Instance.PlayUntil("BeingSmall",()=> { return SMALL; });
 			canSmall = false;
 			StartCoroutine(Statics.WorkAfterSeconds(() => {canSmall = true;energy = Statics.FixFun(Statics.FunType.SqrtX,0,maxEnergy,step_percent);},small_interval));
 			step_percent += step_interval;
@@ -314,6 +316,7 @@ public class PlayerManager : MonoBehaviour
 		PlayBomb();
 		EdgeCollider.enabled = true;
 		if (canBomb){
+			AudioManager.Instance.PlaySound("Bomb");
 			energy = 0;
 			step_percent = 0;
 			canBomb = false;
@@ -354,7 +357,6 @@ public class PlayerManager : MonoBehaviour
 			playerBullet.move.SetLineType(transform.position, direct, CutVelocity ,CutAcc , CutAccTime, GObullet.GetComponent<Rigidbody2D>());
 			if (CutLastTime>0.001f) Destroy(GObullet, CutLastTime);
 			//playerBullet.StartCoroutine(Statics.WorkAfterSeconds(() => { playerBullet.move.acc = 0; }, 0.5f));
-
 		}
 
 	}
@@ -428,6 +430,7 @@ public class PlayerManager : MonoBehaviour
 		if (protect) return;
         health -= damage;
 		maxEnergy = health;
+		AudioManager.Instance.PlaySound("Hurt");
 		Hurt();
 	}
 
@@ -439,6 +442,7 @@ public class PlayerManager : MonoBehaviour
 	public void BeingCut(GameObject other, Vector2 point, Vector2 dir)
 	{
 		//if (protect) return;
+		AudioManager.Instance.PlaySound("Cut");
 		Hurt();
 		//求交点
 		Vector2[] intersectPs = new Vector2[2];
@@ -600,7 +604,6 @@ public class PlayerManager : MonoBehaviour
 
 		EffectManager.Instance.SetCameraContinueFocus(() => { return PlayerManager.Instance.transform.position; }, true, 0.2f);
 
-
 		//BulletNormal = Resources.Load("Sprites/normal.png") as Sprite;
 		//BulletStrong = Resources.Load("Sprites/strong.png") as Sprite;
 		//BulletTan = Resources.Load("Sprites/tantan.png") as Sprite;
@@ -610,6 +613,7 @@ public class PlayerManager : MonoBehaviour
 
 	void StartReBullet()
 	{
+		AudioManager.Instance.PlaySound("HaveNoBullet");
 		UIManager.Instance.SetBulletState(false);
 		noBullet = true;
 	}
@@ -660,6 +664,8 @@ public class PlayerManager : MonoBehaviour
 			StartReBullet();
 		}else if (noBullet)
 		{
+			if (STARTFIRE)
+				AudioManager.Instance.PlaySound("HaveNoBullet");
 			ReBullet(2);
 		}else if (!FIRE)
 		{

@@ -117,7 +117,6 @@ public class Enemy : MonoBehaviour
 		{
 			health = maxHealth;
 			BecomeGoast();
-			AudioManager.Instance.PlaySound("BecomeGoast");
 		}
 		else
 		{
@@ -136,6 +135,7 @@ public class Enemy : MonoBehaviour
 		BeAttackBullet.Add(bullet);
 		if (!Active)
 		{
+			AudioManager.Instance.PlaySound("HitWall");
 			Active = AttackToActive;
 			return;
 		}
@@ -204,12 +204,23 @@ public class Enemy : MonoBehaviour
 		}
 	}
 
+	public IEnumerator GoastSound()
+	{
+		while (true)
+		{
+			if (Statics.InScreen(transform.position)) AudioManager.Instance.PlaySound("BecomeGoast");
+			yield return new WaitForSeconds(Random.Range(6f,9f));
+		}
+	}
+
 	public void BecomeGoast()
 	{
 		if (!isGoast)
 		{
+			if (Statics.InScreen(transform.position)) AudioManager.Instance.PlaySound("BecomeGoast");
 			isGoast = true;
 			StartCoroutine(GoastFlash());
+			//StartCoroutine(GoastSound());
 		}
 	}
 

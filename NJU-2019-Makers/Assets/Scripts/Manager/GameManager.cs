@@ -39,11 +39,16 @@ public class GameManager : MonoBehaviour
 	//暂停
 	public void GamePause() => pause = true;
 
+	private void VideoUISet(bool b)
+	{
+		UIManager.Instance.BulletUI.SetActive(b);
+		UIManager.Instance.MainScore.SetActive(b);
+	}
 	//播放剧情
-	public void GameVideo() => playVideo = true;
+	public void GameVideo() { playVideo = true; VideoUISet(false); }
 
 	//开始播放剧情
-	public void GameRestart() {  pause = playVideo = false; PlayerManager.Instance.Bomb(); }
+	public void GameRestart() {  pause = playVideo = false; VideoUISet(true); PlayerManager.Instance.Bomb(); }
 
 	public void StartGame(string name)
 	{

@@ -52,6 +52,12 @@ public class CameraManager : MonoBehaviour
 	public int RandomY;
 	public int RandomR;
 
+	private readonly int[] m_StepX = { 400, 500, 292, 1000 };
+	private readonly int[] m_StepY = { 400, 500, 292, 1000 };
+	private readonly int[] m_RandX = { 100, 100, 0, 400 };
+	private readonly int[] m_RandY = { 100, 100, 0, 400 };
+	private readonly int[] m_RandR = { 30, 30, 0, 0 };
+
 	public void AddFlower(GameObject obj,Vector2 size,List<GameObject> list)
 	{
 		for (int x = 0; x + StepY < size.x; x += StepX )
@@ -110,6 +116,12 @@ public class CameraManager : MonoBehaviour
 
 	public void ReloadMap(int n)
 	{
+		StepX = m_StepX[n-1];
+		StepY = m_StepY[n-1];
+		RandomX = m_RandX[n-1];
+		RandomY = m_RandY[n-1];
+		RandomR = m_RandR[n-1];
+
 		Statics.ClearChild(PBackGround);
 		foreach (var item in m_backGrounds)
 		{
@@ -159,6 +171,5 @@ public class CameraManager : MonoBehaviour
 	void Update()
 	{
 		FixBackGround();
-
 	}
 }

@@ -14,6 +14,7 @@ public class MessageBox : MonoBehaviour
 
 	IEnumerator StartMessage()
 	{
+		AudioManager.Instance.PlaySound("Collect");
 		UIManager.Instance.ShowDialog();
 		GameManager.Instance.GameVideo();
 		PlayerManager.Instance.m_rb.velocity = Vector2.zero;

@@ -36,6 +36,10 @@ public class UIManager : MonoBehaviour
 	public Animator BulletUIAnimator;
 	public Animator ScoreAnimator;
 	public Image BossHealth;
+	public Image StoryImg;
+	public Text StoryText;
+	public GameObject MainScore;
+	public GameObject BulletUI;
 
 
 	private float health;
@@ -52,6 +56,9 @@ public class UIManager : MonoBehaviour
 
 	//画布大小
 	private Vector2 m_Canvasize;
+
+	//图片路径
+	private const string PicturePath = "Pictures/";
 
 	//初始化
 	public void Init()
@@ -104,8 +111,9 @@ public class UIManager : MonoBehaviour
 	//显示文字 TODO 
 	public void ShowText(string text,float time = 0)
 	{
+		Dialog.color = Color.white;
 		Dialog.text = text;
-		if (time != 0) StartCoroutine(Statics.WorkAfterSeconds(() => { Dialog.text = ""; }, time));
+		if (time != 0) StartCoroutine(Statics.WorkAfterSeconds(() => { Dialog.color = Color.clear;  Dialog.text = ""; }, time));
 	}
 
 	//隐藏文字和对话框 TODO
@@ -180,8 +188,29 @@ public class UIManager : MonoBehaviour
 	{
 		health = h;
 	}
-	//设置临时UI条
-	//..........
+
+	public void ShowPicture(string name,float time)
+	{
+		Texture2D imgTexture = Resources.Load(PicturePath + name) as Texture2D;
+		Sprite sprite = Sprite.Create(imgTexture, new Rect(0, 0, imgTexture.width, imgTexture.height), new Vector2(0.5f, 0.5f));
+		StoryImg.sprite = sprite;
+		StartCoroutine(Statics.Flash(StoryImg, Color.clear, Color.white, 0.5f));
+		StartCoroutine(Statics.WorkAfterSeconds(() => { StartCoroutine(Statics.Flash(StoryImg, Color.white, Color.clear, 0.5f)); }, time));
+	}
+
+	public void ShowStoryTextMid(string text, float time)
+	{
+		StoryText.text = text;
+		StartCoroutine(Statics.Flash(StoryText, Color.clear, Color.white, 0.5f));
+		StartCoroutine(Statics.WorkAfterSeconds(() => { StartCoroutine(Statics.Flash(StoryText, Color.white, Color.clear, 0.5f)); }, time));
+	}
+
+	public void ShowStoryTextBottom(string text, float time)
+	{
+		Dialog.text = text;
+		StartCoroutine(Statics.Flash(Dialog, Color.clear, Color.white, 0.5f));
+		StartCoroutine(Statics.WorkAfterSeconds(() => { StartCoroutine(Statics.Flash(Dialog, Color.white, Color.clear, 0.5f)); }, time));
+	}
 
 	private void FixedUpdate()
 	{

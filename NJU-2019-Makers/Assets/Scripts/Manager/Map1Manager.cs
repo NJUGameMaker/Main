@@ -11,6 +11,9 @@ public class Map1Manager : MonoBehaviour
 		Map1Level3,
 		Map1Story2,
 		Map2Level1,
+		Map2Level2,
+		Map2Level3,
+		Map2Level4,
 		Map4Boss,
 	}
 
@@ -34,6 +37,7 @@ public class Map1Manager : MonoBehaviour
 
 	private bool MouseDown;
 	private GameObject Story2Temp;
+	private bool StoryEnd;
 
 	public SavePoint save;
 
@@ -41,7 +45,7 @@ public class Map1Manager : MonoBehaviour
 	{
 		UIManager.Instance.UseBossHealth(0, false);
 		Destroy(CurrentLevel);
-		CurrentLevel = Instantiate(Levels[(int)s], transform);
+		CurrentLevel = Instantiate(Levels[(int)s], Levels[(int)s].transform.parent);
 		CurrentLevel.SetActive(true);
 	}
 
@@ -54,7 +58,6 @@ public class Map1Manager : MonoBehaviour
 		PlayerManager.Instance.health = PlayerManager.Instance.maxHealth;
 		Destroy(Story2Temp);
 		ReLoad(s);
-
 	}
 
 	//初始化
@@ -62,10 +65,9 @@ public class Map1Manager : MonoBehaviour
 	{
 		UIManager.Instance.Mask.color = Color.black;
 		UIManager.Instance.UseBossHealth(0, false);
-		MouseDown = true;
-		//CameraManager.Instance.ReloadMap(2);
-		//EffectManager.Instance.CameraFocus(1, PlayerStart.position, Statics.FunType.SqrtX);
 		UIManager.Instance.HideDialogAndText();
+		CameraManager.Instance.ReloadMap(1);
+		MouseDown = true;
 	}
 
 	public IEnumerator Story1_Start()
@@ -73,7 +75,6 @@ public class Map1Manager : MonoBehaviour
 		PlayerManager.Instance.BombLock = true;
 		PlayerManager.Instance.FireLock = true;
 		PlayerManager.Instance.MoveLock = false;
-		Player.transform.position = PlayerStart.position;
 		GameManager.Instance.GameVideo();
 		const float MoveTime = 12f;
 		const float WaitTime = 2f;
@@ -125,7 +126,7 @@ public class Map1Manager : MonoBehaviour
 		yield return new WaitForSeconds(1f);
 		UIManager.Instance.ShowText("“戈罗，你在犹豫什么？”", 1.5f);
 		yield return new WaitForSeconds(1.5f);
-		UIManager.Instance.ShowText("“现在不掏枪就死定啦！”", 1.5f);
+		UIManager.Instance.ShowText("“再不反击就死定啦！”", 1.5f);
 		yield return new WaitForSeconds(0.5f);
 		EffectManager.Instance.CameraZoom(1f, 8.5f);
 		yield return new WaitForSeconds(1f);
@@ -140,7 +141,7 @@ public class Map1Manager : MonoBehaviour
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		UIManager.Instance.ShowText("要记得不论什么时候，心被击中就完蛋啦！ [左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
-		UIManager.Instance.ShowText("先逃出王城吧！ [左键继续...]");
+		UIManager.Instance.ShowText("先冲出去，逃出森林再说吧！ [左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		UIManager.Instance.ShowText("【WASD上下左右，鼠标左键发射子弹】 [左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
@@ -164,9 +165,51 @@ public class Map1Manager : MonoBehaviour
 
 	}
 
+	public IEnumerator PreStory()
+	{
+		const float showTime = 5f;
+		const float waitTime = 6.5f;
+		Player.transform.position = PlayerStart.position;
+		GameManager.Instance.GameVideo();
+		StoryEnd = false;
+		UIManager.Instance.Mask.color = Color.black;
+		UIManager.Instance.ShowDialog();
+		yield return new WaitForSeconds(1f);
+		UIManager.Instance.ShowStoryTextMid("十五年前的一个清晨", showTime);
+		yield return new WaitForSeconds(waitTime);
+		UIManager.Instance.ShowStoryTextMid("阿婆推开门", showTime);
+		yield return new WaitForSeconds(waitTime);
+		UIManager.Instance.ShowStoryTextMid("发现了她——戈罗·奈特", showTime);
+		yield return new WaitForSeconds(waitTime);
+		UIManager.Instance.ShowStoryTextMid("一个与边角国格格不入的圆族", showTime);
+		yield return new WaitForSeconds(waitTime);
+		UIManager.Instance.ShowStoryTextMid("她的身边只有一封信", showTime);
+		yield return new WaitForSeconds(waitTime);
+		UIManager.Instance.ShowPicture("Story0_1", waitTime*2+showTime);
+		UIManager.Instance.ShowStoryTextBottom("这也是阿婆十五年来唯一瞒着她的事情", showTime);
+		yield return new WaitForSeconds(waitTime);
+		UIManager.Instance.ShowStoryTextBottom("在阿婆的抚养之下", showTime);
+		yield return new WaitForSeconds(waitTime);
+		UIManager.Instance.ShowStoryTextBottom("戈罗度过了一个无忧无虑的童年", showTime);
+		yield return new WaitForSeconds(waitTime);
+		UIManager.Instance.ShowStoryTextMid("但平静的生活被突如其来的三角军团打破", showTime);
+		yield return new WaitForSeconds(waitTime/2);
+		AudioManager.Instance.StopBGM();
+		yield return new WaitForSeconds(waitTime/2);
+		AudioManager.Instance.PlayBGM("Map1BGM",0.5f);
+		UIManager.Instance.ShowPicture("Story0_2", waitTime);
+		UIManager.Instance.ShowStoryTextBottom("而戈罗的身世之谜，也将由她亲手解开", showTime);
+		yield return new WaitForSeconds(waitTime);
+		UIManager.Instance.HideDialogAndText();
+		yield return new WaitForSeconds(1);
+		StoryEnd = true;
+	}
+
 	public IEnumerator Story1()
 	{
 		yield return new WaitForEndOfFrame();
+		StartCoroutine(PreStory());
+		while (!StoryEnd) yield return new WaitForEndOfFrame();
 		StartCoroutine(Story1_Start());
 		yield return new WaitForEndOfFrame();
 		StartCoroutine(Story1_Dialog1());
@@ -216,7 +259,7 @@ public class Map1Manager : MonoBehaviour
 		yield return new WaitForSeconds(1.5f);
 		UIManager.Instance.ShowText("“别慌！你可是圆形啊！弹开它们的子弹反击吧！”[左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
-		UIManager.Instance.ShowText("【长按鼠标右键蓄力】[左键继续...]");
+		UIManager.Instance.ShowText("【长按 鼠标右键/空格键 蓄力】[左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
 		UIManager.Instance.ShowText("【松开时可以反弹附近的敌人和子弹】[左键继续...]");
 		MouseDown = false; while (!MouseDown) yield return new WaitForEndOfFrame();
@@ -249,9 +292,12 @@ public class Map1Manager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		Init();
 		//EffectManager.Instance.CameraZoom(1f, 8.5f);
 		//EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true, 0.4f);
+
+		Init();
+		//UIManager.Instance.Mask.color = Color.clear;
+
 		StartCoroutine(Story1());
 	}
 

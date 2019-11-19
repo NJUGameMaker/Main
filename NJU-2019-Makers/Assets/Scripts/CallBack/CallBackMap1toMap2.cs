@@ -8,6 +8,6 @@ public class CallBackMap1toMap2 : CallBack
 	public override void Fun()
 	{
 		CameraManager.Instance.ReloadMap(3);
-		manager.save = Map1Manager.SavePoint.Map2Level1;
+		manager.ReLoad(manager.save = Map1Manager.SavePoint.Map2Level1);
 	}
 }
