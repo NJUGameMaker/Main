@@ -82,7 +82,7 @@ public class RandomEnemy : MonoBehaviour
         var ai = obj.GetComponent<EnemyAI>();
         ai.StartCoroutine(Statics.WorkAfterSeconds(() => {
             ai.BeActive();
-        }, 2f));
+        }, 1.5f));
         
     }
 }
