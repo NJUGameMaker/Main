@@ -23,10 +23,18 @@ public class GateManager : MonoBehaviour
     public Transform[] Gates;
     public Transform MidTarget;
     public Transform EndTarget;
+    public GameObject MessageManager;
+    public GameObject[] Messages;
+    public Transform[] position;
     // Start is called before the first frame update
     void Start()
     {
         CurrentSatus = Status.Start;
+        if(MessageManager && MessageManager.transform.childCount == 0)
+        {
+            GameObject ms = Object.Instantiate(Messages[0], position[0].position, Quaternion.identity);
+            ms.transform.parent = MessageManager.transform;
+        }
     }
     public Transform NextPosition(int direction)
     {
@@ -34,7 +42,15 @@ public class GateManager : MonoBehaviour
         if (CurrentSatus == Status.Line2 || CurrentSatus == Status.Up4)
             return EndTarget;
         if (direction == (int)DoorLabel.GoIn)
+        {
+            if (MessageManager && MessageManager.transform.childCount == 0 && Random.value > 0.5)
+            {
+                int index = (int)Random.Range(0, Messages.Length);
+                GameObject ms = Object.Instantiate(Messages[index], position[index].position, Quaternion.identity);
+                ms.transform.parent = MessageManager.transform;
+            }
             return MidTarget;
+        }
         int reindex = (int)Random.Range(0, Gates.Length);
         switch(CurrentSatus)
         {
