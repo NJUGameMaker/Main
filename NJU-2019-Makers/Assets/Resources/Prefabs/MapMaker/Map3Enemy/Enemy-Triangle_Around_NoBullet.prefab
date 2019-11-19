@@ -185,6 +185,7 @@ MonoBehaviour:
   type: 0
   maxHealth: 1
   isGoast: 0
+  GoastAfterDie: 1
 --- !u!114 &8795727429844014209
 MonoBehaviour:
   m_ObjectHideFlags: 0

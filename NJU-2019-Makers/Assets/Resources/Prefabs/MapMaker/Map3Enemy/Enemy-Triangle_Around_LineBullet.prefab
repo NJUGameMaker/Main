@@ -93,6 +93,7 @@ MonoBehaviour:
   bulletType: 0
   ShotPoint: {fileID: 4886777130014293951}
   OffsetTime: 0
+  DestroyTime: 0
 --- !u!1 &8563466533044125892
 GameObject:
   m_ObjectHideFlags: 0
@@ -180,6 +181,7 @@ MonoBehaviour:
   type: 0
   maxHealth: 1
   isGoast: 0
+  GoastAfterDie: 1
 --- !u!114 &8563466533044125900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +204,8 @@ MonoBehaviour:
   RunAfterStep: {fileID: 0}
   RunAfterRound: {fileID: 0}
   CurV: {x: 0, y: 0}
+  Rotate: 1
+  RotateDeg: 0
 --- !u!114 &761770370385202539
 MonoBehaviour:
   m_ObjectHideFlags: 0
