@@ -4191,7 +4191,8 @@ PrefabInstance:
       propertyPath: Map1
       value: 
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8878478251175322918, guid: 661162c083ba52e4eb6f663838c5e20e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 661162c083ba52e4eb6f663838c5e20e, type: 3}
 --- !u!1 &713444778
 GameObject:
@@ -4690,12 +4691,12 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 3.3959703
       objectReference: {fileID: 0}
-    - target: {fileID: 1162299194198459206, guid: 8c93b71905ec9e546930b7a1838962e9,
+    - target: {fileID: 1162299194198459205, guid: 8c93b71905ec9e546930b7a1838962e9,
         type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1162299194198459205, guid: 8c93b71905ec9e546930b7a1838962e9,
+    - target: {fileID: 1162299194198459206, guid: 8c93b71905ec9e546930b7a1838962e9,
         type: 3}
       propertyPath: m_Enabled
       value: 1
@@ -4727,6 +4728,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 397388995}
     m_Modifications:
+    - target: {fileID: 6447316692918880524, guid: 900d5fb674a835745bdb3ebaf75d5767,
+        type: 3}
+      propertyPath: m_Name
+      value: P_MoChi
+      objectReference: {fileID: 0}
     - target: {fileID: 6447316692918880525, guid: 900d5fb674a835745bdb3ebaf75d5767,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4781,11 +4787,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6447316692918880524, guid: 900d5fb674a835745bdb3ebaf75d5767,
-        type: 3}
-      propertyPath: m_Name
-      value: P_MoChi
       objectReference: {fileID: 0}
     - target: {fileID: 6447316692447159798, guid: 900d5fb674a835745bdb3ebaf75d5767,
         type: 3}
@@ -7065,16 +7066,16 @@ PrefabInstance:
       propertyPath: isGoast
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 513455034585002025, guid: 6955b0f973735f84c925c04805467956,
-        type: 3}
-      propertyPath: ActiveCollider
-      value: 
-      objectReference: {fileID: 1726464808}
     - target: {fileID: 5570793005013996193, guid: 6955b0f973735f84c925c04805467956,
         type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 513455034585002025, guid: 6955b0f973735f84c925c04805467956,
+        type: 3}
+      propertyPath: ActiveCollider
+      value: 
+      objectReference: {fileID: 1726464808}
     - target: {fileID: 5838491638173175929, guid: 6955b0f973735f84c925c04805467956,
         type: 3}
       propertyPath: shotType
@@ -7302,16 +7303,16 @@ PrefabInstance:
       propertyPath: isGoast
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 513455034585002025, guid: 6955b0f973735f84c925c04805467956,
-        type: 3}
-      propertyPath: ActiveCollider
-      value: 
-      objectReference: {fileID: 751934611}
     - target: {fileID: 5570793005013996193, guid: 6955b0f973735f84c925c04805467956,
         type: 3}
       propertyPath: type
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 513455034585002025, guid: 6955b0f973735f84c925c04805467956,
+        type: 3}
+      propertyPath: ActiveCollider
+      value: 
+      objectReference: {fileID: 751934611}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6955b0f973735f84c925c04805467956, type: 3}
 --- !u!4 &1365804081 stripped
@@ -9161,6 +9162,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 397388995}
     m_Modifications:
+    - target: {fileID: 6447316692918880524, guid: 900d5fb674a835745bdb3ebaf75d5767,
+        type: 3}
+      propertyPath: m_Name
+      value: P_MoChi
+      objectReference: {fileID: 0}
     - target: {fileID: 6447316692918880525, guid: 900d5fb674a835745bdb3ebaf75d5767,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9220,11 +9226,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.x
       value: 1.625
-      objectReference: {fileID: 0}
-    - target: {fileID: 6447316692918880524, guid: 900d5fb674a835745bdb3ebaf75d5767,
-        type: 3}
-      propertyPath: m_Name
-      value: P_MoChi
       objectReference: {fileID: 0}
     - target: {fileID: 6447316692447159798, guid: 900d5fb674a835745bdb3ebaf75d5767,
         type: 3}
@@ -9790,16 +9791,16 @@ PrefabInstance:
       propertyPath: isGoast
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 513455034585002025, guid: 6955b0f973735f84c925c04805467956,
-        type: 3}
-      propertyPath: ActiveCollider
-      value: 
-      objectReference: {fileID: 751934611}
     - target: {fileID: 5570793005013996193, guid: 6955b0f973735f84c925c04805467956,
         type: 3}
       propertyPath: type
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 513455034585002025, guid: 6955b0f973735f84c925c04805467956,
+        type: 3}
+      propertyPath: ActiveCollider
+      value: 
+      objectReference: {fileID: 751934611}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6955b0f973735f84c925c04805467956, type: 3}
 --- !u!1001 &2078730814

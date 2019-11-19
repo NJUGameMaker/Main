@@ -290,7 +290,7 @@ public class PlayerManager : MonoBehaviour
 				canBomb = true;
 			}
 			//当形状足够小的时候把外壳设置为false 能够穿进敌人
-			if (energy > 80)
+			if (energy/maxEnergy > 0.8f)
 			{
 				EdgeCollider.enabled = false;
 			}
