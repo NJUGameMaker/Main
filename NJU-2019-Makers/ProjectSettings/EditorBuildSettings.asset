@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MapInAll.unity
     guid: 53ed445f3b65917439f181f57be50714
+  - enabled: 1
+    path: Assets/Scenes/TempEnd.unity
+    guid: 60197b5114ecd3643b41db9a17e9bb4a
   m_configObjects: {}

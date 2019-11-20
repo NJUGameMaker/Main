@@ -12,5 +12,6 @@ public class CallBackToBoss : CallBack
 		PlayerManager.Instance.MoveLock = false;
 		manager.save = Map1Manager.SavePoint.Map4Boss;
 		manager.ReLoad(Map1Manager.SavePoint.Map4Boss);
+		CameraManager.Instance.ReloadMap(4);
 	}
 }

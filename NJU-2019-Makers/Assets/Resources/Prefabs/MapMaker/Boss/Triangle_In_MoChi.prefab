@@ -232,6 +232,7 @@ MonoBehaviour:
   ActiveCollider: {fileID: 0}
   ObjectToActive: []
   DelGoAround: 1
+  FaceDir: 0
 --- !u!50 &54930094749555078
 Rigidbody2D:
   serializedVersion: 4

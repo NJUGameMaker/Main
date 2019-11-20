@@ -296,9 +296,8 @@ public class Map1Manager : MonoBehaviour
 		//EffectManager.Instance.SetCameraContinueFocus(() => { return Player.transform.position; }, true, 0.4f);
 
 		Init();
-		UIManager.Instance.Mask.color = Color.clear;
-
-		//StartCoroutine(Story1());
+		//UIManager.Instance.Mask.color = Color.clear;
+		StartCoroutine(Story1());
 	}
 
 	// Update is called once per frame

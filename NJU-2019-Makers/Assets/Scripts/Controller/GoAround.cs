@@ -63,7 +63,7 @@ public class GoAround : MonoBehaviour
 						if (RunAfterRound) RunAfterRound.Fun();
 					}
 				}
-				CurV = rigidbody2.velocity = (KeyPoints[next].position - KeyPoints[now].position) / RunTime;
+				if (KeyPoints[next] && KeyPoints[now]) CurV = rigidbody2.velocity = (KeyPoints[next].position - KeyPoints[now].position) / RunTime;
 				if (Rotate) transform.rotation = Quaternion.Euler(0, 0, RotateDeg + Mathf.Rad2Deg * Mathf.Atan2(CurV.y, CurV.x));
 				yield return new WaitForSeconds(RunTime);
 				if (RunAfterStep) RunAfterStep.Fun();
