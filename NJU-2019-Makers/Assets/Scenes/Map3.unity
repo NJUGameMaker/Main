@@ -1515,6 +1515,11 @@ PrefabInstance:
       objectReference: {fileID: 1073999673}
     - target: {fileID: 4961137713562317031, guid: f844925198d28534fa0c6a2979df4d74,
         type: 3}
+      propertyPath: EnemyList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4961137713562317031, guid: f844925198d28534fa0c6a2979df4d74,
+        type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1073999673}
@@ -1538,6 +1543,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1073999673}
+    - target: {fileID: 4961137714158205730, guid: f844925198d28534fa0c6a2979df4d74,
+        type: 3}
+      propertyPath: IntervalTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4961137714248369411, guid: f844925198d28534fa0c6a2979df4d74,
         type: 3}
       propertyPath: player
