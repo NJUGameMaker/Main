@@ -27,7 +27,7 @@ public class MovePoint : MonoBehaviour
 			{
 				AudioManager.Instance.StopBGM();
 				StartCoroutine(Statics.WorkAfterSeconds(() => { AudioManager.Instance.PlayBGM(BGM, 0.5f); }, 2.5f));
-			}
+			} 
 			UIManager.Instance.Flash(Color.clear, Color.black, 1, 0.5f);
 			PlayerManager.Instance.m_rb.velocity = Vector2.zero;
 			GameManager.Instance.GamePause();
