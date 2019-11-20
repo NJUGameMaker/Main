@@ -136,7 +136,10 @@ public class Enemy : MonoBehaviour
 		if (!Active)
 		{
 			AudioManager.Instance.PlaySound("HitWall");
-			Active = AttackToActive;
+			if (Active = AttackToActive)
+			{
+				StartCoroutine(GetComponent<EnemyAI>().StartActive());
+			}
 			return;
 		}
 		PlayerManager.Instance.ComboAdd();

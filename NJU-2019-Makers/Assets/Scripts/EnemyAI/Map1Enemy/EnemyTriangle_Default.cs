@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnemyTriangle_Default : EnemyAI
 {
 	public bool DelGoAround = true;
+	public bool FaceDir = false;
 	public override void AfterDie()
 	{
 		ActiveList(false);
@@ -16,7 +17,12 @@ public class EnemyTriangle_Default : EnemyAI
 		if (DelGoAround)
 		{
 			goAround.enabled = false;
+			goAround.StopAllCoroutines();
 			move.enabled = true;
+		}
+		if (FaceDir)
+		{
+			move.direction = Statics.FaceVec(transform.rotation, 90);
 		}
 		move.follow = PlayerManager.Instance.gameObject;
 		enemy.Active = true;
