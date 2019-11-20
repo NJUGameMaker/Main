@@ -8,7 +8,8 @@ public class BossAI : EnemyAI
 	public override void AfterDie()
 	{
 		ActiveList(false);
-		GameManager.Instance.StartGame("TempEnd");
+		GameManager.Instance.StartCoroutine(Statics.WorkAfterSeconds(() => { GameManager.Instance.StartGame("TempEnd"); }, 2));
+		GameManager.Instance.StartCoroutine(Statics.WorkAfterSeconds(() => { Application.Quit(); }, 5));
 		return;
 	}
 

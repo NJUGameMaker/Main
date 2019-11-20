@@ -18,6 +18,7 @@ public class MessageBox : MonoBehaviour
 		UIManager.Instance.ShowDialog();
 		GameManager.Instance.GameVideo();
 		PlayerManager.Instance.m_rb.velocity = Vector2.zero;
+		yield return new WaitForSeconds(0.6f);
 		StartCoroutine(Statics.Flash(GetComponentInChildren<SpriteRenderer>(), Color.white, Color.clear, 0.7f));
 		foreach (var item in Messages)
 		{

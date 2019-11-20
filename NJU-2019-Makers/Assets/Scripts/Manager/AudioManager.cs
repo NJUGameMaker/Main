@@ -11,7 +11,7 @@ public class AudioManager : MonoBehaviour
 	private const string path = "Audios/";
 	//设置音频名
 	private readonly string[] AudioNames = {
-		"StartBGM","Map1BGM",
+		"StartBGM","Map1BGM","Map2BGM","Map3BGM","BossBGM",
 		"Shoot1","Shoot2","HitEnemy",
 		"EnemyDie","HitWall","EnemyActive",
 		"MovePoint","EnemyShoot","BecomeGoast",
@@ -32,6 +32,9 @@ public class AudioManager : MonoBehaviour
 	public float SoundVolume { get => _SoundVolume; set => _SoundVolume = Statics.InRange(value, 0, 1); }
 	//临时删除表
 	private List<Statics.bFunv> tmpdel = new List<Statics.bFunv>();
+
+	[HideInInspector]
+	public string CurBGM = "";
 
 	//从路径加载音频
 	private AudioClip LoadAudioClip(string name)
@@ -79,8 +82,9 @@ public class AudioManager : MonoBehaviour
 	//播放背景音乐
 	public void PlayBGM(string name,float fix = 1)
 	{
-		if (AudioDic.ContainsKey(name))
+		if (AudioDic.ContainsKey(name) && CurBGM != name)
 		{
+			CurBGM = name;
 			fixBGMVolume = fix;
 			BGMPlayer.clip = AudioDic[name];
 			BGMPlayer.volume = _BGMVolume * fixBGMVolume;
