@@ -90,7 +90,7 @@ MonoBehaviour:
   Damage: 0
   OutType: 7
   HitType: 6
-  bulletType: 0
+  bulletType: 1
   ShotPoint: {fileID: 4886777130014293951}
   OffsetTime: 0
   DestroyTime: 0
