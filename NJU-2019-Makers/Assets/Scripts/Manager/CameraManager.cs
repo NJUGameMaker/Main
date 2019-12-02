@@ -106,8 +106,8 @@ public class CameraManager : MonoBehaviour
 				m_backGrounds[i + 1, j + 1] = Instantiate(PBackGround, (m_cameraPos + new Vector2Int(i, j)) * BGsize, new Quaternion());
 				m_backGrounds[i + 1, j + 1].SetActive(true);
 				//增加花纹
-				AddFlower(m_backGrounds[i + 1, j + 1], new Vector2(background.width, background.height),outside);
-				AddFlower(m_backGrounds[i + 1, j + 1], new Vector2(background.width, background.height),road);
+				AddFlower(m_backGrounds[i + 1, j + 1], new Vector2(background.width, background.height), outside);
+				AddFlower(m_backGrounds[i + 1, j + 1], new Vector2(background.width, background.height), road);
 			}
 		}
 		PBackGround.SetActive(false);

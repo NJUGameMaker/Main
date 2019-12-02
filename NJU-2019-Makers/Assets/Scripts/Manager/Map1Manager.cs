@@ -47,6 +47,15 @@ public class Map1Manager : MonoBehaviour
 		Destroy(CurrentLevel);
 		CurrentLevel = Instantiate(Levels[(int)s], Levels[(int)s].transform.parent);
 		CurrentLevel.SetActive(true);
+		//temp
+		if (s == SavePoint.Map4Boss)
+		{
+			EffectManager.Instance.CameraZoom(1f, 15f);
+		}
+		else
+		{
+			EffectManager.Instance.CameraZoom(1f, 8.5f);
+		}
 	}
 
 	public void ReStart(SavePoint s)
