@@ -96,6 +96,7 @@ public class CameraManager : MonoBehaviour
 		m_camera = Camera.main.gameObject;
 		var background = BackGroundRoad.GetComponent<SpriteRenderer>().sprite.rect;
 		BGsize = new Vector2(background.width, background.height) / Scale;
+		Debug.Log(background.width+" "+background.height);
 		BackGroundRoad.transform.localPosition = BGsize / 2;
 		BackGroundOutSide.transform.localPosition = BGsize / 2;
 		m_cameraPos = new Vector2Int(Mathf.FloorToInt(m_camera.transform.position.x / BGsize[0]), Mathf.FloorToInt(m_camera.transform.position.y / BGsize[1]));

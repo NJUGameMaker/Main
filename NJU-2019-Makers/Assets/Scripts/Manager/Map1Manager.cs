@@ -243,6 +243,7 @@ public class Map1Manager : MonoBehaviour
 
 	public IEnumerator Story2()
 	{
+		PlayerManager.Instance.health = PlayerManager.Instance.maxHealth;
 		save = SavePoint.Map1Story2;
 		Story2Temp = Instantiate(Story2Enemys, Story2Enemys.transform.parent);
 		Story2Temp.SetActive(true);

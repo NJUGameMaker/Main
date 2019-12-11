@@ -429,6 +429,11 @@ public class PlayerManager : MonoBehaviour
 	{
 		if (protect) return;
         health -= damage;
+		if (health < 0)
+		{
+			AttackHeart(null);
+			return;
+		}
 		maxEnergy = health;
 		AudioManager.Instance.PlaySound("Hurt");
 		Hurt();
